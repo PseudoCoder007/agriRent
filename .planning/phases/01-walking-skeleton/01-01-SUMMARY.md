@@ -121,3 +121,7 @@ completed: 2026-06-26
 ---
 *Phase: 01-walking-skeleton*
 *Completed: partial — blocked at Task 3 checkpoint, 2026-06-26*
+
+## Self-Check: PASSED
+
+All claimed files verified present on disk; all claimed commit hashes (`20774ab`, `71a8328`, `a4e3e5c`) verified present in `git log --oneline --all`.
