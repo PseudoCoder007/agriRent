@@ -48,8 +48,8 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### AI
 
-- [ ] **AI-01**: Any logged-in user can ask the AI chatbot rental-related questions (how to book, deposit policy, etc.) and get a response from the NVIDIA NIM-backed assistant
-- [ ] **AI-02**: The AI chatbot is strictly advisory — it never writes to `bookings` or `equipments` tables directly
+- [x] **AI-01**: Any logged-in user can ask the AI chatbot rental-related questions (how to book, deposit policy, etc.) and get a response from the NVIDIA NIM-backed assistant
+- [x] **AI-02**: The AI chatbot is strictly advisory — it never writes to `bookings` or `equipments` tables directly
 
 ## v2 Requirements
 
@@ -124,8 +124,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REVIEW-01 | Phase 3 | Pending |
 | REVIEW-02 | Phase 3 | Pending |
 | NOTIF-01 | Phase 1 | Pending |
-| AI-01 | Phase 1 | Pending |
-| AI-02 | Phase 1 | Pending |
+| AI-01 | Phase 1 | Complete |
+| AI-02 | Phase 1 | Complete |
 
 **Coverage:**
 

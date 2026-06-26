@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Plan 01-03 complete (Tasks 1-3 done: equipment schema/service layer, owner creation form, farmer browse/detail pages). Resuming with Plan 01-04."
-last_updated: "2026-06-26T16:32:56.874Z"
+stopped_at: "Plan 01-04 complete (AI chatbot slice: ai.service.ts, streaming /api/chat, ChatWidget, /farmer/chat and /owner/chat pages). Resuming with Plan 01-05."
+last_updated: "2026-06-26T16:47:21.786Z"
 last_activity: 2026-06-26 -- Plan 01-03 (listing slice) complete
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
-  percent: 60
+  completed_plans: 4
+  percent: 80
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 ## Current Position
 
 Phase: 01 (walking-skeleton) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
-Last activity: 2026-06-26 -- Plan 01-03 (listing slice) complete
+Last activity: 2026-06-26 -- Plan 01-04 (AI chatbot slice) complete
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [██████░░░░] 60%
 *Updated after each plan completion*
 | Phase 01-walking-skeleton P02 | 55min | 3 tasks | 14 files |
 | Phase 01-walking-skeleton P03 | 50min | 3 tasks | 9 files |
+| Phase 01-walking-skeleton P04 | 35min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [Phase 01-02]: Route groups (farmer)/(owner) restructured to use real nested URL segments (farmer/dashboard, owner/dashboard) after Turbopack rejected the colliding /dashboard path
 - [Phase 01-walking-skeleton]: Created equipment-images Storage bucket via migration instead of completing Plan 01-01's manual dashboard step, which was never actually done — Reproducible/reviewable as code; Task 1's createEquipment() hard-depends on the bucket existing
 - [Phase 01-walking-skeleton]: Added authenticated cross-user SELECT policy on public.users — Own-row-only RLS from Plan 01-01 silently broke this plan's truth that a farmer must see the equipment owner's name
+- [Phase 01-04]: getChatCompletion() accepts an optional injected openai-compatible client purely for unit testing; production always uses process.env.NVIDIA_API_KEY against the real NVIDIA baseURL
+- [Phase 01-04]: /api/chat requires an authenticated session (either role) but does not branch by role -- chatbot is role-agnostic FAQ-only
 
 ### Pending Todos
 
@@ -92,6 +95,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-26T16:30:56.790Z
-Stopped at: Plan 01-03 complete (Tasks 1-3 done: equipment schema/service layer, owner creation form, farmer browse/detail pages). Resuming with Plan 01-04.
-Resume file: .planning/phases/01-walking-skeleton/01-04-PLAN.md
+Last session: 2026-06-26T16:46:35.903Z
+Stopped at: Plan 01-04 complete (AI chatbot slice: ai.service.ts, streaming /api/chat, ChatWidget, /farmer/chat and /owner/chat pages). Resuming with Plan 01-05.
+Resume file: None
