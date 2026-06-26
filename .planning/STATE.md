@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Plan 01-01 complete (Tasks 1-3 done, schema live, types generated). Resuming with Plan 01-02.
-last_updated: "2026-06-26T15:24:55.503Z"
-last_activity: 2026-06-26 -- Phase 1 execution started
+stopped_at: "Plan 01-02 complete (Tasks 1-3 done: auth schemas/service, signup/login/logout, role-scoped route groups + middleware). Resuming with Plan 01-03."
+last_updated: "2026-06-26T16:01:59.607Z"
+last_activity: 2026-06-26 -- Phase 01 execution started
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
-  percent: 0
+  completed_plans: 2
+  percent: 40
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26)
 
 **Core value:** A farmer can find available equipment near them and successfully book it for a date range, and the owner can approve or reject that request — end to end, with no double-booking and no client-side price tampering.
-**Current focus:** Phase 1 — walking-skeleton
+**Current focus:** Phase 01 — walking-skeleton
 
 ## Current Position
 
-Phase: 1 (walking-skeleton) — EXECUTING
-Plan: 2 of 5
+Phase: 01 (walking-skeleton) — EXECUTING
+Plan: 3 of 5
 Status: Ready to execute
-Last activity: 2026-06-26 -- Phase 1 execution started
+Last activity: 2026-06-26 -- Plan 01-02 (auth + role boundary) complete
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: N/A
 
 *Updated after each plan completion*
+| Phase 01-walking-skeleton P02 | 55min | 3 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -64,6 +65,9 @@ Recent decisions affecting current work:
 - Project init: AI provider is NVIDIA NIM, model `meta/llama-3.1-8b-instruct` (originally requested model is EOL/HTTP 410).
 - Project init: Booking `total_amount` always computed server-side from equipment rates, never trusted from client.
 - Project init: Dedicated UI/design phase deferred to Phase 4, after all functional slices run end-to-end.
+- [Phase 01-02]: Added vitest as the project's first test runner to satisfy Task 1's TDD RED/GREEN cycle for auth schema tests
+- [Phase 01-02]: logIn() extended to read role from public.users so Server Action can redirect to the correct role-scoped dashboard
+- [Phase 01-02]: Route groups (farmer)/(owner) restructured to use real nested URL segments (farmer/dashboard, owner/dashboard) after Turbopack rejected the colliding /dashboard path
 
 ### Pending Todos
 
@@ -85,6 +89,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-26T15:24:55.471Z
-Stopped at: Plan 01-01 complete (Tasks 1-3 done, schema live, types generated). Resuming with Plan 01-02.
-Resume file: .planning/phases/01-walking-skeleton/01-01-PLAN.md
+Last session: 2026-06-26T16:00:04.009Z
+Stopped at: Plan 01-02 complete (Tasks 1-3 done: auth schemas/service, signup/login/logout, role-scoped route groups + middleware). Resuming with Plan 01-03.
+Resume file: .planning/phases/01-walking-skeleton/01-03-PLAN.md

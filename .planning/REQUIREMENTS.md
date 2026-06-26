@@ -9,9 +9,9 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can sign up and log in as either a farmer or an equipment owner, with role chosen at signup
-- [ ] **AUTH-02**: User session persists across browser refresh
-- [ ] **AUTH-03**: User can log out from any page
+- [x] **AUTH-01**: User can sign up and log in as either a farmer or an equipment owner, with role chosen at signup
+- [x] **AUTH-02**: User session persists across browser refresh
+- [x] **AUTH-03**: User can log out from any page
 
 ### Equipment
 
@@ -103,9 +103,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
 | EQUIP-01 | Phase 1 | Pending |
 | EQUIP-02 | Phase 2 | Pending |
 | EQUIP-03 | Phase 2 | Pending |
@@ -128,6 +128,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AI-02 | Phase 1 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 23 total
 - Mapped to phases: 23/23 ✓
 - Unmapped: 0 ✓
