@@ -38,7 +38,10 @@ export function getEquipmentImageUrl(storagePath: string): string {
  * function's `input` parameter, so a forged client field cannot change who
  * owns the created listing (see T-03-01). The RLS INSERT policy on
  * equipments additionally enforces `owner_id = auth.uid()` at the database
- * layer as a second, independent guarantee.
+ * layer as a second, independent guarantee. The role check below mirrors
+ * the rest of this codebase's defense-in-depth pattern (e.g.
+ * booking.service.ts's getOwnedPendingBooking) of never relying on RLS as
+ * the sole enforcement layer for a mutating write.
  */
 export async function createEquipment(
   input: CreateEquipmentInput,
@@ -59,6 +62,20 @@ export async function createEquipment(
   }
 
   const supabase = await createClient();
+
+  const { data: callerUser, error: roleError } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", ownerId)
+    .single();
+
+  if (roleError || !callerUser || callerUser.role !== "owner") {
+    return {
+      success: false,
+      message: "Only owner accounts can create equipment listings.",
+      data: null,
+    };
+  }
 
   const { data: equipment, error: insertError } = await supabase
     .from("equipments")
