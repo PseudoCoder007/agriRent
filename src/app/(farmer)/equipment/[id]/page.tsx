@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import * as listingService from "@/lib/services/listing.service";
+import { BookingRequestForm } from "./BookingRequestForm";
 
 /**
  * Equipment detail page — photos, full description, category, rate, and
@@ -68,6 +69,12 @@ export default async function EquipmentDetailPage({
           {equipment.description}
         </p>
       ) : null}
+
+      <BookingRequestForm
+        equipmentId={equipment.id}
+        rate={Number(equipment.rate)}
+        rateUnit={equipment.rate_unit}
+      />
     </div>
   );
 }
