@@ -103,35 +103,35 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | TBD | Pending |
-| AUTH-02 | TBD | Pending |
-| AUTH-03 | TBD | Pending |
-| EQUIP-01 | TBD | Pending |
-| EQUIP-02 | TBD | Pending |
-| EQUIP-03 | TBD | Pending |
-| EQUIP-04 | TBD | Pending |
-| EQUIP-05 | TBD | Pending |
-| EQUIP-06 | TBD | Pending |
-| EQUIP-07 | TBD | Pending |
-| BOOK-01 | TBD | Pending |
-| BOOK-02 | TBD | Pending |
-| BOOK-03 | TBD | Pending |
-| BOOK-04 | TBD | Pending |
-| BOOK-05 | TBD | Pending |
-| BOOK-06 | TBD | Pending |
-| DASH-01 | TBD | Pending |
-| DASH-02 | TBD | Pending |
-| REVIEW-01 | TBD | Pending |
-| REVIEW-02 | TBD | Pending |
-| NOTIF-01 | TBD | Pending |
-| AI-01 | TBD | Pending |
-| AI-02 | TBD | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| EQUIP-01 | Phase 1 | Pending |
+| EQUIP-02 | Phase 2 | Pending |
+| EQUIP-03 | Phase 2 | Pending |
+| EQUIP-04 | Phase 1 | Pending |
+| EQUIP-05 | Phase 2 | Pending |
+| EQUIP-06 | Phase 1 | Pending |
+| EQUIP-07 | Phase 2 | Pending |
+| BOOK-01 | Phase 1 | Pending |
+| BOOK-02 | Phase 1 | Pending |
+| BOOK-03 | Phase 1 | Pending |
+| BOOK-04 | Phase 1 | Pending |
+| BOOK-05 | Phase 1 (pending/approved/rejected) + Phase 2 (completed/cancelled) | Pending |
+| BOOK-06 | Phase 1 | Pending |
+| DASH-01 | Phase 1 | Pending |
+| DASH-02 | Phase 1 | Pending |
+| REVIEW-01 | Phase 3 | Pending |
+| REVIEW-02 | Phase 3 | Pending |
+| NOTIF-01 | Phase 1 | Pending |
+| AI-01 | Phase 1 | Pending |
+| AI-02 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 23 total
-- Mapped to phases: 0 (pending roadmap creation)
-- Unmapped: 23 ⚠️ (resolved by gsd-roadmapper next)
+- Mapped to phases: 23/23 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-26*
-*Last updated: 2026-06-26 after initial definition*
+*Last updated: 2026-06-26 after roadmap creation (4 phases, full coverage)*
