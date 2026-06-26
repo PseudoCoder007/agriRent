@@ -62,7 +62,7 @@ export async function signUp(
  */
 export async function logIn(
   input: LoginInput
-): Promise<ServiceResult<{ userId: string }>> {
+): Promise<ServiceResult<{ userId: string; role: "farmer" | "owner" }>> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -78,10 +78,27 @@ export async function logIn(
     };
   }
 
+  // Role is always read from the server-controlled public.users table,
+  // never from auth.users.user_metadata (see 01-CONTEXT.md D-01/D-02).
+  const { data: profile, error: profileError } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", data.user.id)
+    .single();
+
+  if (profileError || !profile) {
+    console.error("auth.service.logIn: profile lookup failed", profileError);
+    return {
+      success: false,
+      message: "Invalid email or password",
+      data: null,
+    };
+  }
+
   return {
     success: true,
     message: "Logged in",
-    data: { userId: data.user.id },
+    data: { userId: data.user.id, role: profile.role },
   };
 }
 
