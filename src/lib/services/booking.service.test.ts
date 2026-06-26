@@ -86,7 +86,7 @@ describe("createBooking", () => {
 
     expect(result.success).toBe(false);
     expect(result.data).toBeNull();
-    expect(result.message.toLowerCase()).toContain("not");
+    expect(result.message.toLowerCase()).toContain("no longer available");
     expect(result.message).not.toMatch(/23P01/);
   });
 
