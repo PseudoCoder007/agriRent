@@ -47,10 +47,12 @@ files_reviewed_list:
   - supabase/migrations/0003_users_public_read.sql
   - types/database.ts
 findings:
-  critical: 1
+  critical: 0
   warning: 6
   info: 5
-  total: 12
+  total: 11
+  resolved:
+    - "CR-01 (commit cd7f929): app-level owner-role check added to listing.service.ts's createEquipment"
 status: issues_found
 ---
 
@@ -71,7 +73,7 @@ The remaining findings are Warnings/Info: a notable RLS gap on `bookings` UPDATE
 
 ## Critical Issues
 
-### CR-01: No explicit owner-role check before equipment creation in the service layer
+### CR-01: No explicit owner-role check before equipment creation in the service layer — RESOLVED (commit cd7f929)
 
 **File:** `src/lib/services/listing.service.ts:43-87` (also `src/app/actions/listing.actions.ts:24-75`)
 **Issue:** `createEquipment` inserts into `equipments` immediately after validating form fields, with no check that `ownerId`'s role is actually `'owner'`. The *only* place that enforces this is the RLS policy `equipments insert own as owner` (`owner_id = (select auth.uid()) AND public.is_owner()` — `supabase/migrations/0001_init_schema.sql:98-100`). Every other mutating service in this codebase enforces authorization at the service layer in addition to RLS (e.g. `getOwnedPendingBooking` in `booking.service.ts:154-183` explicitly checks `equipments.owner_id !== ownerId` before allowing approve/reject, even though RLS's `bookings update as owning owner` policy already restricts this at the DB level). `listing.service.ts` is the one mutating path in this phase that relies on RLS as the *sole* authorization layer with no apllication-level role check and no role-specific error message. If RLS is ever weakened during a future migration (e.g. a broadened policy, or a service-role client substituted in by mistake), a farmer-role account could create equipment listings with no app-level backstop to catch it, and today a farmer's attempt fails with a generic, unhelpful "Could not create equipment listing. Please try again." (`listing.service.ts:82-86`) that gives no signal that the real cause was a role mismatch.
