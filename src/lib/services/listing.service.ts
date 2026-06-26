@@ -21,6 +21,17 @@ export type EquipmentWithOwnerAndImages = EquipmentRow & {
 const EQUIPMENT_BUCKET = "equipment-images";
 
 /**
+ * Builds the public URL for a stored equipment image path. The
+ * equipment-images bucket is public-read (see
+ * supabase/migrations/0002_equipment_images_bucket.sql), so this is a
+ * deterministic URL construction, not a fetch.
+ */
+export function getEquipmentImageUrl(storagePath: string): string {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  return `${supabaseUrl}/storage/v1/object/public/${EQUIPMENT_BUCKET}/${storagePath}`;
+}
+
+/**
  * Creates an equipment listing and uploads its first photo to Supabase
  * Storage. ownerId is always supplied by the caller (a Server Action that
  * reads it from the authenticated session) — never accepted from this
