@@ -15,12 +15,12 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### Equipment
 
-- [ ] **EQUIP-01**: Owner can create an equipment listing with title, description, category, hourly/daily rate, and at least one photo
+- [x] **EQUIP-01**: Owner can create an equipment listing with title, description, category, hourly/daily rate, and at least one photo
 - [ ] **EQUIP-02**: Owner can edit their own equipment listings
 - [ ] **EQUIP-03**: Owner can delete their own equipment listings
-- [ ] **EQUIP-04**: Farmer can browse all equipment listings
+- [x] **EQUIP-04**: Farmer can browse all equipment listings
 - [ ] **EQUIP-05**: Farmer can filter equipment by category and location (text/region match)
-- [ ] **EQUIP-06**: Farmer can view full equipment detail (photos, rate, owner, description)
+- [x] **EQUIP-06**: Farmer can view full equipment detail (photos, rate, owner, description)
 - [ ] **EQUIP-07**: Farmer can save/favorite equipment for later
 
 ### Booking
@@ -106,12 +106,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-01 | Phase 1 | Complete |
 | AUTH-02 | Phase 1 | Complete |
 | AUTH-03 | Phase 1 | Complete |
-| EQUIP-01 | Phase 1 | Pending |
+| EQUIP-01 | Phase 1 | Complete |
 | EQUIP-02 | Phase 2 | Pending |
 | EQUIP-03 | Phase 2 | Pending |
-| EQUIP-04 | Phase 1 | Pending |
+| EQUIP-04 | Phase 1 | Complete |
 | EQUIP-05 | Phase 2 | Pending |
-| EQUIP-06 | Phase 1 | Pending |
+| EQUIP-06 | Phase 1 | Complete |
 | EQUIP-07 | Phase 2 | Pending |
 | BOOK-01 | Phase 1 | Pending |
 | BOOK-02 | Phase 1 | Pending |

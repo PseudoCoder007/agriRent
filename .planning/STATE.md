@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Plan 01-02 complete (Tasks 1-3 done: auth schemas/service, signup/login/logout, role-scoped route groups + middleware). Resuming with Plan 01-03."
-last_updated: "2026-06-26T16:01:59.607Z"
-last_activity: 2026-06-26 -- Phase 01 execution started
+stopped_at: "Plan 01-03 complete (Tasks 1-3 done: equipment schema/service layer, owner creation form, farmer browse/detail pages). Resuming with Plan 01-04."
+last_updated: "2026-06-26T16:32:56.874Z"
+last_activity: 2026-06-26 -- Plan 01-03 (listing slice) complete
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
-  percent: 40
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 ## Current Position
 
 Phase: 01 (walking-skeleton) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
-Last activity: 2026-06-26 -- Plan 01-02 (auth + role boundary) complete
+Last activity: 2026-06-26 -- Plan 01-03 (listing slice) complete
 
-Progress: [████░░░░░░] 40%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [████░░░░░░] 40%
 
 *Updated after each plan completion*
 | Phase 01-walking-skeleton P02 | 55min | 3 tasks | 14 files |
+| Phase 01-walking-skeleton P03 | 50min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,8 @@ Recent decisions affecting current work:
 - [Phase 01-02]: Added vitest as the project's first test runner to satisfy Task 1's TDD RED/GREEN cycle for auth schema tests
 - [Phase 01-02]: logIn() extended to read role from public.users so Server Action can redirect to the correct role-scoped dashboard
 - [Phase 01-02]: Route groups (farmer)/(owner) restructured to use real nested URL segments (farmer/dashboard, owner/dashboard) after Turbopack rejected the colliding /dashboard path
+- [Phase 01-walking-skeleton]: Created equipment-images Storage bucket via migration instead of completing Plan 01-01's manual dashboard step, which was never actually done — Reproducible/reviewable as code; Task 1's createEquipment() hard-depends on the bucket existing
+- [Phase 01-walking-skeleton]: Added authenticated cross-user SELECT policy on public.users — Own-row-only RLS from Plan 01-01 silently broke this plan's truth that a farmer must see the equipment owner's name
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-26T16:00:04.009Z
-Stopped at: Plan 01-02 complete (Tasks 1-3 done: auth schemas/service, signup/login/logout, role-scoped route groups + middleware). Resuming with Plan 01-03.
-Resume file: .planning/phases/01-walking-skeleton/01-03-PLAN.md
+Last session: 2026-06-26T16:30:56.790Z
+Stopped at: Plan 01-03 complete (Tasks 1-3 done: equipment schema/service layer, owner creation form, farmer browse/detail pages). Resuming with Plan 01-04.
+Resume file: .planning/phases/01-walking-skeleton/01-04-PLAN.md

@@ -40,7 +40,7 @@ Plans:
 
 - [x] 01-01: Scaffold project, push DB schema + RLS + EXCLUDE constraint to live Supabase [BLOCKING]
 - [x] 01-02: Auth + role boundary (signup/login/logout, role-scoped route groups)
-- [ ] 01-03: Listing service (owner create, farmer browse + detail)
+- [x] 01-03: Listing service (owner create, farmer browse + detail)
 - [ ] 01-04: AI chatbot (/api/chat + dedicated /chat route, NVIDIA NIM)
 - [ ] 01-05: Booking + notification + dashboards (server-computed price, EXCLUDE-guarded, approve/reject)
 
@@ -109,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Walking Skeleton | 2/5 | In Progress|  |
+| 1. Walking Skeleton | 3/5 | In Progress|  |
 | 2. Equipment & Booking Lifecycle Deepening | 0/TBD | Not started | - |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
