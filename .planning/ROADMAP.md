@@ -30,10 +30,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A farmer can request a booking for a date range and the stored `total_amount` always matches server-side rate × duration regardless of what the client submitted; a second overlapping booking request for the same equipment is rejected at the database level (Postgres `EXCLUDE` constraint), not just by application logic.
   4. An owner can approve or reject a pending booking from a bare-minimum dashboard, and the booking's status only ever moves pending → approved/rejected via server-enforced logic; a farmer can see their booking history and current status on their own dashboard.
   5. A notification row appears (as a plain list) when a booking is created, approved, or rejected; either user can ask the AI chatbot a rental FAQ question and get a real response from NVIDIA NIM, and the chatbot never writes to `bookings` or `equipments`.
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01: Scaffold project, push DB schema + RLS + EXCLUDE constraint to live Supabase [BLOCKING]
+- [ ] 01-02: Auth + role boundary (signup/login/logout, role-scoped route groups)
+- [ ] 01-03: Listing service (owner create, farmer browse + detail)
+- [ ] 01-04: AI chatbot (/api/chat + dedicated /chat route, NVIDIA NIM)
+- [ ] 01-05: Booking + notification + dashboards (server-computed price, EXCLUDE-guarded, approve/reject)
 
 ### Phase 2: Equipment & Booking Lifecycle Deepening
 **Goal**: Owners have full control over their listings, farmers can narrow down equipment by category/location and save favorites, and bookings can reach a true terminal state (completed or cancelled) rather than stopping at approved/rejected.
@@ -87,7 +91,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Walking Skeleton | 0/TBD | Not started | - |
+| 1. Walking Skeleton | 0/5 | Not started | - |
 | 2. Equipment & Booking Lifecycle Deepening | 0/TBD | Not started | - |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
