@@ -32,7 +32,39 @@ export async function middleware(request: NextRequest) {
 
   // Refreshing the session — do not remove this call, it keeps the session
   // alive and is required for Server Components to read a valid user.
-  await supabase.auth.getUser();
+  const { data: userData } = await supabase.auth.getUser();
+
+  const path = request.nextUrl.pathname;
+  const isFarmerPath = path.startsWith("/farmer");
+  const isOwnerPath = path.startsWith("/owner");
+
+  if (isFarmerPath || isOwnerPath) {
+    if (!userData.user) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    // Role is read only from the server-controlled public.users table —
+    // never from Auth-provided user metadata (see 01-CONTEXT.md D-01/D-02).
+    // This is a fast UX-level redirect; RLS remains the actual
+    // authorization boundary for data access (see threat T-02-04).
+    const { data: profile } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", userData.user.id)
+      .single();
+
+    if (!profile) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (isOwnerPath && profile.role !== "owner") {
+      return NextResponse.redirect(new URL("/farmer/dashboard", request.url));
+    }
+
+    if (isFarmerPath && profile.role !== "farmer") {
+      return NextResponse.redirect(new URL("/owner/dashboard", request.url));
+    }
+  }
 
   return supabaseResponse;
 }
