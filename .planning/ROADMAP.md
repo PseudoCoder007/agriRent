@@ -13,7 +13,7 @@ AgriRent goes from zero to a portfolio-ready farm equipment rental marketplace i
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Walking Skeleton** - Auth, equipment, booking, notifications, and AI chat all run end-to-end for one farmer and one owner account
+- [x] **Phase 1: Walking Skeleton** - Auth, equipment, booking, notifications, and AI chat all run end-to-end for one farmer and one owner account (completed 2026-06-26)
 - [ ] **Phase 2: Equipment & Booking Lifecycle Deepening** - Owners manage listings fully, farmers search/filter/favorite, bookings reach completed/cancelled
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
@@ -42,7 +42,7 @@ Plans:
 - [x] 01-02: Auth + role boundary (signup/login/logout, role-scoped route groups)
 - [x] 01-03: Listing service (owner create, farmer browse + detail)
 - [x] 01-04: AI chatbot (/api/chat + dedicated /chat route, NVIDIA NIM)
-- [ ] 01-05: Booking + notification + dashboards (server-computed price, EXCLUDE-guarded, approve/reject)
+- [x] 01-05: Booking + notification + dashboards (server-computed price, EXCLUDE-guarded, approve/reject)
 
 ### Phase 2: Equipment & Booking Lifecycle Deepening
 
@@ -109,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Walking Skeleton | 4/5 | In Progress|  |
+| 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
 | 2. Equipment & Booking Lifecycle Deepening | 0/TBD | Not started | - |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |

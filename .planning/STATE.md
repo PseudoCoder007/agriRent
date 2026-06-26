@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Plan 01-04 complete (AI chatbot slice: ai.service.ts, streaming /api/chat, ChatWidget, /farmer/chat and /owner/chat pages). Resuming with Plan 01-05."
-last_updated: "2026-06-26T16:47:21.786Z"
-last_activity: 2026-06-26 -- Plan 01-03 (listing slice) complete
+stopped_at: "Plan 01-05 complete (booking/notification/dashboard slice). Phase 01 (walking-skeleton) fully implemented, 5/5 plans complete. Ready for /gsd-transition."
+last_updated: "2026-06-26T23:16:00.000Z"
+last_activity: 2026-06-26 -- Plan 01-05 (booking/notification/dashboard slice) complete
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 4
-  percent: 80
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 
 ## Current Position
 
-Phase: 01 (walking-skeleton) — EXECUTING
+Phase: 01 (walking-skeleton) — COMPLETE (all 5 plans executed)
 Plan: 5 of 5
-Status: Ready to execute
-Last activity: 2026-06-26 -- Plan 01-04 (AI chatbot slice) complete
+Status: Phase 01 execution complete, ready for /gsd-transition
+Last activity: 2026-06-26 -- Plan 01-05 (booking/notification/dashboard slice) complete
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [████████░░] 80%
 | Phase 01-walking-skeleton P02 | 55min | 3 tasks | 14 files |
 | Phase 01-walking-skeleton P03 | 50min | 3 tasks | 9 files |
 | Phase 01-walking-skeleton P04 | 35min | 3 tasks | 6 files |
+| Phase 01-walking-skeleton P05 | 45min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Recent decisions affecting current work:
 - [Phase 01-walking-skeleton]: Added authenticated cross-user SELECT policy on public.users — Own-row-only RLS from Plan 01-01 silently broke this plan's truth that a farmer must see the equipment owner's name
 - [Phase 01-04]: getChatCompletion() accepts an optional injected openai-compatible client purely for unit testing; production always uses process.env.NVIDIA_API_KEY against the real NVIDIA baseURL
 - [Phase 01-04]: /api/chat requires an authenticated session (either role) but does not branch by role -- chatbot is role-agnostic FAQ-only
+- [Phase 01-05]: Booking total_amount always computed server-side from equipment rate; createBookingSchema uses .strict() to reject tampered total_amount/status fields
+- [Phase 01-05]: Dashboards written to existing nested route paths (farmer/dashboard, owner/dashboard) per Plan 01-02 restructuring, not the plan frontmatter's flat path listing
+- [Phase 01-05]: isExclusionViolation checks error.code/.details/.message for 23P01 defensively, since exact Supabase client error shape was not independently re-verified live
 
 ### Pending Todos
 
@@ -95,6 +99,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-26T16:46:35.903Z
-Stopped at: Plan 01-04 complete (AI chatbot slice: ai.service.ts, streaming /api/chat, ChatWidget, /farmer/chat and /owner/chat pages). Resuming with Plan 01-05.
+Last session: 2026-06-26T23:15:00.000Z
+Stopped at: Plan 01-05 complete (booking/notification/dashboard slice). Phase 01 (walking-skeleton) fully implemented, 5/5 plans complete. Ready for /gsd-transition.
 Resume file: None

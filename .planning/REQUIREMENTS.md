@@ -25,17 +25,17 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### Booking
 
-- [ ] **BOOK-01**: Farmer can request a booking for a piece of equipment for a specific date range
-- [ ] **BOOK-02**: System rejects booking requests that overlap an existing pending/approved booking for the same equipment — enforced at the database level (not just application logic), to close concurrent-request race conditions
-- [ ] **BOOK-03**: `total_amount` is computed server-side from the equipment's stored rate; the client-submitted price is never trusted
-- [ ] **BOOK-04**: Owner can approve or reject a pending booking request
-- [ ] **BOOK-05**: Booking status follows pending → approved/rejected → completed/cancelled, with transitions enforced server-side
-- [ ] **BOOK-06**: Farmer can view their own booking history and current status
+- [x] **BOOK-01**: Farmer can request a booking for a piece of equipment for a specific date range
+- [x] **BOOK-02**: System rejects booking requests that overlap an existing pending/approved booking for the same equipment — enforced at the database level (not just application logic), to close concurrent-request race conditions
+- [x] **BOOK-03**: `total_amount` is computed server-side from the equipment's stored rate; the client-submitted price is never trusted
+- [x] **BOOK-04**: Owner can approve or reject a pending booking request
+- [x] **BOOK-05**: Booking status follows pending → approved/rejected → completed/cancelled, with transitions enforced server-side
+- [x] **BOOK-06**: Farmer can view their own booking history and current status
 
 ### Dashboards
 
-- [ ] **DASH-01**: Owner dashboard shows their equipment, incoming booking requests, and active bookings
-- [ ] **DASH-02**: Farmer dashboard shows their booking history and current status
+- [x] **DASH-01**: Owner dashboard shows their equipment, incoming booking requests, and active bookings
+- [x] **DASH-02**: Farmer dashboard shows their booking history and current status
 
 ### Reviews
 
@@ -44,7 +44,7 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### Notifications
 
-- [ ] **NOTIF-01**: User receives an in-app notification when a booking is created, approved, rejected, or completed
+- [x] **NOTIF-01**: User receives an in-app notification when a booking is created, approved, rejected, or completed
 
 ### AI
 
@@ -113,17 +113,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | EQUIP-05 | Phase 2 | Pending |
 | EQUIP-06 | Phase 1 | Complete |
 | EQUIP-07 | Phase 2 | Pending |
-| BOOK-01 | Phase 1 | Pending |
-| BOOK-02 | Phase 1 | Pending |
-| BOOK-03 | Phase 1 | Pending |
-| BOOK-04 | Phase 1 | Pending |
-| BOOK-05 | Phase 1 (pending/approved/rejected) + Phase 2 (completed/cancelled) | Pending |
-| BOOK-06 | Phase 1 | Pending |
-| DASH-01 | Phase 1 | Pending |
-| DASH-02 | Phase 1 | Pending |
+| BOOK-01 | Phase 1 | Complete |
+| BOOK-02 | Phase 1 | Complete |
+| BOOK-03 | Phase 1 | Complete |
+| BOOK-04 | Phase 1 | Complete |
+| BOOK-05 | Phase 1 (pending/approved/rejected) + Phase 2 (completed/cancelled) | Complete |
+| BOOK-06 | Phase 1 | Complete |
+| DASH-01 | Phase 1 | Complete |
+| DASH-02 | Phase 1 | Complete |
 | REVIEW-01 | Phase 3 | Pending |
 | REVIEW-02 | Phase 3 | Pending |
-| NOTIF-01 | Phase 1 | Pending |
+| NOTIF-01 | Phase 1 | Complete |
 | AI-01 | Phase 1 | Complete |
 | AI-02 | Phase 1 | Complete |
 
