@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { saveChatMessageAction } from "@/app/actions/chat.actions";
 
 type Message = {
   role: "user" | "assistant";
@@ -24,8 +25,12 @@ const ERROR_MESSAGE = "The assistant is busy, try again in a moment.";
  * to /api/chat over fetch, so the server-side NVIDIA credential is never
  * reachable from this file (see T-04-01).
  */
-export function ChatWidget() {
-  const [messages, setMessages] = useState<Message[]>([]);
+export function ChatWidget({
+  initialMessages = [],
+}: {
+  initialMessages?: Message[];
+}) {
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +44,7 @@ export function ChatWidget() {
     setError(null);
     const nextMessages: Message[] = [...messages, { role: "user", content }];
     setMessages(nextMessages);
+    await saveChatMessageAction("user", content);
     setInput("");
     setIsPending(true);
 
@@ -61,12 +67,14 @@ export function ChatWidget() {
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
+      let accumulatedContent = "";
 
       for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const token = decoder.decode(value, { stream: true });
+        accumulatedContent += token;
         setMessages((prev) => {
           const updated = [...prev];
           const last = updated[updated.length - 1];
@@ -77,6 +85,8 @@ export function ChatWidget() {
           return updated;
         });
       }
+
+      await saveChatMessageAction("assistant", accumulatedContent);
     } catch {
       setError(ERROR_MESSAGE);
     } finally {
@@ -93,13 +103,16 @@ export function ChatWidget() {
   return (
     <Card className="mx-auto max-w-2xl">
       <CardHeader>
-        <CardTitle>AgriRent Assistant</CardTitle>
+        <CardTitle>🥇 AgriMate AI</CardTitle>
+        <p className="text-xs font-normal text-muted-foreground">
+          Your Smart Farming Assistant
+        </p>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex min-h-[300px] flex-col gap-3 overflow-y-auto rounded-md border p-3">
           {messages.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              Ask a question about how booking and rental works on AgriRent.
+              Get instant answers about booking, pricing, or how rentals work on AgriRent.
             </p>
           )}
           {messages.map((message, index) => (
