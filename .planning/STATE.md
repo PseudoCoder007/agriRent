@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 02.1 UI-SPEC approved
-last_updated: "2026-06-27T06:55:59.963Z"
-last_activity: 2026-06-26 -- Plan 01-05 (booking/notification/dashboard slice) complete
+status: executing
+stopped_at: Completed 02.1-01-PLAN.md
+last_updated: "2026-06-27T07:20:40.803Z"
+last_activity: 2026-06-27 -- Phase 02.1 execution started
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 14
-  completed_plans: 5
+  total_plans: 19
+  completed_plans: 6
   percent: 20
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26)
 
 **Core value:** A farmer can find available equipment near them and successfully book it for a date range, and the owner can approve or reject that request — end to end, with no double-booking and no client-side price tampering.
-**Current focus:** Phase 01 — walking-skeleton
+**Current focus:** Phase 02.1 — mobile-responsiveness-persistent-agrimate-ai-chat-multi-list
 
 ## Current Position
 
-Phase: 01 (walking-skeleton) — COMPLETE (all 5 plans executed)
-Plan: 5 of 5
-Status: Phase 01 execution complete, ready for /gsd-transition
-Last activity: 2026-06-26 -- Plan 01-05 (booking/notification/dashboard slice) complete
+Phase: 02.1 (mobile-responsiveness-persistent-agrimate-ai-chat-multi-list) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-06-27 -- Phase 02.1 execution started
 
 Progress: [██████████] 100%
 
@@ -56,6 +56,7 @@ Progress: [██████████] 100%
 | Phase 01-walking-skeleton P03 | 50min | 3 tasks | 9 files |
 | Phase 01-walking-skeleton P04 | 35min | 3 tasks | 6 files |
 | Phase 01-walking-skeleton P05 | 45min | 3 tasks | 11 files |
+| Phase 02.1 P01 | 25min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Recent decisions affecting current work:
 - [Phase 01-05]: Booking total_amount always computed server-side from equipment rate; createBookingSchema uses .strict() to reject tampered total_amount/status fields
 - [Phase 01-05]: Dashboards written to existing nested route paths (farmer/dashboard, owner/dashboard) per Plan 01-02 restructuring, not the plan frontmatter's flat path listing
 - [Phase 01-05]: isExclusionViolation checks error.code/.details/.message for 23P01 defensively, since exact Supabase client error shape was not independently re-verified live
+- [Phase ?]: [Phase 02.1-01]: chat_messages is a single flat table (no separate conversations parent) -- matches current one-thread-per-user UI
+- [Phase ?]: [Phase 02.1-01]: chat.service.ts never uses createAdminClient -- chat has no cross-user write requirement, unlike notifications
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T06:38:41.350Z
-Stopped at: Phase 02.1 UI-SPEC approved
-Resume file: .planning/phases/02.1-mobile-responsiveness-persistent-agrimate-ai-chat-multi-list/02.1-UI-SPEC.md
+Last session: 2026-06-27T07:20:40.774Z
+Stopped at: Completed 02.1-01-PLAN.md
+Resume file: None
