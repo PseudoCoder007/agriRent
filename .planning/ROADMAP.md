@@ -87,7 +87,7 @@ Plans:
 
 - [x] 02.1-01: Chat persistence backend — chat_messages migration + push [BLOCKING], chat.service.ts, chat.actions.ts, unit tests
 - [x] 02.1-02: Bug fixes — multi-listing redirect, owner dashboard equipment thumbnails, dashboard row mobile wrap, token-based empty-state CTAs
-- [ ] 02.1-03: Dark mode — ThemeProvider, ThemeToggle, wired into farmer/owner headers
+- [x] 02.1-03: Dark mode — ThemeProvider, ThemeToggle, wired into farmer/owner headers
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -142,6 +142,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
-| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 2/5 | In Progress|  |
+| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 3/5 | In Progress|  |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
