@@ -82,12 +82,15 @@ Plans:
   5. A farmer or owner can toggle light/dark mode from their header, and the choice persists across a full browser reload.
 
 **Plans**: 5 plans
-
 Plans:
+**Wave 1**
 
 - [ ] 02.1-01: Chat persistence backend — chat_messages migration + push [BLOCKING], chat.service.ts, chat.actions.ts, unit tests
 - [ ] 02.1-02: Bug fixes — multi-listing redirect, owner dashboard equipment thumbnails, dashboard row mobile wrap, token-based empty-state CTAs
 - [ ] 02.1-03: Dark mode — ThemeProvider, ThemeToggle, wired into farmer/owner headers
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 02.1-04: Mobile nav collapse — shadcn Sheet drawer for farmer/owner headers below 640px
 - [ ] 02.1-05: Chat widget persistence wiring + AgriMate AI rebrand
 
