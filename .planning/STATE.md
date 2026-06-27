@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02.1-01-PLAN.md
-last_updated: "2026-06-27T07:20:40.803Z"
+stopped_at: Completed 02.1-02-PLAN.md
+last_updated: "2026-06-27T07:30:22.780Z"
 last_activity: 2026-06-27 -- Phase 02.1 execution started
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 19
-  completed_plans: 6
+  completed_plans: 7
   percent: 20
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 ## Current Position
 
 Phase: 02.1 (mobile-responsiveness-persistent-agrimate-ai-chat-multi-list) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-06-27 -- Phase 02.1 execution started
 
@@ -57,6 +57,7 @@ Progress: [██████████] 100%
 | Phase 01-walking-skeleton P04 | 35min | 3 tasks | 6 files |
 | Phase 01-walking-skeleton P05 | 45min | 3 tasks | 11 files |
 | Phase 02.1 P01 | 25min | 3 tasks | 6 files |
+| Phase 02.1 P02 | 12min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,7 @@ Recent decisions affecting current work:
 - [Phase 01-05]: isExclusionViolation checks error.code/.details/.message for 23P01 defensively, since exact Supabase client error shape was not independently re-verified live
 - [Phase ?]: [Phase 02.1-01]: chat_messages is a single flat table (no separate conversations parent) -- matches current one-thread-per-user UI
 - [Phase ?]: [Phase 02.1-01]: chat.service.ts never uses createAdminClient -- chat has no cross-user write requirement, unlike notifications
+- [Phase ?]: [Phase 02.1-02]: Used buttonVariants() className helper instead of Button asChild for Link-styled CTAs -- this codebase's Button wraps @base-ui/react/button (no asChild prop), not Radix's Slot-based shadcn Button
 
 ### Pending Todos
 
@@ -108,6 +110,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T07:20:40.774Z
-Stopped at: Completed 02.1-01-PLAN.md
+Last session: 2026-06-27T07:30:22.676Z
+Stopped at: Completed 02.1-02-PLAN.md
 Resume file: None
