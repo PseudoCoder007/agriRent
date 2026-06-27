@@ -19,6 +19,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 3.1: Auth & Navigation UI Fixes (INSERTED)** - Fix dark-mode CSS variable bleed-through on forced-light pages, redesign login/signup visual design, rebuild role-scoped nav as a structured layout
 - [ ] **Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)** - Custom brand mark used consistently across nav, chat, and favicon; branded chat avatar + animated typing indicator
+- [ ] **Phase 3.3: Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED)** - Soft-deleted owner listings disappear from the dashboard, a persistent add-equipment CTA stays visible, and auth/home pages stay white after logout
+- [ ] **Phase 03.4: User Profile Management (INSERTED)** - View/edit display name, upload/change profile photo, add/edit phone number
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -119,6 +121,35 @@ Plans:
 
 - [ ] 03-01: TBD
 
+### Phase 03.4: User Profile Management (INSERTED)
+
+**Goal**: A logged-in user can see their real display name and edit their profile — name, profile photo, and phone number — instead of only seeing a static role label ("farmer"/"owner") with no way to edit anything.
+**Mode:** mvp
+**Depends on**: Phase 3
+**Requirements**: PROFILE-01, PROFILE-02, PROFILE-03
+**Success Criteria** (what must be TRUE):
+
+  1. The logged-in user's actual display name (not just their role label) is visible in the nav/header for both farmer and owner roles.
+  2. A user can open a profile page/section, edit their display name, and save the change — it persists and is reflected immediately in the UI.
+  3. A user can upload or replace their profile photo (validated MIME type/size, stored in Supabase Storage) and it renders wherever their profile/avatar is shown.
+  4. A user can add or edit a phone number on their profile, validated server-side via Zod, and it persists across sessions.
+
+**Plans**: 3 plans
+
+Plans:
+
+**Wave 1**
+
+- [ ] 03.4-01: Schema migration — phone/avatar_url/avatar_updated_at columns + avatars Storage bucket + RLS; push to live Supabase + regenerate types [BLOCKING]; profile.schema.ts validation contracts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 03.4-02: Display name + phone vertical slice — profile.service.ts/profile.actions.ts, ProfileForm, AccountMenu, profile pages, role layout wiring (PROFILE-01, PROFILE-03)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 03.4-03: Profile photo upload vertical slice — uploadAvatar/getAvatarUrl, uploadAvatarAction, AvatarUpload component, wired into ProfileForm + AccountMenu (PROFILE-02)
+
 ### Phase 3.1: Auth & Navigation UI Fixes (INSERTED)
 
 **Goal**: Auth/home pages stay fully legible regardless of the user's dark-mode preference, login/signup have a polished cohesive design instead of bug-patched defaults, and role-scoped navigation (desktop + mobile) is restructured into a clear sidebar-style layout instead of a flat link row.
@@ -157,6 +188,26 @@ Plans:
 
 - [ ] 03.2-01: Retroactive brand-mark/chat-polish documentation + apple-icon 180x180 fix + full BRAND-01/CHAT-UX-01 verification pass (BRAND-01, CHAT-UX-01)
 
+### Phase 3.3: Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED)
+
+**Goal**: Deleted equipment disappears from the owner dashboard after refresh, owners always have a clear path to add another item, and the auth/home pages stay light after logout even if the user previously enabled dark mode.
+**Mode:** mvp
+**Depends on**: Phase 3.1 and Phase 2.1
+**Requirements**: BUG-DELETE-01, BUG-LISTING-02, UI-AUTH-03
+**Success Criteria** (what must be TRUE):
+
+  1. After an owner deletes a listing, the item no longer appears in the owner dashboard on refresh, while the public browse/detail pages still treat the deleted listing as unavailable.
+  2. The owner dashboard always exposes a visible "List equipment" action, even when the owner already has active listings.
+  3. Logging out from a dark-mode session does not leave login/signup/forgot-password/reset-password/home rendered with dark surfaces or unreadable text.
+
+**Plans**: 3 plans
+
+Plans:
+
+- [ ] 03.3-01: Hide soft-deleted owner listings from the dashboard read path and keep public 404 behavior intact
+- [ ] 03.3-02: Add a persistent owner-dashboard "List equipment" CTA so owners can add another item at any time
+- [ ] 03.3-03: Force auth/home pages back to light mode and record each bug in `.planning/debug/`
+
 ### Phase 4: UI/Design Polish
 
 **Goal**: The application is visually presentable and consistent across every flow already built — auth, browse/detail, booking, dashboards, reviews, notifications, and AI chat — suitable as a portfolio/demo piece.
@@ -180,7 +231,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 4
+Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 3.3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -188,6 +239,8 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 4
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
+| 03.4. User Profile Management (INSERTED) | 0/3 | Not started | - |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
+| 3.3. Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED) | 0/3 | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
