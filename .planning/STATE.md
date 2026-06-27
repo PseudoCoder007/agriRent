@@ -109,6 +109,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260627-ax3 | Fix login/signup page design to match home page, add show/hide password toggle, add forgot password flow | 2026-06-27 | aa1ce7f | [260627-ax3-fix-login-signup-page-design-to-match-ho](./quick/260627-ax3-fix-login-signup-page-design-to-match-ho/) |
+| 260627-ph2 | Fix mobile nav drawer cramped spacing (farmer/owner layouts) and invisible login/signup input borders | 2026-06-27 | fdcd2a0 | [260627-ph2-fix-mobile-nav-drawer-cramped-spacing-fa](./quick/260627-ph2-fix-mobile-nav-drawer-cramped-spacing-fa/) |
 
 ## Deferred Items
 
@@ -121,6 +122,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T17:15:00.000Z
-Stopped at: Phase 02.1 complete (6/6 plans incl. gap closure); all commits through c1499a2 pushed to origin/main
+Last session: 2026-06-27T17:30:00.000Z
+Stopped at: Quick task 260627-ph2 complete (mobile nav drawer spacing + auth input visibility); Phase 3 retroactive reconciliation in progress (03-01..03-04-SUMMARY.md written, 2 gaps identified pending gap-closure plan 03-05)
 Resume file: None
