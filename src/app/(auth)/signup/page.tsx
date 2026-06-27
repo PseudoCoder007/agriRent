@@ -53,21 +53,21 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4 dark:from-background dark:to-background">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
+          <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300">
             ← Back to home
           </Link>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950 dark:text-foreground">
             Create your account
           </h1>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="mt-1 text-sm text-slate-600 dark:text-muted-foreground">
             Sign up as a farmer or equipment owner.
           </p>
         </div>
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
+        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8 dark:bg-card">
           <Form {...form}>
             <div className="mb-5 space-y-3">
               <GoogleOAuthButton mode="signup" role={selectedRole} />
@@ -75,8 +75,8 @@ export default function SignupPage() {
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
                 </div>
-                <div className="relative flex justify-center text-xs uppercase tracking-widest text-slate-400">
-                  <span className="bg-white px-3">or</span>
+                <div className="relative flex justify-center text-xs uppercase tracking-widest text-slate-400 dark:text-muted-foreground">
+                  <span className="bg-white px-3 dark:bg-card">or</span>
                 </div>
               </div>
             </div>
@@ -174,9 +174,9 @@ export default function SignupPage() {
           </Form>
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="mt-6 text-center text-sm text-slate-600 dark:text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-emerald-700 hover:text-emerald-800">
+          <Link href="/login" className="font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300">
             Log in
           </Link>
         </p>
