@@ -17,6 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Equipment & Booking Lifecycle Deepening** - Owners manage listings fully, farmers search/filter/favorite, bookings reach completed/cancelled
 - [x] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle (gap closure in progress: mobile nav drawer close-on-navigate fix) (completed 2026-06-27)
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
+- [ ] **Phase 3.1: Auth & Navigation UI Fixes (INSERTED)** - Fix dark-mode CSS variable bleed-through on forced-light pages, redesign login/signup visual design, rebuild role-scoped nav as a structured layout
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -117,6 +118,26 @@ Plans:
 
 - [ ] 03-01: TBD
 
+### Phase 3.1: Auth & Navigation UI Fixes (INSERTED)
+
+**Goal**: Auth/home pages stay fully legible regardless of the user's dark-mode preference, login/signup have a polished cohesive design instead of bug-patched defaults, and role-scoped navigation (desktop + mobile) is restructured into a clear sidebar-style layout instead of a flat link row.
+**Mode:** mvp
+**Depends on**: Phase 2.1
+**Requirements**: UI-AUTH-01, UI-AUTH-02, NAV-01
+**Success Criteria** (what must be TRUE):
+
+  1. With dark mode toggled on, the login, signup, forgot-password, reset-password, and home pages remain fully legible — labels, input borders, placeholders, and dividers are visible, not just the page background. Root cause (CSS custom property inheritance from `.dark` ancestor) is fixed at the source, not patched per-field.
+  2. Login and signup pages have a deliberately designed layout/visual treatment (spacing, hierarchy, color use), not just visible-but-unstyled inputs.
+  3. Farmer and owner role-scoped navigation (desktop header and mobile Sheet drawer) is restructured: theme toggle + notification bell share a top utility row, nav links occupy the main content area with clear spacing, and logout is pinned at the bottom — applied consistently to both roles.
+
+**Plans**: 3 plans
+
+Plans:
+
+- [ ] 03.1-01: Fix dark-mode CSS bleed-through via .force-light class (UI-AUTH-01)
+- [ ] 03.1-02: Redesign login/signup visual styling (UI-AUTH-02)
+- [ ] 03.1-03: Restructure farmer/owner nav into 3-zone sidebar layout (NAV-01)
+
 ### Phase 4: UI/Design Polish
 
 **Goal**: The application is visually presentable and consistent across every flow already built — auth, browse/detail, booking, dashboards, reviews, notifications, and AI chat — suitable as a portfolio/demo piece.
@@ -140,7 +161,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -148,4 +169,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
+| 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
