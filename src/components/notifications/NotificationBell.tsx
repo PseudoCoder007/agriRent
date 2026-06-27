@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Bell, CheckCheck } from "lucide-react";
 
 import {
@@ -28,6 +28,12 @@ export function NotificationBell({ userId }: { userId: string }) {
   const [unreadCount, setUnreadCount] = useState(0);
   const [notifications, setNotifications] = useState<NotificationRow[]>([]);
   const [open, setOpen] = useState(false);
+  // Unique per mount instance -- React Strict Mode double-invokes this effect in dev
+  // (mount -> cleanup -> mount). @supabase/realtime-js's channel() dedupes by topic
+  // name and can hand back the still-joining channel from the first mount before its
+  // removeChannel() cleanup finishes, so a fixed topic name throws "cannot add
+  // postgres_changes callbacks ... after subscribe()" on the second mount.
+  const topicIdRef = useRef(Math.random().toString(36).slice(2, 10));
 
   const loadNotifications = useCallback(async () => {
     const result = await getUnreadNotificationsAction();
@@ -45,7 +51,7 @@ export function NotificationBell({ userId }: { userId: string }) {
     const supabase = createClient();
 
     const channel = supabase
-      .channel("notifications")
+      .channel(`notifications-${userId}-${topicIdRef.current}`)
       .on(
         "postgres_changes",
         {
