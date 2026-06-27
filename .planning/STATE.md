@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 03.4 UI-SPEC approved
-last_updated: "2026-06-27T21:52:58.873Z"
-last_activity: 2026-06-27 -- Phase 02.1 complete (6/6 plans, including gap-closure plan 02.1-06)
+stopped_at: Completed 03.4-01-PLAN.md
+last_updated: "2026-06-27T22:08:24.221Z"
+last_activity: 2026-06-27 -- Phase 03.4 execution started
 progress:
   total_phases: 9
   completed_phases: 3
-  total_plans: 25
-  completed_plans: 15
+  total_plans: 28
+  completed_plans: 16
   percent: 33
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26)
 
 **Core value:** A farmer can find available equipment near them and successfully book it for a date range, and the owner can approve or reject that request — end to end, with no double-booking and no client-side price tampering.
-**Current focus:** Phase 03 — reviews-dashboard-notification-richness (Phase 02.1 complete, including gap closure)
+**Current focus:** Phase 03.4 — user-profile-management-view-edit-display-name-upload-change
 
 ## Current Position
 
-Phase: 03.4
-Plan: Not started
+Phase: 03.4 (user-profile-management-view-edit-display-name-upload-change) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-27 -- Phase 02.1 complete (6/6 plans, including gap-closure plan 02.1-06)
+Last activity: 2026-06-27 -- Phase 03.4 execution started
 
 Progress: [██████████] 100%
 
@@ -61,6 +61,7 @@ Progress: [██████████] 100%
 | Phase 02.1 P03 | 15min | 2 tasks | 5 files |
 | Phase 02.1 P04 | 20min | 3 tasks | 2 files |
 | Phase 02.1 P05 | 35min | 3 tasks | 4 files |
+| Phase 03.4 P01 | 25min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Recent decisions affecting current work:
 - [Phase 02.1-06]: Gap closure for MOBILE-01/CR-01 -- wrapped mobile nav drawer Links in SheetClose (render prop) in both farmer/owner layouts; required a follow-up fix (nativeButton={false}) since @base-ui/react/dialog's Close primitive defaults to expecting a native <button> child, discovered only via live browser verification, not tsc/static analysis
 - [Phase 02.1]: Login/signup/forgot-password/reset-password pages and the home page are deliberately forced to always render light/white regardless of the user's dark mode preference (explicit user decision, not a bug) -- fixed by removing the /60 alpha from the from-emerald-50/60 gradient (was letting the dark-mode --background bleed through), not by adding dark: variants
 - [Phase 02.1]: Out-of-scope fix applied during 02.1-06 verification: NotificationBell.tsx's Supabase Realtime channel topic is now scoped per mount instance (userId + random suffix) -- fixed a pre-existing (since Phase 1) crash where React Strict Mode's double-effect-invoke in dev collided with @supabase/realtime-js's channel-name dedup, throwing on every page load
+- [Phase ?]: Phase 03.4 Plan 01: phone column inherits the same accepted information-disclosure tradeoff as email under the existing public-read users RLS policy; documented in-migration
+- [Phase ?]: Phase 03.4 Plan 01: avatars bucket INSERT policy deliberately omits public.is_owner() since any authenticated user (farmer or owner) must be able to upload their own avatar
 
 ### Pending Todos
 
@@ -122,6 +125,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T21:17:30.700Z
-Stopped at: Phase 03.4 UI-SPEC approved
-Resume file: .planning/phases/03.4-user-profile-management-view-edit-display-name-upload-change/03.4-UI-SPEC.md
+Last session: 2026-06-27T22:08:24.205Z
+Stopped at: Completed 03.4-01-PLAN.md
+Resume file: None

@@ -140,7 +140,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 03.4-01: Schema migration — phone/avatar_url/avatar_updated_at columns + avatars Storage bucket + RLS; push to live Supabase + regenerate types [BLOCKING]; profile.schema.ts validation contracts
+- [x] 03.4-01: Schema migration — phone/avatar_url/avatar_updated_at columns + avatars Storage bucket + RLS; push to live Supabase + regenerate types [BLOCKING]; profile.schema.ts validation contracts
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 3.3 �
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
-| 03.4. User Profile Management (INSERTED) | 0/3 | Not started | - |
+| 03.4. User Profile Management (INSERTED) | 1/3 | In Progress|  |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
 | 3.3. Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED) | 0/3 | Not started | - |

@@ -52,9 +52,9 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 
 ### Profile
 
-- [ ] **PROFILE-01**: User can view their real display name (not just role label) and edit it from a profile page
-- [ ] **PROFILE-02**: User can upload or replace their profile photo, validated server-side (MIME type, size), stored in Supabase Storage
-- [ ] **PROFILE-03**: User can add or edit a phone number on their profile, validated server-side via Zod
+- [x] **PROFILE-01**: User can view their real display name (not just role label) and edit it from a profile page
+- [x] **PROFILE-02**: User can upload or replace their profile photo, validated server-side (MIME type, size), stored in Supabase Storage
+- [x] **PROFILE-03**: User can add or edit a phone number on their profile, validated server-side via Zod
 
 ### Notifications
 
@@ -145,9 +145,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAV-01 | Phase 3.1 | Pending |
 | BRAND-01 | Phase 3.2 | Pending |
 | CHAT-UX-01 | Phase 3.2 | Pending |
-| PROFILE-01 | Phase 03.4 | Pending |
-| PROFILE-02 | Phase 03.4 | Pending |
-| PROFILE-03 | Phase 03.4 | Pending |
+| PROFILE-01 | Phase 03.4 | Complete |
+| PROFILE-02 | Phase 03.4 | Complete |
+| PROFILE-03 | Phase 03.4 | Complete |
 
 **Coverage:**
 
