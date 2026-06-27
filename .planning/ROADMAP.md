@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Walking Skeleton** - Auth, equipment, booking, notifications, and AI chat all run end-to-end for one farmer and one owner account (completed 2026-06-26)
 - [ ] **Phase 2: Equipment & Booking Lifecycle Deepening** - Owners manage listings fully, farmers search/filter/favorite, bookings reach completed/cancelled
-- [ ] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle (gap closure in progress: mobile nav drawer close-on-navigate fix)
+- [x] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle (gap closure in progress: mobile nav drawer close-on-navigate fix) (completed 2026-06-27)
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
@@ -96,7 +96,7 @@ Plans:
 
 **Gap closure** *(from 02.1-VERIFICATION.md MOBILE-01 gap / 02.1-REVIEW.md CR-01)*
 
-- [ ] 02.1-06: Mobile nav drawer close-on-navigate fix — wrap nav Links in SheetClose (farmer + owner layouts), add SheetTitle for accessibility (WR-06)
+- [x] 02.1-06: Mobile nav drawer close-on-navigate fix — wrap nav Links in SheetClose (farmer + owner layouts), add SheetTitle for accessibility (WR-06)
 
 ### Phase 3: Reviews & Dashboard/Notification Richness
 
@@ -146,6 +146,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
-| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 5/6 | Gap closure in progress | - |
+| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |

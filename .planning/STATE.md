@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02.1-05-PLAN.md
-last_updated: "2026-06-27T10:54:54.532Z"
-last_activity: 2026-06-27 -- Phase 02.1 execution started
+stopped_at: Completed 02.1-06-PLAN.md (gap closure) -- Phase 02.1 complete
+last_updated: "2026-06-27T17:15:00.000Z"
+last_activity: 2026-06-27
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 19
-  completed_plans: 10
+  total_plans: 20
+  completed_plans: 11
   percent: 40
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26)
 
 **Core value:** A farmer can find available equipment near them and successfully book it for a date range, and the owner can approve or reject that request — end to end, with no double-booking and no client-side price tampering.
-**Current focus:** Phase 02.1 — mobile-responsiveness-persistent-agrimate-ai-chat-multi-list
+**Current focus:** Phase 03 — reviews-dashboard-notification-richness (Phase 02.1 complete, including gap closure)
 
 ## Current Position
 
-Phase: 02.1 (mobile-responsiveness-persistent-agrimate-ai-chat-multi-list) — EXECUTING
-Plan: 2 of 5
+Phase: 03
+Plan: Not started
 Status: Ready to execute
-Last activity: 2026-06-27 -- Phase 02.1 execution started
+Last activity: 2026-06-27 -- Phase 02.1 complete (6/6 plans, including gap-closure plan 02.1-06)
 
 Progress: [██████████] 100%
 
@@ -36,7 +36,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 6
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -44,7 +44,7 @@ Progress: [██████████] 100%
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 02.1 | 6 | - | - |
 
 **Recent Trend:**
 
@@ -90,6 +90,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 02.1-04]: Used SheetTrigger render prop instead of asChild -- this codebase's Sheet/Button primitives are @base-ui/react-backed (not Radix Slot-based), no asChild prop exists on DialogTrigger
 - [Phase ?]: [Phase 02.1-05]: Mapped chat_messages DB row's generic string role to ChatWidget's strict user|assistant union via explicit .map() cast in both chat page Server Components, not by widening ChatWidget's Message type
 - [Phase ?]: [Phase 02.1-05]: Assistant message persisted from a locally-accumulated string built in parallel with the streaming setMessages updater, not read back from React state, since state updates are async
+- [Phase 02.1-06]: Gap closure for MOBILE-01/CR-01 -- wrapped mobile nav drawer Links in SheetClose (render prop) in both farmer/owner layouts; required a follow-up fix (nativeButton={false}) since @base-ui/react/dialog's Close primitive defaults to expecting a native <button> child, discovered only via live browser verification, not tsc/static analysis
+- [Phase 02.1]: Login/signup/forgot-password/reset-password pages and the home page are deliberately forced to always render light/white regardless of the user's dark mode preference (explicit user decision, not a bug) -- fixed by removing the /60 alpha from the from-emerald-50/60 gradient (was letting the dark-mode --background bleed through), not by adding dark: variants
+- [Phase 02.1]: Out-of-scope fix applied during 02.1-06 verification: NotificationBell.tsx's Supabase Realtime channel topic is now scoped per mount instance (userId + random suffix) -- fixed a pre-existing (since Phase 1) crash where React Strict Mode's double-effect-invoke in dev collided with @supabase/realtime-js's channel-name dedup, throwing on every page load
 
 ### Pending Todos
 
@@ -99,7 +102,7 @@ None yet.
 
 - Phase 1 requires research-flagged verification at implementation time: confirm NVIDIA NIM model availability/rate-limit behavior again (model catalog has already changed once), and re-verify RLS policy design (SECURITY DEFINER helper functions) holds as later tables (favorites, reviews) are added in Phase 2-3.
 - Phase 5-equivalent AI tool-calling deepening (AI recommendations) is v2 scope, not in this roadmap — no canonical reference architecture was found during research; resolve via a research pass if/when scheduled.
-- CHAT-PERSIST-01 and CHAT-BRAND-01 requirement IDs not present in REQUIREMENTS.md traceability table (phase 02.1 inserted urgently, never had requirement IDs minted there, same gap as THEME-01 from Plan 03) -- flagged for traceability backfill, not blocking
+- MOBILE-01, MOBILE-02, CHAT-PERSIST-01, CHAT-BRAND-01, BUG-LISTING-01, BUG-IMAGE-01, and THEME-01 requirement IDs are not present in REQUIREMENTS.md traceability table (phase 02.1 inserted urgently, never had requirement IDs minted there) -- flagged for traceability backfill, not blocking; confirmed again via requirements.mark-complete returning not_found for MOBILE-01 at phase completion
 
 ### Quick Tasks Completed
 
@@ -118,6 +121,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T10:54:06.213Z
-Stopped at: Completed 02.1-05-PLAN.md
+Last session: 2026-06-27T17:15:00.000Z
+Stopped at: Phase 02.1 complete (6/6 plans incl. gap closure); all commits through c1499a2 pushed to origin/main
 Resume file: None
