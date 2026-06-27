@@ -5,7 +5,7 @@ milestone_name: milestone
 status: executing
 stopped_at: "Plan 01-05 complete (booking/notification/dashboard slice). Phase 01 (walking-skeleton) fully implemented, 5/5 plans complete. Ready for /gsd-transition."
 last_updated: "2026-06-26T23:16:00.000Z"
-last_activity: 2026-06-26 -- Plan 01-05 (booking/notification/dashboard slice) complete
+last_activity: 2026-06-27 -- Completed quick task 260627-ax3: Fix login/signup page design to match home page, add show/hide password toggle, add forgot password flow
 progress:
   total_phases: 4
   completed_phases: 0
@@ -87,6 +87,12 @@ None yet.
 
 - Phase 1 requires research-flagged verification at implementation time: confirm NVIDIA NIM model availability/rate-limit behavior again (model catalog has already changed once), and re-verify RLS policy design (SECURITY DEFINER helper functions) holds as later tables (favorites, reviews) are added in Phase 2-3.
 - Phase 5-equivalent AI tool-calling deepening (AI recommendations) is v2 scope, not in this roadmap — no canonical reference architecture was found during research; resolve via a research pass if/when scheduled.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260627-ax3 | Fix login/signup page design to match home page, add show/hide password toggle, add forgot password flow | 2026-06-27 | aa1ce7f | [260627-ax3-fix-login-signup-page-design-to-match-ho](./quick/260627-ax3-fix-login-signup-page-design-to-match-ho/) |
 
 ## Deferred Items
 
