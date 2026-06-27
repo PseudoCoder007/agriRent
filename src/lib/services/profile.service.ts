@@ -10,6 +10,12 @@ type ServiceResult<T> = {
 
 const AVATAR_BUCKET = "avatars";
 
+const MIME_TO_EXTENSION: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
 /**
  * Updates a user's editable profile fields (full_name/phone). `userId` is
  * always supplied by the caller (a Server Action that derives it from
@@ -104,7 +110,11 @@ export async function uploadAvatar(
 
   const supabase = await createClient();
 
-  const ext = imageFile.name.split(".").pop() ?? "jpg";
+  // Extension is derived from the Zod-validated MIME type, never from the
+  // client-controlled filename — prevents an attacker-chosen extension (e.g.
+  // "avatar.html") landing in the public avatars bucket alongside a spoofed
+  // image/* MIME type (CR-01).
+  const ext = MIME_TO_EXTENSION[imageCheck.data.type];
   const storagePath = `${userId}/avatar.${ext}`;
 
   const { error: uploadError } = await supabase.storage
