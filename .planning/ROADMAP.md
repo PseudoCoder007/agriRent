@@ -15,6 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Walking Skeleton** - Auth, equipment, booking, notifications, and AI chat all run end-to-end for one farmer and one owner account (completed 2026-06-26)
 - [ ] **Phase 2: Equipment & Booking Lifecycle Deepening** - Owners manage listings fully, farmers search/filter/favorite, bookings reach completed/cancelled
+- [ ] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
@@ -68,14 +69,27 @@ Plans:
 
 ### Phase 02.1: Mobile responsiveness, persistent AgriMate AI chat, multi-listing bug, listing image bug, and dark mode (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
-**Depends on:** Phase 2
-**Plans:** 0 plans
+**Goal**: The app is usable on narrow viewports, the AgriMate AI chat assistant remembers a user's conversation across reloads and is consistently branded, owners can list equipment repeatedly without dead-ending, the owner dashboard shows equipment photos, and both roles can toggle light/dark mode.
+**Mode:** mvp
+**Depends on**: Phase 2
+**Requirements**: MOBILE-01, MOBILE-02, CHAT-PERSIST-01, CHAT-BRAND-01, BUG-LISTING-01, BUG-IMAGE-01, THEME-01
+**Success Criteria** (what must be TRUE):
+
+  1. On viewports narrower than 640px, the farmer and owner header nav collapses behind a hamburger trigger with no link overflow/clipping, and dashboard booking rows stack instead of cramping.
+  2. A user's AgriMate AI chat conversation survives a full page reload and navigating away and back, scoped to their own account only (RLS-enforced).
+  3. Every UI location showing the chat assistant's name displays "AgriMate AI" / "Your Smart Farming Assistant", not the old "AgriRent Assistant" label.
+  4. An owner can create a second (and subsequent) equipment listing and land on /owner/dashboard seeing all their listings with photos, not bounced back to /browse with text-only rows.
+  5. A farmer or owner can toggle light/dark mode from their header, and the choice persists across a full browser reload.
+
+**Plans**: 5 plans
 
 Plans:
 
-- [ ] TBD (run /gsd-plan-phase 02.1 to break down)
+- [ ] 02.1-01: Chat persistence backend — chat_messages migration + push [BLOCKING], chat.service.ts, chat.actions.ts, unit tests
+- [ ] 02.1-02: Bug fixes — multi-listing redirect, owner dashboard equipment thumbnails, dashboard row mobile wrap, token-based empty-state CTAs
+- [ ] 02.1-03: Dark mode — ThemeProvider, ThemeToggle, wired into farmer/owner headers
+- [ ] 02.1-04: Mobile nav collapse — shadcn Sheet drawer for farmer/owner headers below 640px
+- [ ] 02.1-05: Chat widget persistence wiring + AgriMate AI rebrand
 
 ### Phase 3: Reviews & Dashboard/Notification Richness
 
@@ -125,5 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
+| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 0/5 | Not started | - |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
