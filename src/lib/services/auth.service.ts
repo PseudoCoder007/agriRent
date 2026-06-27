@@ -1,6 +1,11 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
-import type { LoginInput, SignupInput } from "@/lib/validations/auth.schema";
+import type {
+  ForgotPasswordInput,
+  LoginInput,
+  ResetPasswordInput,
+  SignupInput,
+} from "@/lib/validations/auth.schema";
 
 type ServiceResult<T> = {
   success: boolean;
@@ -245,6 +250,99 @@ export async function logIn(
     success: true,
     message: "Logged in",
     data: { userId: data.user.id, role: profile.role },
+  };
+}
+
+/**
+ * Resolves the base URL used to build the Supabase recovery email's
+ * redirectTo link. Prefers an explicitly configured site URL, falls back to
+ * Vercel's auto-populated preview/production URL, then localhost for dev.
+ */
+function getSiteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  return "http://localhost:3000";
+}
+
+/**
+ * Requests a password reset email. Always returns the same generic success
+ * message regardless of whether the email is registered — this mirrors
+ * logIn()'s anti-enumeration pattern (see threat T-ax3-01 in
+ * 260627-ax3-PLAN.md). The only exception is a rate-limit error, which gets
+ * its own distinct, input-independent message (consistent with signUp()'s
+ * over_email_send_rate_limit handling above).
+ */
+export async function requestPasswordReset(
+  input: ForgotPasswordInput
+): Promise<ServiceResult<null>> {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(input.email, {
+    redirectTo: `${getSiteUrl()}/auth/reset-callback`,
+  });
+
+  if (error) {
+    if (error.code && /rate_limit/i.test(error.code)) {
+      console.error(
+        "auth.service.requestPasswordReset: rate limit hit",
+        error
+      );
+      return {
+        success: false,
+        message:
+          "Too many requests — please wait a few minutes and try again.",
+        data: null,
+      };
+    }
+
+    // Never let a non-rate-limit error (e.g. "user not found") leak to the
+    // client — log it server-side and still return the generic success
+    // response so the response never reveals whether the email exists.
+    console.error(
+      "auth.service.requestPasswordReset: resetPasswordForEmail failed",
+      error
+    );
+  }
+
+  return {
+    success: true,
+    message: "If an account exists for that email, a reset link has been sent",
+    data: null,
+  };
+}
+
+/**
+ * Sets a new password for the currently authenticated session (established
+ * by the recovery code exchange in /auth/reset-callback). Never forwards the
+ * raw Supabase error text to the client (see threat T-ax3-02).
+ */
+export async function updatePassword(
+  input: ResetPasswordInput
+): Promise<ServiceResult<null>> {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({
+    password: input.password,
+  });
+
+  if (error) {
+    console.error("auth.service.updatePassword: updateUser failed", error);
+    return {
+      success: false,
+      message:
+        "Could not update password. The reset link may have expired — request a new one.",
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Password updated",
+    data: null,
   };
 }
 

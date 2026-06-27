@@ -4,9 +4,13 @@ import { redirect } from "next/navigation";
 
 import * as authService from "@/lib/services/auth.service";
 import {
+  forgotPasswordSchema,
   loginSchema,
+  resetPasswordSchema,
   signupSchema,
+  type ForgotPasswordInput,
   type LoginInput,
+  type ResetPasswordInput,
   type SignupInput,
 } from "@/lib/validations/auth.schema";
 
@@ -65,4 +69,34 @@ export async function logInAction(input: LoginInput): Promise<ActionResult> {
 export async function logOutAction(): Promise<void> {
   await authService.logOut();
   redirect("/login");
+}
+
+export async function requestPasswordResetAction(
+  input: ForgotPasswordInput
+): Promise<ActionResult> {
+  const parsed = forgotPasswordSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Please correct the highlighted fields",
+      data: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  return authService.requestPasswordReset(parsed.data);
+}
+
+export async function updatePasswordAction(
+  input: ResetPasswordInput
+): Promise<ActionResult> {
+  const parsed = resetPasswordSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Please correct the highlighted fields",
+      data: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  return authService.updatePassword(parsed.data);
 }
