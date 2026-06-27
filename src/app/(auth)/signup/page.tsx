@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { signUpAction } from "@/app/actions/auth.actions";
 import { Button } from "@/components/ui/button";
@@ -45,8 +46,12 @@ export default function SignupPage() {
   async function onSubmit(values: SignupInput) {
     setServerError(null);
     const result = await signUpAction(values);
+    const data = result.data as { confirmationPending?: boolean } | null;
     if (!result.success) {
       setServerError(result.message);
+      toast.error(result.message);
+    } else if (data?.confirmationPending) {
+      toast.success(result.message);
     }
   }
 

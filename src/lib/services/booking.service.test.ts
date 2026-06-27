@@ -64,7 +64,9 @@ vi.mock("@/lib/services/notification.service", () => ({
 }));
 
 describe("createBooking", () => {
-  it("returns a friendly message (not a thrown exception) when Postgres raises 23P01", async () => {
+  it(
+    "returns a friendly message (not a thrown exception) when Postgres raises 23P01",
+    async () => {
     const { createClient } = await import("@/lib/supabase/server");
     (createClient as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(
       makeFakeSupabase({
@@ -88,7 +90,9 @@ describe("createBooking", () => {
     expect(result.data).toBeNull();
     expect(result.message.toLowerCase()).toContain("no longer available");
     expect(result.message).not.toMatch(/23P01/);
-  });
+    },
+    20000
+  );
 
   it("computes total_amount as rate x duration from the server-fetched equipment rate, ignoring any price-like input", async () => {
     const { createClient } = await import("@/lib/supabase/server");

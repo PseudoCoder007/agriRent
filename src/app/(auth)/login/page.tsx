@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { logInAction } from "@/app/actions/auth.actions";
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,7 @@ export default function LoginPage() {
     const result = await logInAction(values);
     if (!result.success) {
       setServerError(result.message);
+      toast.error(result.message);
     }
   }
 

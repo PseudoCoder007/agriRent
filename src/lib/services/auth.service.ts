@@ -1,3 +1,4 @@
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { LoginInput, SignupInput } from "@/lib/validations/auth.schema";
 
@@ -13,18 +14,69 @@ type ServiceResult<T> = {
  * server-validated input here — never from auth.users.user_metadata
  * anywhere downstream (see 01-CONTEXT.md D-01/D-02, CLAUDE.md "What NOT to
  * Use" on user_metadata).
+ *
+ * When Supabase email confirmation is enabled, signUp() returns session=null.
+ * In that case the profile insert is done via the service-role admin client
+ * (bypasses RLS since no auth.uid() exists yet) and the caller receives a
+ * `confirmationPending: true` flag so the UI can display a "check your email"
+ * message instead of redirecting.
  */
 export async function signUp(
   input: SignupInput
-): Promise<ServiceResult<{ userId: string }>> {
+): Promise<ServiceResult<{ userId: string; confirmationPending: boolean }>> {
   const supabase = await createClient();
 
+  // Store role/full_name in user_metadata ONLY as a recovery fallback for
+  // the login path. The public.users table remains the sole source of truth
+  // for authorization — user_metadata is never read for RLS or middleware
+  // role checks (see CLAUDE.md "What NOT to Use" on user_metadata).
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: input.email,
     password: input.password,
+    options: {
+      data: {
+        role: input.role,
+        full_name: input.fullName,
+      },
+    },
   });
 
   if (authError || !authData.user) {
+    // If the user already exists (unconfirmed from a prior attempt), treat
+    // it as a success — a new confirmation email was already sent by Supabase.
+    // This regex covers Supabase configs that DO return an explicit error;
+    // see the identities check below for the (more common, anti-enumeration)
+    // case where signUp() returns no error at all for a duplicate email.
+    if (authError && /already/i.test(authError.message)) {
+      return {
+        success: true,
+        message: "Confirmation email sent — check your inbox",
+        data: { userId: "", confirmationPending: true },
+      };
+    }
+
+    // Supabase's default built-in email service enforces a low hourly
+    // send-rate limit. This surfaces as authError.code ===
+    // "over_email_send_rate_limit" (HTTP 429). It is a transient,
+    // input-independent condition — the generic "Could not create account"
+    // message is actively misleading here, so it gets its own message.
+    if (authError?.code === "over_email_send_rate_limit") {
+      console.error(
+        "auth.service.signUp: email send rate limit hit",
+        authError
+      );
+      return {
+        success: false,
+        message:
+          "Too many signup attempts right now — please wait a few minutes and try again.",
+        data: null,
+      };
+    }
+
+    // Log every other unhandled signUp() error so the real Supabase error
+    // code/message is never invisible, consistent with every other failure
+    // branch in this file (see insert/profile-lookup/signOut branches below).
+    console.error("auth.service.signUp: signUp() failed", authError);
     return {
       success: false,
       message: "Could not create account. Please try again.",
@@ -32,6 +84,61 @@ export async function signUp(
     };
   }
 
+  // Supabase's anti-enumeration behavior: when email confirmation is enabled
+  // and the email already belongs to an existing (confirmed or unconfirmed)
+  // user, signUp() returns NO error — instead authData.user is the existing
+  // user with an empty identities array and session: null. Detect this and
+  // short-circuit to the same "check your email" success response before
+  // ever attempting an insert, since the profile row already exists.
+  if (authData.user.identities?.length === 0) {
+    return {
+      success: true,
+      message: "Confirmation email sent — check your inbox",
+      data: { userId: authData.user.id, confirmationPending: true },
+    };
+  }
+
+  // Email confirmation is enabled — session is null. Insert the profile row
+  // using the service-role admin client so it succeeds without an auth.uid().
+  if (!authData.session) {
+    const admin = createAdminClient();
+    const { error: insertError } = await admin.from("users").insert({
+      id: authData.user.id,
+      email: input.email,
+      full_name: input.fullName,
+      role: input.role,
+    });
+
+    if (insertError) {
+      // Postgres unique-violation: the profile row already exists (e.g. a
+      // race with a concurrent request, or a duplicate-signup path that
+      // slipped past the identities/error checks above). Treat this as
+      // success rather than failure — the account and profile both already
+      // exist, so the user just needs to check their email.
+      if (insertError.code === "23505") {
+        return {
+          success: true,
+          message: "Confirmation email sent — check your inbox",
+          data: { userId: authData.user.id, confirmationPending: true },
+        };
+      }
+      console.error("auth.service.signUp: admin insert failed", insertError);
+      return {
+        success: false,
+        message: "Account created but profile setup failed, contact support",
+        data: null,
+      };
+    }
+
+    return {
+      success: true,
+      message: "Confirmation email sent — check your inbox",
+      data: { userId: authData.user.id, confirmationPending: true },
+    };
+  }
+
+  // Session exists immediately (email confirmation disabled). Insert using
+  // the regular authenticated client (relies on the INSERT RLS policy).
   const { error: insertError } = await supabase.from("users").insert({
     id: authData.user.id,
     email: input.email,
@@ -51,7 +158,7 @@ export async function signUp(
   return {
     success: true,
     message: "Account created",
-    data: { userId: authData.user.id },
+    data: { userId: authData.user.id, confirmationPending: false },
   };
 }
 
@@ -87,7 +194,46 @@ export async function logIn(
     .single();
 
   if (profileError || !profile) {
-    console.error("auth.service.logIn: profile lookup failed", profileError);
+    console.error(
+      "auth.service.logIn: profile lookup failed, attempting recovery",
+      profileError
+    );
+
+    // Recovery path: the auth user exists but the public.users row was never
+    // created (e.g. pre-fix signup where INSERT was blocked by RLS). Insert
+    // it now via the admin client, reading role/full_name from auth user
+    // metadata as a last resort, defaulting to "farmer".
+    try {
+      const admin = createAdminClient();
+      const meta = data.user.user_metadata ?? {};
+      await admin.from("users").insert({
+        id: data.user.id,
+        email: input.email,
+        full_name:
+          (meta.full_name as string) ?? input.email.split("@")[0],
+        role: (meta.role as string) ?? "farmer",
+      });
+
+      const { data: retryProfile } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
+      if (retryProfile) {
+        return {
+          success: true,
+          message: "Logged in",
+          data: { userId: data.user.id, role: retryProfile.role },
+        };
+      }
+    } catch (recoveryError) {
+      console.error(
+        "auth.service.logIn: profile recovery failed",
+        recoveryError
+      );
+    }
+
     return {
       success: false,
       message: "Invalid email or password",

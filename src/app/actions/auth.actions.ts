@@ -35,6 +35,12 @@ export async function signUpAction(input: SignupInput): Promise<ActionResult> {
     return result;
   }
 
+  // Email confirmation required — show "check your inbox" message on the
+  // signup page instead of redirecting (user has no session yet).
+  if (result.data?.confirmationPending) {
+    return result;
+  }
+
   redirect(dashboardPathForRole(parsed.data.role));
 }
 

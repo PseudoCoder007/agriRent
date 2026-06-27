@@ -1,103 +1,102 @@
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home(props: {
+  searchParams: Promise<{ code?: string }>;
+}) {
+  const { code } = await props.searchParams;
+
+  // Supabase email confirmation links land on ?code=<uuid>. Redirect to the
+  // auth callback route which exchanges the code for a real session.
+  if (code) {
+    redirect(`/auth/callback?code=${code}`);
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,200,130,0.22),_transparent_45%),linear-gradient(180deg,_#f7fbf6_0%,_#eef5ea_100%)] px-6 py-10 sm:px-10 lg:px-16">
+      <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl flex-col justify-center gap-10">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+          <section className="space-y-6">
+            <div className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-medium text-emerald-900 shadow-sm backdrop-blur">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+              AgriRent marketplace
+            </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="space-y-4">
+              <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                Rent farm equipment without the friction.
+              </h1>
+              <p className="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+                Owners list equipment, farmers book what they need, and the
+                platform keeps pricing, availability, and booking status
+                controlled end to end.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/signup"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-slate-950 px-6 text-sm font-medium text-white transition-colors hover:bg-slate-800"
+              >
+                Create account
+              </Link>
+              <Link
+                href="/login"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-slate-300 bg-white px-6 text-sm font-medium text-slate-950 transition-colors hover:bg-slate-100"
+              >
+                Log in
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap gap-4 text-sm text-slate-600">
+              <span>Farmer bookings</span>
+              <span className="text-slate-300">•</span>
+              <span>Owner listings</span>
+              <span className="text-slate-300">•</span>
+              <span>AI help</span>
+            </div>
+          </section>
+
+          <section className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+            <div className="mb-5 flex items-center gap-3">
+              <Image
+                src="/globe.svg"
+                alt="AgriRent"
+                width={34}
+                height={34}
+                className="opacity-80"
+                priority
+              />
+              <div>
+                <p className="text-sm font-medium text-slate-500">Start here</p>
+                <p className="text-lg font-semibold text-slate-950">
+                  One home screen for both roles
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl bg-emerald-50 p-4">
+                <p className="text-sm font-medium text-emerald-900">
+                  For farmers
+                </p>
+                <p className="mt-2 text-sm leading-6 text-emerald-950/80">
+                  Browse equipment, open details, request a booking, and track
+                  status.
+                </p>
+              </div>
+              <div className="rounded-2xl bg-amber-50 p-4">
+                <p className="text-sm font-medium text-amber-900">For owners</p>
+                <p className="mt-2 text-sm leading-6 text-amber-950/80">
+                  Create listings, review requests, and approve or reject
+                  bookings.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </main>
   );
 }
