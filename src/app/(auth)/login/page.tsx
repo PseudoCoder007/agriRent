@@ -83,6 +83,7 @@ export default function LoginPage() {
                       <Input
                         type="email"
                         placeholder="you@example.com"
+                        className="border-slate-300"
                         {...field}
                       />
                     </FormControl>
@@ -98,7 +99,7 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput {...field} />
+                      <PasswordInput className="border-slate-300" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

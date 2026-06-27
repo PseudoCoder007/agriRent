@@ -91,7 +91,11 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Full name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Jane Farmer" {...field} />
+                      <Input
+                        placeholder="Jane Farmer"
+                        className="border-slate-300"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,6 +112,7 @@ export default function SignupPage() {
                       <Input
                         type="email"
                         placeholder="you@example.com"
+                        className="border-slate-300"
                         {...field}
                       />
                     </FormControl>
@@ -123,7 +128,7 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput {...field} />
+                      <PasswordInput className="border-slate-300" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
