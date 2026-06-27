@@ -2,18 +2,29 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Menu } from "lucide-react";
 
+import { AgriMateAIIcon } from "@/components/brand/agri-mate-ai-mark";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { createClient } from "@/lib/supabase/server";
-import { LogoutButton } from "@/components/auth/logout-button";
+import { AccountMenu } from "@/components/navigation/account-menu";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
+  SheetDescription,
+  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { RoleNavLinks } from "@/components/navigation/role-nav-links";
+import { RoleMobileNavLinks } from "@/components/navigation/role-mobile-nav-links";
+
+const farmerNavItems = [
+  { href: "/farmer/dashboard", label: "Dashboard" },
+  { href: "/browse", label: "Browse" },
+  { href: "/farmer/favorites", label: "Favorites" },
+  { href: "/farmer/chat", label: "Chat" },
+];
 
 /**
  * Enforces role=farmer for every route under this group. Defense in depth
@@ -35,7 +46,7 @@ export default async function FarmerLayout({
 
   const { data: profile } = await supabase
     .from("users")
-    .select("role")
+    .select("role, full_name, avatar_url")
     .eq("id", userData.user.id)
     .single();
 
@@ -49,28 +60,31 @@ export default async function FarmerLayout({
 
   return (
     <div>
-      <header className="flex items-center justify-between border-b p-4">
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-medium">AgriRent — Farmer</span>
-          <nav className="hidden gap-3 text-sm sm:flex">
-            <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground">
-              Dashboard
-            </Link>
-            <Link href="/browse" className="text-muted-foreground hover:text-foreground">
-              Browse
-            </Link>
-            <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground">
-              Favorites
-            </Link>
-            <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground">
-              Chat
-            </Link>
-          </nav>
+      <header className="flex items-center justify-between border-b border-border/70 bg-background/90 px-4 py-3 backdrop-blur">
+        <div className="flex items-center gap-5">
+          <Link href="/farmer/dashboard" className="flex items-center gap-3">
+            <span className="inline-flex size-10 items-center justify-center rounded-2xl border border-emerald-200/70 bg-white p-1.5 shadow-sm dark:border-emerald-500/20 dark:bg-background">
+              <AgriMateAIIcon variant="navbar" className="size-6" />
+            </span>
+            <span className="flex flex-col leading-tight">
+              <span className="text-sm font-semibold text-foreground">AgriRent</span>
+              <span className="text-xs text-muted-foreground">Farmer workspace</span>
+            </span>
+          </Link>
+          <RoleNavLinks
+            items={farmerNavItems}
+            className="hidden gap-4 text-sm font-medium sm:flex"
+          />
         </div>
         <div className="hidden items-center gap-2 sm:flex">
           <ThemeToggle />
           <NotificationBell userId={userData.user.id} />
-          <LogoutButton />
+          <AccountMenu
+            fullName={profile.full_name}
+            email={userData.user.email ?? ""}
+            avatarUrl={profile.avatar_url}
+            profileHref="/farmer/profile"
+          />
         </div>
         <Sheet>
           <SheetTrigger
@@ -78,65 +92,35 @@ export default async function FarmerLayout({
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-11 w-11 sm:hidden"
+                className="h-11 w-11 rounded-full sm:hidden"
                 aria-label="Open navigation menu"
               />
             }
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="w-64">
-            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-            <nav className="flex flex-col p-4">
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/farmer/dashboard"
-                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  />
-                }
-              >
-                Dashboard
-              </SheetClose>
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/browse"
-                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  />
-                }
-              >
-                Browse
-              </SheetClose>
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/farmer/favorites"
-                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  />
-                }
-              >
-                Favorites
-              </SheetClose>
-              <SheetClose
-                nativeButton={false}
-                render={
-                  <Link
-                    href="/farmer/chat"
-                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  />
-                }
-              >
-                Chat
-              </SheetClose>
-            </nav>
-            <div className="flex flex-col gap-2 border-t p-4 pt-3">
+          <SheetContent side="right" className="w-[min(92vw,22rem)] border-l border-border/70 bg-background p-0 shadow-2xl sm:w-[24rem]">
+            <SheetHeader className="border-b border-border/70 bg-gradient-to-br from-emerald-50 via-white to-lime-50 px-5 py-5 dark:from-emerald-950/40 dark:via-background dark:to-lime-950/20">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex size-11 items-center justify-center rounded-2xl border border-emerald-200/70 bg-white p-2 shadow-sm dark:border-emerald-500/20 dark:bg-background">
+                  <AgriMateAIIcon variant="navbar" className="size-6" />
+                </span>
+                <div>
+                  <SheetTitle className="text-base font-semibold">AgriRent</SheetTitle>
+                  <SheetDescription>Farmer workspace</SheetDescription>
+                </div>
+              </div>
+            </SheetHeader>
+            <RoleMobileNavLinks items={farmerNavItems} />
+            <div className="mt-auto flex flex-col gap-3 border-t border-border/70 px-4 py-4">
               <ThemeToggle />
               <NotificationBell userId={userData.user.id} />
-              <LogoutButton />
+              <AccountMenu
+                fullName={profile.full_name}
+                email={userData.user.email ?? ""}
+                avatarUrl={profile.avatar_url}
+                profileHref="/farmer/profile"
+              />
             </div>
           </SheetContent>
         </Sheet>
