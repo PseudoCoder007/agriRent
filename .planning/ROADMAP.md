@@ -18,6 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle (gap closure in progress: mobile nav drawer close-on-navigate fix) (completed 2026-06-27)
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 3.1: Auth & Navigation UI Fixes (INSERTED)** - Fix dark-mode CSS variable bleed-through on forced-light pages, redesign login/signup visual design, rebuild role-scoped nav as a structured layout
+- [ ] **Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)** - Custom brand mark used consistently across nav, chat, and favicon; branded chat avatar + animated typing indicator
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -138,6 +139,24 @@ Plans:
 - [ ] 03.1-02: Redesign login/signup visual styling (UI-AUTH-02)
 - [ ] 03.1-03: Restructure farmer/owner nav into 3-zone sidebar layout (NAV-01)
 
+### Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)
+
+**Goal**: AgriRent has one consistent custom "AgriMate AI" brand mark used across the nav header, the chat widget, and the site favicon/app icon, and the chat widget feels like a polished assistant surface (branded avatar, animated typing state, "Chat with AgriMate AI" header) instead of an emoji placeholder.
+**Mode:** mvp
+**Depends on**: Phase 2.1
+**Requirements**: BRAND-01, CHAT-UX-01
+**Success Criteria** (what must be TRUE):
+
+  1. A single shared brand-mark component renders the AgriMate AI logo (with navbar/avatar/favicon variants as needed) and is the only place the logo's SVG markup is defined — no duplicate inline logo markup elsewhere.
+  2. The site favicon and Apple touch icon both render the brand mark at a correct, non-blurry size for their respective surfaces (browser tab vs. iOS home screen).
+  3. The chat widget header shows the brand mark and the text "Chat with AgriMate AI" (not the 🥇 emoji or any other placeholder), every assistant message shows the branded avatar, and a visible animated indicator displays while the assistant is generating a response.
+
+**Plans**: 1 plan (retroactive — most scope already shipped via parallel work; this plan documents it and implements the one remaining gap: apple-icon 180x180 sizing)
+
+Plans:
+
+- [ ] 03.2-01: Retroactive brand-mark/chat-polish documentation + apple-icon 180x180 fix + full BRAND-01/CHAT-UX-01 verification pass (BRAND-01, CHAT-UX-01)
+
 ### Phase 4: UI/Design Polish
 
 **Goal**: The application is visually presentable and consistent across every flow already built — auth, browse/detail, booking, dashboards, reviews, notifications, and AI chat — suitable as a portfolio/demo piece.
@@ -161,7 +180,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 4
+Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -170,4 +189,5 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 4
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
+| 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |
