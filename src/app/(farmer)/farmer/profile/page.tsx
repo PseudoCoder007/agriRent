@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { ProfileForm } from "@/components/profile/profile-form";
 import { PageShell } from "@/components/ui/page-shell";
+import { getAvatarUrl } from "@/lib/services/profile.service";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -20,13 +21,17 @@ export default async function FarmerProfilePage() {
 
   const { data: profile } = await supabase
     .from("users")
-    .select("full_name, phone, avatar_url, role, email")
+    .select("full_name, phone, avatar_url, avatar_updated_at, role, email")
     .eq("id", userData.user.id)
     .single();
 
   if (!profile) {
     redirect("/login");
   }
+
+  const avatarUrl = profile.avatar_url
+    ? getAvatarUrl(profile.avatar_url, profile.avatar_updated_at)
+    : null;
 
   return (
     <PageShell
@@ -38,6 +43,7 @@ export default async function FarmerProfilePage() {
         initialPhone={profile.phone}
         email={userData.user.email ?? profile.email}
         role={profile.role === "owner" ? "owner" : "farmer"}
+        avatarUrl={avatarUrl}
       />
     </PageShell>
   );

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { updateProfileAction } from "@/app/actions/profile.actions";
+import { AvatarUpload } from "@/components/profile/avatar-upload";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -27,6 +28,7 @@ type ProfileFormProps = {
   initialPhone: string | null;
   email: string;
   role: "farmer" | "owner";
+  avatarUrl: string | null;
 };
 
 type FieldErrors = {
@@ -47,6 +49,7 @@ export function ProfileForm({
   initialPhone,
   email,
   role,
+  avatarUrl,
 }: ProfileFormProps) {
   const form = useForm<UpdateProfileInput>({
     resolver: zodResolver(updateProfileSchema),
@@ -79,7 +82,10 @@ export function ProfileForm({
   return (
     <Card className="mx-auto max-w-2xl">
       <CardHeader className="items-center text-center">
-        {/* Avatar block wired in 03.4-03 */}
+        <AvatarUpload
+          currentAvatarUrl={avatarUrl}
+          fallbackInitial={initialFullName.charAt(0).toUpperCase() || "?"}
+        />
         <Badge variant="secondary">
           {role === "owner" ? "Owner" : "Farmer"}
         </Badge>

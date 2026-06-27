@@ -19,6 +19,12 @@ import {
 type AccountMenuProps = {
   fullName: string | null;
   email: string;
+  /**
+   * Must be an already-built, cache-busted display URL produced by
+   * profile.service.ts's getAvatarUrl(storagePath, avatarUpdatedAt) —
+   * never the raw avatar_url storage path. Passing the raw path would
+   * render a broken image src (it is not a fetchable URL on its own).
+   */
   avatarUrl: string | null;
   profileHref: "/farmer/profile" | "/owner/profile";
 };

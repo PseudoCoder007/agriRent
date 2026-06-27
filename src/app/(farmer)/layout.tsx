@@ -5,6 +5,7 @@ import { Menu } from "lucide-react";
 import { AgriMateAIIcon } from "@/components/brand/agri-mate-ai-mark";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { createClient } from "@/lib/supabase/server";
+import { getAvatarUrl } from "@/lib/services/profile.service";
 import { AccountMenu } from "@/components/navigation/account-menu";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -46,7 +47,7 @@ export default async function FarmerLayout({
 
   const { data: profile } = await supabase
     .from("users")
-    .select("role, full_name, avatar_url")
+    .select("role, full_name, avatar_url, avatar_updated_at")
     .eq("id", userData.user.id)
     .single();
 
@@ -57,6 +58,10 @@ export default async function FarmerLayout({
   if (profile.role === "owner") {
     redirect("/owner/dashboard");
   }
+
+  const avatarUrl = profile.avatar_url
+    ? getAvatarUrl(profile.avatar_url, profile.avatar_updated_at)
+    : null;
 
   return (
     <div>
@@ -82,7 +87,7 @@ export default async function FarmerLayout({
           <AccountMenu
             fullName={profile.full_name}
             email={userData.user.email ?? ""}
-            avatarUrl={profile.avatar_url}
+            avatarUrl={avatarUrl}
             profileHref="/farmer/profile"
           />
         </div>
@@ -118,7 +123,7 @@ export default async function FarmerLayout({
               <AccountMenu
                 fullName={profile.full_name}
                 email={userData.user.email ?? ""}
-                avatarUrl={profile.avatar_url}
+                avatarUrl={avatarUrl}
                 profileHref="/farmer/profile"
               />
             </div>
