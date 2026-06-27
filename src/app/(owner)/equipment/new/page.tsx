@@ -89,7 +89,7 @@ export default function NewEquipmentPage() {
     }
 
     toast.success(result.message);
-    router.push("/browse");
+    router.push("/owner/dashboard");
   }
 
   return (
