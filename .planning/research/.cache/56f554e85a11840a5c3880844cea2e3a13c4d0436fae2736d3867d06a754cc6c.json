@@ -1,1 +1,0 @@
-{"content":"Zod v4 recommended for Next.js Server Actions: single schema shared client/server, validate at request boundary via safeParse, use .flatten().fieldErrors for form-friendly errors, faster parsing for nested schemas than v3.","source":"web","provider":"websearch","confidence":"LOW","fetched_at":"2026-06-26T09:37:06.890Z","ttl":86400000,"kind":"web"}

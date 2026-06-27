@@ -1,1 +1,0 @@
-{"content":"react-leaflet requires next/dynamic with ssr:false (or isolating in a use client component) to avoid 'window is not defined' in Next.js App Router; ongoing GitHub issues (#956, #1152) confirm this remains necessary as of Next 15.1.6.","source":"web","provider":"websearch","confidence":"LOW","fetched_at":"2026-06-26T09:37:06.170Z","ttl":86400000,"kind":"web"}
