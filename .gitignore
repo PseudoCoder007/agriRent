@@ -27,12 +27,6 @@ yarn-error.log*
 .env
 .env*.local
 
-# local artifacts and planning
-/agri-/
-/agri-.zip
-/.agents/
-/.planning/
-
 # vercel
 .vercel
 
