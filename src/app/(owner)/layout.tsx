@@ -83,6 +83,7 @@ export default async function OwnerLayout({
             <SheetTitle className="sr-only">Navigation menu</SheetTitle>
             <nav className="flex flex-col gap-1 p-4">
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/owner/dashboard" className="text-muted-foreground hover:text-foreground" />
                 }
@@ -90,6 +91,7 @@ export default async function OwnerLayout({
                 Dashboard
               </SheetClose>
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/owner/chat" className="text-muted-foreground hover:text-foreground" />
                 }

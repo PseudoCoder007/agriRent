@@ -89,6 +89,7 @@ export default async function FarmerLayout({
             <SheetTitle className="sr-only">Navigation menu</SheetTitle>
             <nav className="flex flex-col gap-1 p-4">
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground" />
                 }
@@ -96,6 +97,7 @@ export default async function FarmerLayout({
                 Dashboard
               </SheetClose>
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/browse" className="text-muted-foreground hover:text-foreground" />
                 }
@@ -103,6 +105,7 @@ export default async function FarmerLayout({
                 Browse
               </SheetClose>
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground" />
                 }
@@ -110,6 +113,7 @@ export default async function FarmerLayout({
                 Favorites
               </SheetClose>
               <SheetClose
+                nativeButton={false}
                 render={
                   <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground" />
                 }
