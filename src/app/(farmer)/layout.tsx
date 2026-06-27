@@ -87,11 +87,14 @@ export default async function FarmerLayout({
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
             <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-            <nav className="flex flex-col gap-1 p-4">
+            <nav className="flex flex-col p-4">
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/farmer/dashboard"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Dashboard
@@ -99,7 +102,10 @@ export default async function FarmerLayout({
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/browse" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/browse"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Browse
@@ -107,7 +113,10 @@ export default async function FarmerLayout({
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/farmer/favorites"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Favorites
@@ -115,7 +124,10 @@ export default async function FarmerLayout({
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/farmer/chat"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Chat

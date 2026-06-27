@@ -81,11 +81,14 @@ export default async function OwnerLayout({
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
             <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-            <nav className="flex flex-col gap-1 p-4">
+            <nav className="flex flex-col p-4">
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/owner/dashboard" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/owner/dashboard"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Dashboard
@@ -93,7 +96,10 @@ export default async function OwnerLayout({
               <SheetClose
                 nativeButton={false}
                 render={
-                  <Link href="/owner/chat" className="text-muted-foreground hover:text-foreground" />
+                  <Link
+                    href="/owner/chat"
+                    className="flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  />
                 }
               >
                 Chat
