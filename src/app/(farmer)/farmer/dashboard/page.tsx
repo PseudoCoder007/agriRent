@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageShell } from "@/components/ui/page-shell";
@@ -110,10 +111,7 @@ export default async function FarmerDashboardPage() {
             title="No bookings yet"
             description="Browse equipment listings to request a booking."
             action={
-              <Link
-                href="/browse"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-slate-950 px-4 text-sm font-medium text-white hover:bg-slate-800"
-              >
+              <Link href="/browse" className={buttonVariants()}>
                 Browse equipment
               </Link>
             }
@@ -123,7 +121,7 @@ export default async function FarmerDashboardPage() {
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="flex items-center justify-between rounded-md border p-2 text-sm"
+                className="flex flex-col gap-2 rounded-md border p-2 text-sm sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
                   <p>{booking.equipments?.title ?? "Equipment"}</p>
@@ -132,7 +130,7 @@ export default async function FarmerDashboardPage() {
                     {booking.total_amount}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant={STATUS_VARIANT[booking.status] ?? "secondary"}
                   >
