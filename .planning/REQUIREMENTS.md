@@ -42,6 +42,20 @@ Requirements for the initial release (Phase 1 walking skeleton + its immediate d
 - [ ] **REVIEW-01**: Farmer can leave a rating + review only for a booking with status `completed`
 - [ ] **REVIEW-02**: Equipment detail page shows its average rating and reviews
 
+### UI/Navigation
+
+- [ ] **UI-AUTH-01**: Auth pages (login, signup, forgot-password, reset-password) and the home page render fully legible in light mode regardless of the user's dark-mode preference — every text/border/placeholder token (not just the page background) stays visible
+- [ ] **UI-AUTH-02**: Login and signup pages have a polished, cohesive visual design (not just bug-fixed defaults)
+- [ ] **NAV-01**: Farmer and owner role-scoped navigation (desktop header + mobile Sheet drawer) is restructured into a clear layout: theme toggle and notification bell share a top utility row, nav links occupy the main/middle area, logout is pinned at the bottom
+- [ ] **BRAND-01**: AgriRent has a custom "AgriMate AI" brand mark (SVG logo) used consistently across the role-scoped nav header, the chat widget header/avatar, and the site favicon/app icon — replacing the placeholder 🥇 emoji and default favicon
+- [ ] **CHAT-UX-01**: Chat widget header reads "Chat with AgriMate AI" with the brand mark icon (not an emoji), assistant messages show a branded avatar, and an animated typing indicator displays while the assistant is generating a response
+
+### Profile
+
+- [ ] **PROFILE-01**: User can view their real display name (not just role label) and edit it from a profile page
+- [ ] **PROFILE-02**: User can upload or replace their profile photo, validated server-side (MIME type, size), stored in Supabase Storage
+- [ ] **PROFILE-03**: User can add or edit a phone number on their profile, validated server-side via Zod
+
 ### Notifications
 
 - [x] **NOTIF-01**: User receives an in-app notification when a booking is created, approved, rejected, or completed
@@ -126,11 +140,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTIF-01 | Phase 1 | Complete |
 | AI-01 | Phase 1 | Complete |
 | AI-02 | Phase 1 | Complete |
+| UI-AUTH-01 | Phase 3.1 | Pending |
+| UI-AUTH-02 | Phase 3.1 | Pending |
+| NAV-01 | Phase 3.1 | Pending |
+| BRAND-01 | Phase 3.2 | Pending |
+| CHAT-UX-01 | Phase 3.2 | Pending |
+| PROFILE-01 | Phase 03.4 | Pending |
+| PROFILE-02 | Phase 03.4 | Pending |
+| PROFILE-03 | Phase 03.4 | Pending |
 
 **Coverage:**
 
-- v1 requirements: 23 total
-- Mapped to phases: 23/23 ✓
+- v1 requirements: 28 total
+- Mapped to phases: 28/28 ✓
 - Unmapped: 0 ✓
 
 ---
