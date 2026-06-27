@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 /**
  * Enforces role=owner for every route under this group. Defense in depth
@@ -52,6 +53,7 @@ export default async function OwnerLayout({
           </nav>
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <NotificationBell userId={userData.user.id} />
           <LogoutButton />
         </div>
