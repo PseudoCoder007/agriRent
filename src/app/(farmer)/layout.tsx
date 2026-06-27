@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Menu } from "lucide-react";
 
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 /**
  * Enforces role=farmer for every route under this group. Defense in depth
@@ -43,7 +46,7 @@ export default async function FarmerLayout({
       <header className="flex items-center justify-between border-b p-4">
         <div className="flex items-center gap-4">
           <span className="text-sm font-medium">AgriRent — Farmer</span>
-          <nav className="flex gap-3 text-sm">
+          <nav className="hidden gap-3 text-sm sm:flex">
             <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground">
               Dashboard
             </Link>
@@ -58,11 +61,46 @@ export default async function FarmerLayout({
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 sm:flex">
           <ThemeToggle />
           <NotificationBell userId={userData.user.id} />
           <LogoutButton />
         </div>
+        <Sheet>
+          <SheetTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-11 w-11 sm:hidden"
+                aria-label="Open navigation menu"
+              />
+            }
+          >
+            <Menu className="h-5 w-5" />
+          </SheetTrigger>
+          <SheetContent side="right" className="w-64">
+            <nav className="flex flex-col gap-1 p-4">
+              <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground">
+                Dashboard
+              </Link>
+              <Link href="/browse" className="text-muted-foreground hover:text-foreground">
+                Browse
+              </Link>
+              <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground">
+                Favorites
+              </Link>
+              <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground">
+                Chat
+              </Link>
+            </nav>
+            <div className="flex flex-col gap-2 border-t p-4 pt-3">
+              <ThemeToggle />
+              <NotificationBell userId={userData.user.id} />
+              <LogoutButton />
+            </div>
+          </SheetContent>
+        </Sheet>
       </header>
       <main>{children}</main>
     </div>
