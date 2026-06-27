@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="1100.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.3  DFD Level 1</text>
+<ellipse cx="210" cy="270" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="210" y="261" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">F</text>
+<text x="210" y="327" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Farmer</text>
+<ellipse cx="210" cy="560" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="210" y="551" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">O</text>
+<text x="210" y="617" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Owner</text>
+<rect x="120" y="920" width="200" height="160" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="220" y="959" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Browser</text>
+<text x="220" y="986" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">UI events</text>
+<rect x="1820" y="250" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="289" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Supabase Auth</text>
+<rect x="1820" y="420" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="459" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">users</text>
+<rect x="1820" y="590" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="629" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">equipments</text>
+<rect x="1820" y="760" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="799" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">equipment_images</text>
+<rect x="1820" y="930" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="969" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">bookings</text>
+<rect x="1820" y="1100" width="260" height="140" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="1139" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">notifications</text>
+<rect x="1820" y="1270" width="260" height="100" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1950" y="1309" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Storage</text>
+<rect x="520" y="180" width="360" height="120" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="700" y="219" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">1. Auth</text>
+<rect x="520" y="360" width="360" height="120" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="700" y="399" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">2. Browse &amp; View Equipment</text>
+<rect x="520" y="540" width="360" height="120" rx="18" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<text x="700" y="579" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">3. List Equipment</text>
+<rect x="980" y="180" width="360" height="120" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1160" y="219" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">4. Create Booking</text>
+<rect x="980" y="360" width="360" height="120" rx="18" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<text x="1160" y="399" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">5. Approve/Reject Booking</text>
+<rect x="980" y="540" width="360" height="120" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1160" y="579" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">6. Notifications</text>
+<rect x="980" y="720" width="360" height="120" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="1160" y="759" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">7. Chat Assistant</text>
+<line x1="300" y1="270" x2="520" y2="240" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="300" y1="560" x2="520" y2="610" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="300" y1="270" x2="520" y2="440" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="300" y1="560" x2="520" y2="440" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="300" y1="270" x2="980" y2="240" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="300" y1="560" x2="980" y2="640" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="240" x2="1820" y2="320" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="240" x2="1820" y2="490" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="420" x2="1820" y2="660" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="420" x2="1820" y2="830" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="620" x2="1820" y2="1000" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1240" y1="720" x2="1820" y2="1170" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1080" y1="780" x2="1820" y2="1350" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="880" y1="300" x2="520" y2="420" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<line x1="880" y1="420" x2="980" y2="420" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="520" y1="600" x2="980" y2="600" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1340" y1="300" x2="1820" y2="320" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1340" y1="420" x2="1820" y2="490" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1340" y1="540" x2="1820" y2="660" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1340" y1="660" x2="1820" y2="830" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1340" y1="780" x2="1820" y2="1000" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1260" y="180" font-family="Arial" font-size="20" fill="#d97706">NVIDIA NIM API</text>
+<line x1="1160" y1="780" x2="1500" y2="1260" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1500" y1="1260" x2="1160" y2="780" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1340" y="1246" font-family="Arial" font-size="16" fill="#4b5563">FAQ response stream</text>
+</svg>

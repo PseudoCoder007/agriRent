@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="900.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.2  DFD Level 0</text>
+<ellipse cx="220" cy="340" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="220" y="331" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">F</text>
+<text x="220" y="397" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Farmer</text>
+<ellipse cx="220" cy="760" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="220" y="751" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">EO</text>
+<text x="220" y="804" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Equipment</text>
+<text x="220" y="830" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Owner</text>
+<rect x="760" y="420" width="480" height="340" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1000" y="459" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">AgriRent Platform</text>
+<text x="1000" y="486" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Authentication</text>
+<text x="1000" y="512" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Browsing</text>
+<text x="1000" y="538" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Booking</text>
+<text x="1000" y="564" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Notifications</text>
+<text x="1000" y="590" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Chat assistant</text>
+<rect x="1330" y="900" width="380" height="180" rx="18" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<text x="1520" y="939" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">NVIDIA NIM API</text>
+<text x="1520" y="966" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">FAQ response stream</text>
+<line x1="320" y1="340" x2="760" y2="470" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="320" y1="760" x2="760" y2="650" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="760" y1="540" x2="320" y2="340" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="760" y1="610" x2="320" y2="760" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1240" y1="650" x2="1330" y2="960" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1330" y1="980" x2="1240" y2="620" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="360" y="301" font-family="Arial" font-size="16" fill="#4b5563">signup/login, browse, booking requests, chat</text>
+<text x="360" y="851" font-family="Arial" font-size="16" fill="#4b5563">signup/login, listing, booking decisions, chat</text>
+<text x="1030" y="406" font-family="Arial" font-size="16" fill="#4b5563">results, dashboards, messages</text>
+<text x="1210" y="876" font-family="Arial" font-size="16" fill="#4b5563">chat completion request</text>
+</svg>

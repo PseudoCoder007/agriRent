@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="1100.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.4  Use Case Diagram</text>
+<ellipse cx="220" cy="360" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="220" y="351" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">F</text>
+<text x="220" y="417" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Farmer</text>
+<ellipse cx="1980" cy="360" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1980" y="351" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">O</text>
+<text x="1980" y="417" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Owner</text>
+<ellipse cx="1100" cy="1220" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1100" y="1211" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">S</text>
+<text x="1100" y="1277" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">System</text>
+<rect x="540" y="170" width="1380" height="950" rx="24" ry="24" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1080" y="245" font-family="Arial" font-size="20" fill="#2563eb">AgriRent System Boundary</text>
+<ellipse cx="770" cy="360" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="770" y="357" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Sign up</text>
+<ellipse cx="1080" cy="360" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1080" y="357" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Log in</text>
+<ellipse cx="1390" cy="360" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1390" y="357" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Browse equipment</text>
+<ellipse cx="1700" cy="360" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1700" y="357" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">View equipment details</text>
+<ellipse cx="770" cy="570" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="770" y="567" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Request booking</text>
+<ellipse cx="1080" cy="570" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1080" y="567" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">View booking history</text>
+<ellipse cx="1390" cy="570" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1390" y="567" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">View notifications</text>
+<ellipse cx="1700" cy="570" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1700" y="567" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Use chat assistant</text>
+<ellipse cx="770" cy="790" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="770" y="787" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">List equipment</text>
+<ellipse cx="1080" cy="790" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1080" y="787" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Upload equipment photo</text>
+<ellipse cx="1390" cy="790" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1390" y="787" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">View dashboard</text>
+<ellipse cx="1700" cy="790" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1700" y="787" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Approve booking</text>
+<ellipse cx="1080" cy="1000" rx="125.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1080" y="997" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Reject booking</text>
+<ellipse cx="1700" cy="1000" rx="145.0" ry="46.0" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="1700" y="997" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Insert system notification</text>
+<line x1="268" y1="360" x2="630" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="940" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="1250" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="1560" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="630" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="940" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="1250" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="268" y1="360" x2="1560" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1900" y1="360" x2="910" y2="790" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1900" y1="360" x2="1220" y2="790" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1900" y1="360" x2="1530" y2="790" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1900" y1="360" x2="1840" y2="790" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1900" y1="360" x2="1220" y2="1000" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1100" y1="1170" x2="1700" y2="1000" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1100" y1="1170" x2="1390" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1100" y1="1170" x2="1700" y2="570" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="740" y="1236" font-family="Arial" font-size="16" fill="#4b5563">Farmer: discovery, booking, and status tracking</text>
+<text x="1340" y="1236" font-family="Arial" font-size="16" fill="#4b5563">Owner: listing management and booking decisions</text>
+<text x="870" y="1276" font-family="Arial" font-size="16" fill="#4b5563">System path: notifications are created by server-side code</text>
+</svg>

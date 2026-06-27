@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1300" viewBox="0 0 2200 1300">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="1100.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.6  Sequence Diagram</text>
+<rect x="60" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="180" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Farmer</text>
+<line x1="180" y1="150" x2="180" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<rect x="380" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="500" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">BookingRequestForm</text>
+<line x1="500" y1="150" x2="500" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<rect x="730" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="850" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">createBookingAction</text>
+<line x1="850" y1="150" x2="850" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<rect x="1060" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="1180" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">booking.service</text>
+<line x1="1180" y1="150" x2="1180" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<rect x="1420" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="1540" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Supabase Postgres</text>
+<line x1="1540" y1="150" x2="1540" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<rect x="1760" y="90" width="240" height="60" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="1880" y="129" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">notification.service</text>
+<line x1="1880" y1="150" x2="1880" y2="1180" stroke="#6b7280" stroke-width="2"/>
+<line x1="180" y1="260" x2="500" y2="260" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="190" y="248" font-family="Arial" font-size="16" fill="#4b5563">Select date range and click Request booking</text>
+<line x1="500" y1="360" x2="850" y2="360" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="510" y="348" font-family="Arial" font-size="16" fill="#4b5563">formData(equipmentId, startDate, endDate)</text>
+<line x1="850" y1="500" x2="1180" y2="500" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="860" y="488" font-family="Arial" font-size="16" fill="#4b5563">createBooking(input, farmerId)</text>
+<line x1="1180" y1="650" x2="1540" y2="650" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="1190" y="638" font-family="Arial" font-size="16" fill="#4b5563">Read equipment rate and owner_id</text>
+<line x1="1540" y1="760" x2="1180" y2="760" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1190" y="748" font-family="Arial" font-size="16" fill="#4b5563">equipment row</text>
+<line x1="1180" y1="860" x2="1540" y2="860" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="1190" y="848" font-family="Arial" font-size="16" fill="#4b5563">Insert booking(pending, computed total_amount)</text>
+<line x1="1540" y1="960" x2="1180" y2="960" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1190" y="948" font-family="Arial" font-size="16" fill="#4b5563">booking row or exclusion error</text>
+<line x1="1180" y1="1060" x2="1880" y2="1060" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<text x="1190" y="1048" font-family="Arial" font-size="16" fill="#4b5563">createNotification(ownerId, bookingId, message)</text>
+<line x1="1880" y1="1160" x2="1540" y2="1160" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1550" y="1148" font-family="Arial" font-size="16" fill="#4b5563">Insert notification via service role</text>
+<text x="1280" y="520" font-family="Arial" font-size="20" fill="#16a34a">alt booking inserted</text>
+<text x="1280" y="1020" font-family="Arial" font-size="20" fill="#dc2626">else overlap or error</text>
+<text x="1460" y="1206" font-family="Arial" font-size="16" fill="#4b5563">Owner dashboard shows pending request</text>
+<text x="1460" y="1256" font-family="Arial" font-size="16" fill="#4b5563">Farmer receives success or friendly error</text>
+</svg>

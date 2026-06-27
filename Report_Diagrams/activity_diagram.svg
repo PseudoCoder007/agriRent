@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1500" viewBox="0 0 1800 1500">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="900.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.5  Activity Diagram</text>
+<rect x="770" y="120" width="260" height="90" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="900" y="162" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Start</text>
+<line x1="900" y1="210" x2="900" y2="260" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="710" y="260" width="380" height="80" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="900" y="299" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">User opens app</text>
+<line x1="900" y1="340" x2="900" y2="400" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<polygon points="900,390.0 1080.0,470 900,550.0 720.0,470" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="900" y="465" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Authenticated?</text>
+<line x1="900" y1="550" x2="900" y2="620" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="730" y="620" width="340" height="80" rx="18" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<text x="900" y="659" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Login / Signup</text>
+<text x="900" y="686" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Create account or log in</text>
+<line x1="900" y1="700" x2="900" y2="780" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="730" y="780" width="340" height="80" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="900" y="819" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Session Created</text>
+<line x1="900" y1="860" x2="900" y2="920" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<polygon points="900,955.0 1040.0,1030 900,1105.0 760.0,1030" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+<text x="900" y="1025" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Role</text>
+<line x1="900" y1="1110" x2="500" y2="1110" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="900" y1="1110" x2="1280" y2="1110" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="260" y="1200" width="480" height="90" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="500" y="1239" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Farmer Flow</text>
+<text x="500" y="1266" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Browse equipment</text>
+<text x="500" y="1292" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">View details</text>
+<text x="500" y="1318" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Request booking</text>
+<text x="500" y="1344" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">View booking status</text>
+<rect x="1060" y="1200" width="480" height="90" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1300" y="1239" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Owner Flow</text>
+<text x="1300" y="1266" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">View dashboard</text>
+<text x="1300" y="1292" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Review requests</text>
+<text x="1300" y="1318" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Approve or reject</text>
+<line x1="500" y1="1110" x2="500" y2="1200" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1280" y1="1110" x2="1280" y2="1200" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="620" y="1360" width="560" height="100" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="900" y="1399" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Chat Assistant</text>
+<text x="900" y="1426" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Open /api/chat</text>
+<text x="900" y="1452" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Stream FAQ response</text>
+<line x1="1280" y1="1290" x2="900" y2="1360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="500" y1="1290" x2="900" y2="1360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+</svg>

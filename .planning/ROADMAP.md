@@ -57,13 +57,14 @@ Plans:
   3. A farmer can save/favorite a piece of equipment and find it again later.
   4. A booking can be explicitly marked completed or cancelled, with each transition still server-enforced against the booking's current status (no arbitrary status jumps).
 
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 
 - [ ] 02-01: Schema migration — favorites table + RLS, equipments.deleted_at, bookings status-transition trigger; push to live Supabase + regenerate types [BLOCKING]
 - [ ] 02-02: Equipment edit/delete (soft-delete) + server-side category/location browse filter
-- [ ] 02-03: Favorites (save/list) + booking completed/cancelled state machine on both dashboards
+- [ ] 02-03: Favorites (save/list) — farmer can favorite equipment and find it again on a dedicated page
+- [ ] 02-04: Booking completed/cancelled state machine — service-layer VALID_TRANSITIONS guard, farmer self-cancel RLS policy, dashboard UI for both roles
 
 ### Phase 3: Reviews & Dashboard/Notification Richness
 
@@ -112,6 +113,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
-| 2. Equipment & Booking Lifecycle Deepening | 0/3 | Not started | - |
+| 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |

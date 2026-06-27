@@ -484,22 +484,19 @@ Note: `ON DELETE CASCADE` on `favorites.equipment_id` is intentional here (unlik
 
 **If this table is empty:** N/A — see entries above; all five require confirmation before being locked into a plan, particularly A1/A2 which materially change the shape of `booking.service.ts`'s new functions.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Who can cancel a booking, and from which statuses?**
+1. **Who can cancel a booking, and from which statuses?** RESOLVED
    - What we know: BOOK-05 says bookings reach a "true terminal state (completed or cancelled)." Phase 1's existing `bookings` `UPDATE` RLS policy only allows the owning owner to update a booking row at all — no farmer-facing `UPDATE` path exists yet.
-   - What's unclear: Whether farmers can self-cancel a `pending` request (very likely — "I changed my mind before approval" is the obvious case), whether farmers can cancel an already-`approved` booking (less obvious — may need an owner-notification-only flow, or may be entirely owner-driven), and whether an owner can unilaterally cancel an approved booking (e.g., equipment broke down).
-   - Recommendation: Surface this explicitly in `/gsd-discuss-phase` before planning — it directly determines the RLS policy set and the `VALID_TRANSITIONS` table shape (Assumption A1 above is this research's best-guess default: both farmer self-cancel from pending/approved, and owner-driven complete from approved).
+   - Decision (user-confirmed 2026-06-27): Farmer can self-cancel their own booking while it is `pending` or `approved`. Owner-driven `completed` transition is manual only, from `approved`. Owner can also cancel an `approved` booking (e.g. equipment broke down). This is Assumption A1's default, now locked — both farmer self-cancel from pending/approved, and owner-driven complete from approved.
 
-2. **Is "completed" ever automatic (time-based), or always a manual owner action?**
+2. **Is "completed" ever automatic (time-based), or always a manual owner action?** RESOLVED
    - What we know: The phase success criteria say "a booking can be explicitly marked completed" — "explicitly" suggests a manual trigger (a button), not an automatic cron-based transition.
-   - What's unclear: Whether "explicitly marked" was a deliberate word choice ruling out automation, or just describing the v1 minimum without ruling out a later auto-complete enhancement.
-   - Recommendation: Treat as manual-only for Phase 2 (Assumption A2), consistent with the literal wording and avoiding a Vercel Hobby cron/Edge-Function dependency this phase doesn't otherwise need; revisit as a v2/Phase 3 enhancement if desired.
+   - Decision: Manual-only for Phase 2 (Assumption A2), consistent with the literal wording and avoiding a Vercel Hobby cron/Edge-Function dependency this phase doesn't otherwise need; revisit as a v2/Phase 3 enhancement if desired.
 
-3. **Should a soft-deleted equipment listing be restorable, or is delete truly final from the owner's perspective?**
+3. **Should a soft-deleted equipment listing be restorable, or is delete truly final from the owner's perspective?** RESOLVED
    - What we know: Soft delete (this research's recommendation) makes restoration technically trivial (`UPDATE equipments SET deleted_at = NULL`), but nothing in the phase description asks for an "undo"/"restore" UI.
-   - What's unclear: Whether the owner dashboard should show a "Deleted Listings" section with a restore button, or whether the soft-delete column exists purely as an internal safety mechanism with no exposed restore UI in Phase 2.
-   - Recommendation: Build the column and the filtered reads now (cheap, and the right call for data integrity regardless), but treat the restore UI as out of scope for Phase 2 unless CONTEXT.md says otherwise — EQUIP-03 only requires "can delete," not "can restore."
+   - Decision: Build the column and the filtered reads now (cheap, and the right call for data integrity regardless), but the restore UI is out of scope for Phase 2 — EQUIP-03 only requires "can delete," not "can restore."
 
 ## Environment Availability
 

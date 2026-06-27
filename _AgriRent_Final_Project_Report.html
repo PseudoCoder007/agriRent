@@ -1,0 +1,864 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AgriRent Final Project Report</title>
+<style>
+@page {
+  size: A4;
+  margin: 1in;
+  @bottom-center { content: "Page " counter(page); font-size: 10pt; }
+}
+body { font-family: "Times New Roman", serif; font-size: 12pt; line-height: 1.5; color: #111; }
+h1, h2, h3 { font-family: "Times New Roman", serif; }
+.center { text-align:center; }
+.cover-title { font-size: 24pt; font-weight: bold; margin-top: 2in; }
+.cover-sub { font-size: 14pt; font-style: italic; margin-top: 0.2in; }
+.cover-meta { margin-top: 0.35in; }
+.pagebreak { page-break-after: always; }
+.chapter-page { page-break-before: always; }
+h1.chapter { text-align:center; font-size: 16pt; margin-top: 0; page-break-before: always; }
+h2.section { font-size: 13pt; margin-top: 0.2in; }
+h3.section { font-size: 12pt; margin-top: 0.15in; }
+p { text-align: justify; margin: 0 0 0.12in 0; }
+ul { margin: 0 0 0.12in 0.3in; padding: 0; }
+li { margin: 0 0 0.05in 0; }
+table { width: 100%; border-collapse: collapse; margin: 0.15in 0; }
+th, td { border: 1px solid #444; padding: 6px; vertical-align: top; }
+th { background: #efefef; }
+pre { background: #f2f2f2; padding: 10px; white-space: pre-wrap; font-family: Consolas, "Courier New", monospace; font-size: 9pt; border: 1px solid #ddd; }
+.placeholder { border: 1px dashed #555; padding: 24px; text-align: center; font-style: italic; margin: 12px 0; }
+.section-title { text-align: center; font-size: 14pt; font-weight: bold; margin: 0.15in 0 0.1in; }
+</style>
+</head>
+<body>
+<div class="center">
+  <div class="cover-title">AgriRent</div>
+  <div class="cover-sub">A Web-Based Farm Equipment Rental Marketplace</div>
+  <div class="cover-meta" style="font-size:16pt;font-weight:bold;">AgriRent Final Project Report</div>
+  <div class="cover-meta">Prepared for the BCA final-year project submission</div>
+  <div class="cover-meta" style="margin-top:0.6in;">Prepared By: ____________________________</div>
+  <div class="cover-meta">Under the supervision of ____________________________</div>
+  <div class="cover-meta" style="margin-top:0.5in;">2026</div>
+</div>
+<div class="pagebreak"></div>
+<h1 class="chapter">DECLARATION</h1>
+<p>I hereby declare that the project report entitled "AgriRent" is an original piece of work developed for academic purposes. The implementation, analysis, and documentation in this report are based on the current AgriRent codebase and represent the actual features present in the project. No unsupported features have been added in the preparation of this report.</p>
+<p>The work has been prepared in partial fulfillment of the requirements for the Bachelor of Computer Applications (BCA) final-year project submission.</p>
+<div class="pagebreak"></div>
+<h1 class="chapter">CERTIFICATE</h1>
+<p>This is to certify that the project report entitled "AgriRent" has been prepared as a genuine academic project based on the implemented source code of the application. The report documents the design, implementation, testing, and evaluation of the farm equipment rental marketplace.</p>
+<p>The project demonstrates the application of modern web development technologies and software engineering practices in accordance with the requirements of the final-year BCA project.</p>
+<div class="pagebreak"></div>
+<h1 class="chapter">ACKNOWLEDGEMENT</h1>
+<p>I express sincere gratitude to all those who provided guidance and support during the preparation of the AgriRent project report. This work reflects the effort involved in developing a practical web application for agricultural equipment rental and documenting it in an academic format.</p>
+<p>I am also thankful for the tools, frameworks, documentation, and open-source resources that made it possible to build and analyze the project in a structured manner.</p>
+<div class="pagebreak"></div>
+<h1 class="chapter">ABSTRACT</h1>
+<p>AgriRent is a web-based marketplace that connects equipment owners with farmers who need to rent agricultural machinery for specific date ranges. The project implements a role-based marketplace flow using Next.js, React, TypeScript, Tailwind CSS, shadcn/ui, and Supabase. The system supports user registration, login, equipment listing creation, equipment browsing, booking requests, booking approval or rejection, notifications, and a simple chat assistant for general platform guidance.</p>
+<p>The backend logic is structured through server actions and service functions so that important business rules are enforced on the server side. Booking totals are computed from the stored equipment rate, overlapping bookings are blocked by a database-level constraint, and role-based access is handled through middleware and protected layouts. The project demonstrates a practical full-stack implementation that is suitable for academic submission and future extension.</p>
+<div class="pagebreak"></div>
+<h1 class="chapter">TABLE OF CONTENTS</h1>
+<p>[Automatic TOC field will appear in the Word document.]</p>
+<div class="pagebreak"></div>
+<h1 class="chapter">LIST OF FIGURES</h1>
+<ul><li>Figure 3.1 - System Architecture</li><li>Figure 3.2 - DFD Level 0</li><li>Figure 3.3 - DFD Level 1</li><li>Figure 3.4 - Use Case Diagram</li><li>Figure 3.5 - Activity Diagram</li><li>Figure 3.6 - Sequence Diagram</li><li>Figure 5.1 - Entity-Relationship Diagram</li><li>Figure 8.1 - Home Page</li><li>Figure 8.2 - Login Page</li><li>Figure 8.3 - Registration Page</li><li>Figure 8.4 - Farmer Equipment Browse Page</li><li>Figure 8.5 - Equipment Details and Booking Page</li><li>Figure 8.6 - Farmer Dashboard</li><li>Figure 8.7 - Farmer Chat Assistant Page</li><li>Figure 8.8 - Equipment Listing Creation Page</li><li>Figure 8.9 - Owner Dashboard</li><li>Figure 8.10 - Owner Chat Assistant Page</li></ul>
+<div class="pagebreak"></div>
+<h1 class="chapter">LIST OF TABLES</h1>
+<ul><li>Table 2.1 - Limitations of Existing Systems</li><li>Table 2.2 - Technology Stack</li><li>Table 5.1 - users</li><li>Table 5.2 - equipments</li><li>Table 5.3 - equipment_images</li><li>Table 5.4 - bookings</li><li>Table 5.5 - notifications</li><li>Table 6.1 - Development Machine</li><li>Table 6.2 - Cloud Requirements</li><li>Table 6.3 - Runtime and Framework Requirements</li><li>Table 6.4 - UI and Validation Libraries</li><li>Table 6.5 - Backend and Data Requirements</li><li>Table 7.1 - Functional Test Cases</li><li>Table 7.2 - Integration Test Cases</li><li>Table 7.3 - System Test Cases</li><li>Table 7.4 - User Acceptance Test Cases</li><li>Table 7.5 - Performance Test Cases</li><li>Table 7.6 - Security Test Cases</li><li>Table 7.7 - Browser Compatibility Test Cases</li><li>Table 7.8 - Database Test Cases</li></ul>
+<div class="pagebreak"></div>
+<h1 class="chapter">LIST OF ABBREVIATIONS</h1>
+<table><tr><th>Abbreviation</th><th>Full Form</th></tr><tr><td>API</td><td>Application Programming Interface</td></tr><tr><td>BCA</td><td>Bachelor of Computer Applications</td></tr><tr><td>CSS</td><td>Cascading Style Sheets</td></tr><tr><td>DFD</td><td>Data Flow Diagram</td></tr><tr><td>HTML</td><td>HyperText Markup Language</td></tr><tr><td>HTTP</td><td>HyperText Transfer Protocol</td></tr><tr><td>JSON</td><td>JavaScript Object Notation</td></tr><tr><td>JWT</td><td>JSON Web Token</td></tr><tr><td>ORM</td><td>Object Relational Mapping</td></tr><tr><td>PDF</td><td>Portable Document Format</td></tr><tr><td>PK</td><td>Primary Key</td></tr><tr><td>RLS</td><td>Row Level Security</td></tr><tr><td>SQL</td><td>Structured Query Language</td></tr><tr><td>TOC</td><td>Table of Contents</td></tr><tr><td>UI</td><td>User Interface</td></tr><tr><td>UX</td><td>User Experience</td></tr><tr><td>UUID</td><td>Universally Unique Identifier</td></tr><tr><td>URL</td><td>Uniform Resource Locator</td></tr></table>
+<section class="chapter-page" id="ch1"><h1 class="chapter">CHAPTER 1</h1>
+<p>INTRODUCTION</p>
+<h3 class="section">1.1 Background of the Study</h3>
+<p>Agricultural equipment rental has become an important support service for modern farming, especially for small and medium-scale farmers who cannot justify the full cost of purchasing machinery for occasional use. Tractors, harvesters, sprayers, ploughs, rotavators, and related equipment are often required only during specific farming seasons. In such situations, access to a dependable rental platform can improve productivity, reduce capital expenditure, and make mechanized farming more accessible.</p>
+<p>In many practical settings, however, the process of finding equipment and coordinating rentals remains fragmented. Farmers typically rely on personal contacts, informal phone calls, or local intermediaries to identify available machinery. This approach can be time-consuming and can create uncertainty regarding equipment availability, pricing, and booking confirmation. For equipment owners, the absence of a structured digital system makes it difficult to present listings consistently, manage booking requests, and keep track of rental activity in an organized manner.</p>
+<p>AgriRent is developed as a web-based farm equipment rental marketplace to address this need. The system connects equipment owners who list machinery with farmers who want to rent equipment for a specific date range. The implementation is built on Next.js, TypeScript, Supabase, and shadcn/ui, and it supports authenticated user access, role-based navigation, equipment listing management, booking requests, booking decisions, notifications, and an FAQ-style chat assistant. The application is designed as a complete working platform rather than a static demonstration, with the core business logic handled on the server and the database used as the source of truth.</p>
+<h3 class="section">1.2 Purpose of the Project</h3>
+<p>The primary purpose of AgriRent is to provide a functional and structured online system for agricultural equipment rental. The project aims to make the rental process more organized for both farmers and equipment owners by replacing informal coordination with a centralized web application.</p>
+<p>The specific purposes of the project are:</p>
+<ul><li>To allow farmers to browse available equipment listings and inspect equipment details before making a request.</li></ul>
+<ul><li>To enable farmers to request equipment for a particular date range through a booking workflow.</li></ul>
+<ul><li>To allow equipment owners to create and manage equipment listings through a dedicated owner interface.</li></ul>
+<ul><li>To support booking approval and rejection by the equipment owner based on the current status of each request.</li></ul>
+<ul><li>To calculate the booking total on the server using the stored equipment rate, ensuring that pricing is not dependent on client-side input.</li></ul>
+<ul><li>To store user identity, role, equipment data, bookings, images, and notifications in a structured Supabase-backed database.</li></ul>
+<ul><li>To provide a simple chat assistant for general questions related to the platform and its rental process.</li></ul>
+<p>The project therefore serves as a practical full-stack application for agricultural rental management. It demonstrates how a role-based marketplace can be implemented with strong validation, server-side business rules, and database-backed integrity.</p>
+<h3 class="section">1.3 Scope of the System</h3>
+<p>The scope of AgriRent is limited to the features that are currently implemented in the codebase. The system is intentionally focused on the rental marketplace workflow and does not extend into broader agricultural supply-chain services.</p>
+<p>The system currently covers two main user roles: farmer and equipment owner. A user selects one of these roles during signup, and the role is stored in the application database rather than in editable client-side metadata. This role determines the pages the user can access and the actions available to them.</p>
+<p>For farmers, the system provides account creation, login, equipment browsing, equipment detail viewing, booking requests, booking history, notifications, and access to the chat assistant. For equipment owners, the system provides account creation, login, equipment listing creation, booking request review, notifications, and access to the same chat assistant. The application also includes role-protected layouts that redirect users when they enter a section intended for another role.</p>
+<p>The booking workflow is limited to the request-and-decision cycle. A farmer can request a booking for an equipment item, and the owner can approve or reject that request. The system stores booking status values such as pending, approved, and rejected, while the current user interface focuses on this operational flow. The codebase also contains completed database support for notification storage and image storage for equipment listings.</p>
+<p>The application does not currently implement advanced search filters, profile editing screens, payments, reviews, maps, or background job processing. Those capabilities are not part of the present implementation and are therefore outside the scope of this chapter.</p>
+<h3 class="section">1.4 Problem Statement</h3>
+<p>Farm equipment rental becomes inefficient when the process depends on informal communication and manual record keeping. Farmers may struggle to discover which equipment is available, while owners may find it difficult to manage requests, track the status of bookings, and communicate changes in a reliable way. In such a process, mistakes can occur in scheduling, availability can be misunderstood, and the coordination burden becomes unnecessarily high.</p>
+<p>The problem addressed by AgriRent is the lack of a simple, role-based digital system for managing agricultural equipment rentals. A usable system in this domain must support at least three critical concerns. First, it must allow a farmer to view available equipment and create a booking request without depending on phone calls or in-person visits. Second, it must allow the owner to review those requests and respond in a controlled manner. Third, it must protect the booking process from data tampering and booking conflicts by enforcing validation and server-side checks.</p>
+<p>AgriRent addresses these concerns by combining a modern web interface with Supabase-backed authentication, structured database tables, row-level security, and server-side booking logic. The database validates ownership and availability, the server calculates the final booking amount, and the application stores notifications to keep both parties informed. In this way, the platform converts an informal rental process into a more reliable digital workflow.</p>
+<h3 class="section">1.5 Objectives of the Project</h3>
+<p>The main objectives of AgriRent are listed below:</p>
+<ul><li>To design and implement a web-based marketplace for agricultural equipment rental.</li></ul>
+<ul><li>To provide secure registration and login for two user roles: farmer and equipment owner.</li></ul>
+<ul><li>To store user profiles in a dedicated database table and use the stored role for access control.</li></ul>
+<ul><li>To allow equipment owners to create equipment listings with descriptions, rates, categories, locations, and photos.</li></ul>
+<ul><li>To allow farmers to browse equipment and open detailed equipment pages before booking.</li></ul>
+<ul><li>To implement a date-range booking request system for farmers.</li></ul>
+<ul><li>To compute booking totals on the server using the equipment rate stored in the database.</li></ul>
+<ul><li>To prevent overlapping active bookings through database-level constraints.</li></ul>
+<ul><li>To provide booking review tools so that owners can approve or reject booking requests.</li></ul>
+<ul><li>To generate notifications for booking events and display them in the dashboards.</li></ul>
+<ul><li>To support a simple FAQ chat assistant for general platform guidance.</li></ul>
+<ul><li>To ensure that the application follows secure and maintainable full-stack development practices.</li></ul>
+<p>These objectives reflect the implemented structure of the application. The project is not intended to solve every possible rental-domain requirement, but rather to deliver a working and well-structured core marketplace that demonstrates the essential booking lifecycle from listing creation to booking decision.</p>
+<h3 class="section">1.6 Significance of the Project</h3>
+<p>AgriRent is significant because it applies full-stack web development to a real operational problem in agricultural access and equipment coordination. The project demonstrates how a marketplace can be organized around distinct user responsibilities while still maintaining a simple and understandable user experience.</p>
+<p>For farmers, the system reduces the difficulty of discovering and requesting equipment. Instead of relying only on informal communication, they can use a structured interface to inspect available listings, review rates, and submit booking requests. For equipment owners, the platform provides a consistent way to publish listings and manage incoming requests without relying on scattered messages or manual notes.</p>
+<p>From a technical perspective, the project demonstrates the use of several important software engineering practices. The codebase separates responsibilities into server actions, service functions, validation schemas, and UI components. This separation improves readability and makes the booking process easier to reason about. The system also uses Supabase row-level security and database constraints so that business rules are enforced beyond the user interface. This is important because a rental system must not trust client-supplied pricing or availability information.</p>
+<p>The project is also significant as an academic implementation because it shows the integration of authentication, authorization, database design, storage management, and interactive user interfaces in a single application. The resulting system is a practical example of how a domain-specific marketplace can be built using a modern JavaScript framework and a managed backend platform.</p>
+<h3 class="section">1.7 Organization of the Report</h3>
+<p>This report is organized in a chapter-wise manner. Chapter 1 introduces the project background, purpose, scope, problem statement, objectives, and significance. Chapter 2 typically presents system analysis and the rationale for the proposed solution. Subsequent chapters describe system design, database design, implementation details, testing, and conclusion.</p>
+<p>In the context of the AgriRent project, the present chapter establishes the motivation and boundaries of the system. It provides the foundation for the technical discussion that would follow in later chapters by clarifying what the application is intended to do and which features are currently implemented.</p></section><section class="chapter-page" id="ch2"><h1 class="chapter">CHAPTER 2</h1>
+<p>SYSTEM ANALYSIS</p>
+<h3 class="section">2.1 Existing System</h3>
+<p>The existing process of agricultural equipment rental in many local settings is typically informal and distributed across phone calls, personal contacts, and direct negotiation between farmers and equipment owners. In such a process, the farmer often depends on manual inquiry to determine whether a machine is available on a particular date, while the owner relies on memory, notes, or isolated communication threads to manage booking requests. This form of operation does not provide a single point of reference for listings, availability, booking status, or notifications.</p>
+<p>In the absence of a structured digital platform, equipment discovery is usually limited to local knowledge and word-of-mouth communication. A farmer may contact multiple owners before finding a suitable machine, and the final rental agreement may be confirmed only after several back-and-forth exchanges. Likewise, the owner may receive booking requests through scattered messages without a consistent record of which request has been approved, rejected, or is still pending. The result is a process that is difficult to audit, difficult to scale, and vulnerable to misunderstandings.</p>
+<p>AgriRent was developed as a response to this situation. The implemented system provides a centralized web-based marketplace in which owners can publish equipment listings and farmers can search through the available items, inspect details, and request bookings for a selected date range. The project therefore replaces the fragmented rental approach with a single application that stores user data, equipment data, booking data, notifications, and image metadata in a structured Supabase-backed system.</p>
+<p>The existing system, as observed through the actual implementation of AgriRent, can be described as a transition from manual coordination to a role-based marketplace model. The project supports two distinct user roles, farmer and equipment owner, and each role has a dedicated navigation path, dashboard view, and allowed set of actions. This is a marked improvement over informal rental arrangements because it gives each actor a clearly defined responsibility within the workflow.</p>
+<h3 class="section">2.2 Limitations of Existing Systems</h3>
+<p>The current manual or loosely organized method of rental coordination suffers from a number of limitations. These limitations are the practical reasons why a structured system such as AgriRent is required.</p>
+<table>
+<tr><th>Limitation</th><th>Effect</th></tr>
+<tr><td>No centralized listing repository</td><td>Farmers must rely on personal contacts or repeated inquiries to discover available equipment.</td></tr>
+<tr><td>No structured booking workflow</td><td>Requests and confirmations can be lost in chat messages or verbal conversations.</td></tr>
+<tr><td>No role-based access control</td><td>Owners and farmers do not operate within clearly separated interfaces and permissions.</td></tr>
+<tr><td>No consistent status tracking</td><td>It is difficult to know whether a request is pending, approved, or rejected.</td></tr>
+<tr><td>No database-backed record of activity</td><td>Historical rental data is hard to preserve or review.</td></tr>
+<tr><td>Manual pricing coordination</td><td>Rental charges may be communicated informally and are prone to inconsistency.</td></tr>
+<tr><td>No integrated notification mechanism</td><td>Users may not be informed promptly when booking decisions change.</td></tr>
+<tr><td>Limited equipment presentation</td><td>Photos, categories, and descriptive details are often missing or stored inconsistently.</td></tr>
+</table>
+<p>These limitations affect both sides of the marketplace. Farmers experience uncertainty in finding equipment and confirming bookings, while owners face repeated coordination overhead and a lack of organization in managing requests. From a system perspective, manual processes also make it hard to enforce validation rules such as booking date integrity, owner-only listing creation, or correct role assignment.</p>
+<p>AgriRent addresses these limitations through a modern full-stack implementation. The project uses a dedicated database schema for users, equipment, images, bookings, and notifications. It also uses server-side actions and service-layer logic so that price computation, ownership checks, and booking status transitions are not left to the client side. In addition, the application uses row-level security and route guards to reduce unauthorized access across user roles.</p>
+<h3 class="section">2.3 Proposed System</h3>
+<p>The proposed system in this project is the implemented AgriRent web application itself. It is a farm equipment rental marketplace designed to provide a simple, role-based workflow for farmers and equipment owners. The system is intended to support the full path from registration and login to equipment listing, booking request, booking decision, and notification delivery.</p>
+<p>The core characteristics of the proposed system are as follows:</p>
+<ul><li>Centralized marketplace: Equipment listings are stored in the system and presented to farmers in a unified browse interface.</li></ul>
+<ul><li>Role-based access: Users are assigned either the farmer role or the owner role at signup, and the application routes them accordingly.</li></ul>
+<ul><li>Equipment listing management: Owners can create equipment entries with title, description, category, rate, rate unit, location, and image.</li></ul>
+<ul><li>Booking request workflow: Farmers can request a rental for a chosen date range from the equipment detail page.</li></ul>
+<ul><li>Server-side business rules: Booking totals are computed on the server using stored equipment rates, not submitted by the client.</li></ul>
+<ul><li>Conflict protection: The booking table uses a database-level exclusion constraint to prevent overlapping active bookings for the same equipment.</li></ul>
+<ul><li>Notification support: Booking-related events generate notifications for the affected party.</li></ul>
+<ul><li>Dashboard visibility: Farmers and owners each have a dashboard that summarizes the most relevant records for their role.</li></ul>
+<ul><li>Chat assistant: A simple FAQ assistant is available through a dedicated chat route.</li></ul>
+<p>The system follows a layered implementation approach. The user interface is built with Next.js App Router and shadcn/ui components. Server Actions receive form submissions and delegate to service functions. Service functions interact with Supabase clients and encapsulate the business logic. The database acts as the source of truth for identity, listings, bookings, images, and notifications.</p>
+<p>This design improves reliability by ensuring that important actions are validated on the server. For example, a booking request is not accepted simply because the browser submits a form; it is first validated against a strict schema, then checked against the current equipment record, then written to the database with a computed total, and finally protected by an exclusion constraint that blocks overlapping active bookings. Similarly, equipment creation is available only to authenticated owner accounts, and notification inserts that cross user boundaries are handled through a service-role path rather than through client-side access.</p>
+<h3 class="section">2.4 Feasibility Study</h3>
+<h4 class="section">2.4.1 Technical Feasibility</h4>
+<p>The project is technically feasible because it is built on widely used and well-supported web technologies. Next.js 15 provides the application framework, routing, server-side rendering, and server action support. TypeScript improves type safety throughout the codebase. Supabase supplies authentication, PostgreSQL storage, file storage, and row-level security. The application uses standard browser-based forms, role-aware layouts, and conventional service-layer patterns, which makes the implementation manageable and maintainable.</p>
+<p>The technical design is also feasible because the implemented features are aligned with the strengths of the chosen stack. The farmer and owner dashboards are rendered as server components, which reduces unnecessary client-side complexity. Multipart form submissions are used where file uploads are required. The chat feature is isolated behind a dedicated API route, and the OpenAI-compatible client is used only on the server. These choices keep the runtime boundaries clear and reduce the chance of exposing sensitive credentials to the browser.</p>
+<p>At the database level, the schema is also technically appropriate. The tables are normalized enough for the current scope, relationships are explicit through foreign keys, and the booking overlap problem is handled through a native PostgreSQL exclusion constraint. This is a strong technical choice because the database becomes the authoritative gatekeeper for booking integrity rather than relying on fragile application-side checks alone.</p>
+<h4 class="section">2.4.2 Economic Feasibility</h4>
+<p>The project is economically feasible because the implemented stack is based largely on open-source or low-cost tools. Next.js, React, TypeScript, PostgreSQL, and Tailwind CSS are open technologies. Supabase provides a managed backend that reduces the cost and complexity of self-hosting authentication and database infrastructure. For a small to medium-scale project, this significantly lowers the operational burden compared with building and maintaining a custom backend stack from scratch.</p>
+<p>The application also avoids unnecessary infrastructure. It does not require a separate message broker, a background job runner, or a persistent websocket server for its current feature set. Notifications are stored in the database and shown in the dashboards. The chat assistant is handled through a single route handler and a server-only API client. Because the project is scoped to the implemented marketplace workflow, the cost of development and deployment remains proportionate to the functionality delivered.</p>
+<p>From a maintenance perspective, the separation into service functions and server actions reduces long-term cost by making the application easier to extend and debug. A structured codebase also reduces the risk of defects that could otherwise lead to expensive rework. Therefore, the system is economically reasonable for a final-year project and also realistic as a portfolio-grade demonstration.</p>
+<h4 class="section">2.4.3 Operational Feasibility</h4>
+<p>The system is operationally feasible because the user interactions are straightforward and aligned with typical web usage patterns. A user only needs a modern browser to access the platform. Registration, login, browsing, listing creation, booking requests, and dashboard review all occur through standard form-based interfaces. This reduces the training burden for users and makes the system accessible to non-technical participants.</p>
+<p>The farmer workflow is simple: browse equipment, open a detail page, select a date range, and submit a booking request. The owner workflow is equally direct: create listings, review pending bookings, and approve or reject them. Notifications provide visible feedback after booking actions, which helps keep both parties informed without requiring a separate communication channel inside the application.</p>
+<p>Operationally, the application is also easier to manage because the backend logic is centralized. Role checks are enforced in middleware and route layouts, while the database provides row-level security and key integrity constraints. This means the system can operate reliably with less manual supervision once deployed. The current scope does not include complex operational dependencies such as background workers or live delivery systems, which keeps day-to-day operation practical.</p>
+<h3 class="section">2.5 Technology Stack</h3>
+<p>The technology stack for AgriRent has been selected to support a full-stack rental marketplace with strong server-side control and a maintainable implementation structure.</p>
+<table>
+<tr><th>Technology Category</th><th>Technology</th><th>Purpose</th></tr>
+<tr><td>Frontend Framework</td><td>Next.js 15</td><td>Provides routing, layouts, server components, server actions, and route handlers.</td></tr>
+<tr><td>UI Library</td><td>React 19</td><td>Builds the interactive user interface.</td></tr>
+<tr><td>Language</td><td>TypeScript</td><td>Adds static typing and improves maintainability.</td></tr>
+<tr><td>Styling</td><td>Tailwind CSS 4</td><td>Provides utility-first styling across the application.</td></tr>
+<tr><td>Component System</td><td>shadcn/ui</td><td>Supplies reusable UI primitives such as cards, buttons, forms, calendars, and dialogs.</td></tr>
+<tr><td>Validation</td><td>Zod</td><td>Validates auth, equipment, and booking inputs.</td></tr>
+<tr><td>Form Handling</td><td>react-hook-form</td><td>Manages form state in client components.</td></tr>
+<tr><td>Date Utilities</td><td>date-fns</td><td>Supports date formatting and date-range duration calculation.</td></tr>
+<tr><td>Notifications</td><td>sonner</td><td>Displays toast messages after user actions.</td></tr>
+<tr><td>Backend Platform</td><td>Supabase</td><td>Provides authentication, Postgres, storage, RLS, and server/client SDK support.</td></tr>
+<tr><td>Database</td><td>PostgreSQL</td><td>Stores users, equipment, images, bookings, and notifications.</td></tr>
+<tr><td>Storage</td><td>Supabase Storage</td><td>Stores uploaded equipment photos.</td></tr>
+<tr><td>AI Client</td><td>OpenAI SDK</td><td>Connects the chat route to NVIDIA NIM through an OpenAI-compatible API.</td></tr>
+<tr><td>Testing</td><td>Vitest</td><td>Tests validation schemas and selected service logic.</td></tr>
+</table>
+<p>The implemented stack reflects the actual project requirements. Since the system is a marketplace with authenticated users, role-based access, file uploads, and database-backed booking integrity, a managed backend platform such as Supabase is suitable. The stack also supports the app router model in Next.js, which fits the server-rendered dashboards and server action patterns already used in the codebase.</p>
+<p>The technology choices are also consistent with the current implementation constraints. The application does not rely on a heavy client-state library, real-time websocket infrastructure, or multiple external services for its core features. Instead, it uses a compact but capable stack that matches the project scope and keeps the architecture understandable.</p></section><section class="chapter-page" id="ch3"><h1 class="chapter">CHAPTER 3</h1>
+<p>SYSTEM DESIGN</p>
+<h3 class="section">3.1 System Architecture</h3>
+<p>AgriRent follows a layered web application architecture built around the Next.js App Router, Supabase services, and a clear separation between presentation, server logic, and data storage. The browser interacts with role-based pages rendered by Next.js, while Server Actions and service functions manage business operations such as authentication, equipment creation, booking requests, booking approval, and notifications. Supabase provides the database, authentication, and storage layers, and the chat assistant is exposed through a dedicated API route that connects to an OpenAI-compatible NVIDIA NIM endpoint.</p>
+<p>The architecture is intentionally designed to keep sensitive operations on the server side. The browser never communicates directly with the database using privileged credentials. Instead, the application uses three Supabase client paths: a browser client for user-facing interactions, a server client for authenticated server-side queries, and a service-role admin client for narrow system-generated writes such as notifications. This structure supports the project’s security goals and makes the booking workflow more reliable.</p>
+<pre><code>flowchart TB<br/>  U[User Browser] --&gt; APP[Next.js 15 App Router]<br/><br/>  subgraph Frontend<br/>    APP --&gt; R1[Auth Pages]<br/>    APP --&gt; R2[Farmer Pages]<br/>    APP --&gt; R3[Owner Pages]<br/>    APP --&gt; R4[Chat Pages]<br/>    APP --&gt; UI[shadcn/ui + Tailwind]<br/>  end<br/><br/>  subgraph Server<br/>    A1[Server Actions]<br/>    A2[Route Handler /api/chat]<br/>    S1[Auth Service]<br/>    S2[Listing Service]<br/>    S3[Booking Service]<br/>    S4[Notification Service]<br/>    S5[AI Service]<br/>  end<br/><br/>  subgraph Supabase<br/>    DB[(Postgres)]<br/>    AUTH[Supabase Auth]<br/>    ST[Supabase Storage]<br/>    RLS[RLS Policies]<br/>  end<br/><br/>  subgraph External<br/>    NIM[NVIDIA NIM OpenAI-Compatible API]<br/>  end<br/><br/>  APP --&gt; A1<br/>  APP --&gt; A2<br/><br/>  A1 --&gt; S1<br/>  A1 --&gt; S2<br/>  A1 --&gt; S3<br/><br/>  A2 --&gt; S5<br/>  S5 --&gt; NIM<br/><br/>  S1 --&gt; AUTH<br/>  S2 --&gt; DB<br/>  S3 --&gt; DB<br/>  S4 --&gt; DB<br/>  S2 --&gt; ST<br/><br/>  DB --- RLS<br/>  AUTH --&gt; APP</code></pre>
+<p>Figure 3.1 shows the overall system architecture of AgriRent. The figure illustrates how the user browser interacts with the Next.js application, how server actions delegate to specialized services, and how Supabase supplies authentication, storage, and PostgreSQL persistence. It also shows the dedicated AI route and the external NVIDIA NIM service used for FAQ chat completion.</p>
+<h3 class="section">3.2 DFD Level 0</h3>
+<p>The Level 0 data flow diagram represents AgriRent as a single high-level process that receives requests from the main actors and returns corresponding results. At this level, the system is viewed as one integrated platform that manages authentication, listings, bookings, notifications, and chat responses.</p>
+<pre><code>flowchart TB<br/>  Farmer[Farmer]<br/>  Owner[Equipment Owner]<br/>  NVIDIA[NVIDIA NIM API]<br/><br/>  P0((AgriRent Platform))<br/><br/>  Farmer --&gt;|signup/login, browse, booking requests, chat| P0<br/>  Owner --&gt;|signup/login, listing, booking decisions, chat| P0<br/>  P0 --&gt;|results, dashboards, messages| Farmer<br/>  P0 --&gt;|results, dashboards, messages| Owner<br/>  P0 --&gt;|chat completion request| NVIDIA<br/>  NVIDIA --&gt;|streamed FAQ response| P0</code></pre>
+<p>Figure 3.2 presents the DFD Level 0 view. The diagram shows two external actors, farmer and equipment owner, exchanging data with the AgriRent platform. Farmers submit signup, login, browsing, booking, and chat requests, while owners submit listing and booking decision requests. The system then returns dashboards, confirmation messages, and streamed chat responses. The figure emphasizes that all internal processing is encapsulated inside a single platform boundary.</p>
+<h3 class="section">3.3 DFD Level 1</h3>
+<p>The Level 1 data flow diagram expands the system into its major sub-processes and shows how each process interacts with the underlying data stores. This level provides a clearer picture of the internal implementation without descending into component-level detail.</p>
+<pre><code>flowchart TB<br/>  Farmer[Farmer]<br/>  Owner[Equipment Owner]<br/>  Browser[Browser]<br/>  NVIDIA[NVIDIA NIM API]<br/><br/>  P1((1. Auth))<br/>  P2((2. Browse &amp; View Equipment))<br/>  P3((3. List Equipment))<br/>  P4((4. Create Booking))<br/>  P5((5. Approve/Reject Booking))<br/>  P6((6. Notifications))<br/>  P7((7. Chat Assistant))<br/><br/>  D1[(Supabase Auth)]<br/>  D2[(users)]<br/>  D3[(equipments)]<br/>  D4[(equipment_images)]<br/>  D5[(bookings)]<br/>  D6[(notifications)]<br/>  D7[(Supabase Storage)]<br/><br/>  Farmer --&gt; P1<br/>  Owner --&gt; P1<br/>  P1 &lt;--&gt; D1<br/>  P1 &lt;--&gt; D2<br/><br/>  Farmer --&gt; P2<br/>  Owner --&gt; P2<br/>  P2 &lt;--&gt; D3<br/>  P2 &lt;--&gt; D4<br/>  P2 &lt;--&gt; D2<br/><br/>  Owner --&gt; P3<br/>  P3 &lt;--&gt; D2<br/>  P3 &lt;--&gt; D3<br/>  P3 &lt;--&gt; D4<br/>  P3 &lt;--&gt; D7<br/><br/>  Farmer --&gt; P4<br/>  P4 &lt;--&gt; D3<br/>  P4 &lt;--&gt; D5<br/>  P4 --&gt; P6<br/>  P6 &lt;--&gt; D6<br/><br/>  Owner --&gt; P5<br/>  P5 &lt;--&gt; D2<br/>  P5 &lt;--&gt; D3<br/>  P5 &lt;--&gt; D5<br/>  P5 --&gt; P6<br/><br/>  Farmer --&gt; P7<br/>  Owner --&gt; P7<br/>  P7 --&gt; NVIDIA<br/>  NVIDIA --&gt; P7<br/><br/>  Browser --&gt; P1</code></pre>
+<p>Figure 3.3 shows the Level 1 DFD. The diagram decomposes the platform into authentication, equipment browsing, equipment listing, booking creation, booking decision handling, notifications, and chat assistance. It also shows the main data stores used by each process: `users`, `equipments`, `equipment_images`, `bookings`, `notifications`, Supabase Auth, and Supabase Storage. This figure explains how each functional area is connected to the database and how the application maintains separation between user-facing operations and persistence.</p>
+<h3 class="section">3.4 Use Case Diagram</h3>
+<p>The use case view of AgriRent identifies the primary interactions available to the two user roles and the system-level notification behavior used internally. It helps to clarify what each actor can do within the implemented scope of the project.</p>
+<pre><code>flowchart LR<br/>  Farmer((Farmer))<br/>  Owner((Owner))<br/>  System((System))<br/>  Admin((Admin/System Role))<br/><br/>  UC1[Sign up]<br/>  UC2[Log in]<br/>  UC3[Browse equipment]<br/>  UC4[View equipment details]<br/>  UC5[Request booking]<br/>  UC6[View booking history]<br/>  UC7[View notifications]<br/>  UC8[Use chat assistant]<br/><br/>  UC9[List equipment]<br/>  UC10[Upload equipment photo]<br/>  UC11[View dashboard]<br/>  UC12[Approve booking]<br/>  UC13[Reject booking]<br/><br/>  UC14[Insert system notification]<br/><br/>  Farmer --&gt; UC1<br/>  Farmer --&gt; UC2<br/>  Farmer --&gt; UC3<br/>  Farmer --&gt; UC4<br/>  Farmer --&gt; UC5<br/>  Farmer --&gt; UC6<br/>  Farmer --&gt; UC7<br/>  Farmer --&gt; UC8<br/><br/>  Owner --&gt; UC1<br/>  Owner --&gt; UC2<br/>  Owner --&gt; UC9<br/>  Owner --&gt; UC10<br/>  Owner --&gt; UC11<br/>  Owner --&gt; UC12<br/>  Owner --&gt; UC13<br/>  Owner --&gt; UC7<br/>  Owner --&gt; UC8<br/><br/>  Admin --&gt; UC14<br/>  System --&gt; UC14</code></pre>
+<p>Figure 3.4 presents the use case diagram. The figure shows that the farmer role is centered on discovery and booking, while the owner role is centered on listing management and booking decisions. Both roles can authenticate and use the chat assistant. The diagram also shows the internal notification insertion use case, which is performed by the system through a server-only path rather than by an end user directly.</p>
+<h3 class="section">3.5 Activity Diagram</h3>
+<p>The activity flow of AgriRent describes the operational sequence from user entry to role-specific actions. It shows how the application branches based on authentication status and user role.</p>
+<pre><code>flowchart TD<br/>  A([Start]) --&gt; B[User opens app]<br/>  B --&gt; C{Authenticated?}<br/>  C -- No --&gt; D[Go to login/signup]<br/>  D --&gt; E[Create account or log in]<br/>  E --&gt; F[Session created]<br/>  C -- Yes --&gt; G{Role}<br/>  F --&gt; G<br/><br/>  G -- Farmer --&gt; H[Browse equipment]<br/>  H --&gt; I[Open equipment detail]<br/>  I --&gt; J[Select date range]<br/>  J --&gt; K[Submit booking request]<br/>  K --&gt; L[Server validates and computes total]<br/>  L --&gt; M[Store booking as pending]<br/>  M --&gt; N[Notify owner]<br/>  N --&gt; O[Farmer views booking status]<br/><br/>  G -- Owner --&gt; P[View owner dashboard]<br/>  P --&gt; Q[Review pending bookings]<br/>  Q --&gt; R{Decision}<br/>  R -- Approve --&gt; S[Update booking to approved]<br/>  R -- Reject --&gt; T[Update booking to rejected]<br/>  S --&gt; U[Notify farmer]<br/>  T --&gt; U<br/>  U --&gt; V[Owner sees updated dashboard]<br/><br/>  G -- Farmer or Owner --&gt; W[Open chat assistant]<br/>  W --&gt; X[Send message to /api/chat]<br/>  X --&gt; Y[Stream FAQ response]<br/>  O --&gt; Z([End])<br/>  V --&gt; Z<br/>  Y --&gt; Z</code></pre>
+<p>Figure 3.5 illustrates the activity diagram for the application. The figure shows the complete behavior of the system from login to role-based execution paths. For farmers, the flow ends with booking request submission and status viewing. For owners, the flow ends with booking review and decision-making. The chat assistant branch is shown separately because it is available to both roles and does not alter database state.</p>
+<h3 class="section">3.6 Sequence Diagram</h3>
+<p>The sequence diagram focuses on one of the most important implemented flows: a farmer requesting a booking for an equipment item. This sequence shows the order of interaction between the user interface, server action, booking service, database, and notification service.</p>
+<pre><code>sequenceDiagram<br/>  actor Farmer<br/>  participant UI as BookingRequestForm<br/>  participant Action as createBookingAction<br/>  participant Service as booking.service<br/>  participant DB as Supabase Postgres<br/>  participant Notify as notification.service<br/>  participant Owner as Owner Dashboard<br/><br/>  Farmer-&gt;&gt;UI: Select date range and click Request booking<br/>  UI-&gt;&gt;Action: formData(equipmentId, startDate, endDate)<br/>  Action-&gt;&gt;Service: createBooking(input, farmerId)<br/>  Service-&gt;&gt;DB: Read equipment rate and owner_id<br/>  DB--&gt;&gt;Service: equipment row<br/>  Service-&gt;&gt;DB: Insert booking(pending, computed total_amount)<br/>  DB--&gt;&gt;Service: booking row or exclusion error<br/>  alt booking inserted<br/>    Service-&gt;&gt;Notify: createNotification(ownerId, bookingId, message)<br/>    Notify-&gt;&gt;DB: Insert notification via service role<br/>    DB--&gt;&gt;Notify: notification row<br/>    Notify--&gt;&gt;Service: success<br/>    Service--&gt;&gt;Action: success<br/>    Action--&gt;&gt;UI: booking requested<br/>    UI--&gt;&gt;Farmer: toast success<br/>    Note over Owner: Owner dashboard will show new pending request<br/>  else overlap or error<br/>    Service--&gt;&gt;Action: friendly failure message<br/>    Action--&gt;&gt;UI: failure<br/>    UI--&gt;&gt;Farmer: show error<br/>  end</code></pre>
+<p>Figure 3.6 shows the sequence for booking creation. The diagram demonstrates that the server first loads the equipment data, computes the booking amount, and then attempts the insert. If the insert succeeds, the system creates a notification for the owner. If the booking conflicts with an existing active reservation, the user receives a friendly failure message instead of a raw database error. The figure highlights the role of the service layer in protecting the booking workflow.</p>
+<h3 class="section">3.7 Module Interaction</h3>
+<p>The modules in AgriRent are organized so that the user interface, business logic, validation, and data access remain separated. This structure makes the application easier to understand and reduces coupling between the parts of the system.</p>
+<ul><li>Authentication module</li></ul>
+<ul><li>Handles signup, login, logout, session refresh, and role-based redirects.</li></ul>
+<ul><li>Interacts with Supabase Auth and the `users` table.</li></ul>
+<ul><li>Equipment module</li></ul>
+<ul><li>Handles equipment creation, equipment browsing, and equipment detail display.</li></ul>
+<ul><li>Interacts with `equipments`, `equipment_images`, and Supabase Storage.</li></ul>
+<ul><li>Booking module</li></ul>
+<ul><li>Handles booking request creation, approval, and rejection.</li></ul>
+<ul><li>Interacts with `bookings` and uses server-side price calculation.</li></ul>
+<ul><li>Notification module</li></ul>
+<ul><li>Creates and reads booking notifications.</li></ul>
+<ul><li>Uses a service-role client for inserts and a normal server client for reads.</li></ul>
+<ul><li>Chat module</li></ul>
+<ul><li>Handles user chat input and streaming AI responses.</li></ul>
+<ul><li>Interacts with the `/api/chat` route and the NVIDIA NIM API.</li></ul>
+<ul><li>Validation module</li></ul>
+<ul><li>Uses Zod schemas for auth, equipment, and booking input validation.</li></ul>
+<ul><li>Prevents invalid or tampered payloads from reaching the business logic layer.</li></ul>
+<ul><li>Presentation module</li></ul>
+<ul><li>Contains pages, layouts, forms, cards, calendars, and buttons used in the UI.</li></ul>
+<ul><li>Provides the interactive interface for farmers and owners.</li></ul>
+<p>The module interaction pattern is primarily top-down. User actions start in the presentation layer, pass through a server action when mutation is required, then reach a service function that performs the business logic, and finally interact with the database or external API. This design ensures that the application remains maintainable and that critical rules such as owner-only listing creation, pending-only booking updates, and server-side total calculation remain enforced consistently across the system.</p></section><section class="chapter-page" id="ch4"><h1 class="chapter">CHAPTER 4</h1>
+<p>MODULES DESCRIPTION</p>
+<h3 class="section">4.1 Authentication Module</h3>
+<p>The Authentication Module manages user identity, session creation, and role-based access control within AgriRent. It supports user registration, login, logout, and authenticated session continuity across protected pages. The implementation is built on Supabase Auth and is integrated into the application through server actions, server-side Supabase clients, middleware, and role-specific layouts.</p>
+<p>During registration, the user provides an email address, password, full name, and role. The signup form validates this data using Zod before submission. The corresponding server action then invokes the authentication service, which creates the Supabase Auth account and inserts a matching row into the `users` table. This row stores the user’s name and role, which are then used throughout the application for authorization and routing. The role is chosen once at signup and is not taken from editable client-side metadata.</p>
+<p>During login, the application verifies the email and password using Supabase Auth. After successful authentication, the application retrieves the user’s role from the database and redirects the user to the appropriate dashboard. Farmers are routed to the farmer section, while owners are routed to the owner section. This approach ensures that access decisions are based on server-controlled data rather than on data supplied by the browser.</p>
+<p>Session continuity is maintained through middleware and server-side clients. The middleware refreshes the session cookie on each request and checks whether the current path belongs to a protected role group. The farmer and owner layouts perform an additional server-side role check on every render. Logout is provided through a reusable client component that calls the logout server action and redirects the user back to the login page.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/app/(auth)/login/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(auth)\login\page.tsx)</li></ul>
+<ul><li>[`src/app/(auth)/signup/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(auth)\signup\page.tsx)</li></ul>
+<ul><li>[`src/app/actions/auth.actions.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\actions\auth.actions.ts)</li></ul>
+<ul><li>[`src/lib/services/auth.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\auth.service.ts)</li></ul>
+<ul><li>[`src/lib/validations/auth.schema.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\validations\auth.schema.ts)</li></ul>
+<ul><li>[`src/middleware.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\middleware.ts)</li></ul>
+<ul><li>[`src/app/(farmer)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\layout.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\layout.tsx)</li></ul>
+<ul><li>[`src/components/auth/logout-button.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\components\auth\logout-button.tsx)</li></ul>
+<p>The main database table used by this module is `users`, while Supabase Auth manages the underlying authentication identity.</p>
+<h3 class="section">4.2 Equipment Module</h3>
+<p>The Equipment Module covers the creation, storage, browsing, and display of agricultural equipment listings. It is one of the core functional modules of the project because the marketplace depends on the ability of owners to publish equipment and of farmers to inspect those listings before making a booking request.</p>
+<p>Owners create new equipment through a dedicated form page. The form collects the equipment title, description, category, rate, rate unit, location, and a photo. The user interface uses react-hook-form and Zod for validation, while the final submission is sent as `FormData` to a server action. The server action checks the authenticated session, validates the payload again, and delegates the creation logic to the listing service.</p>
+<p>The listing service performs the main business logic. It verifies that the requesting account is an owner, validates the uploaded file type and size, inserts a new row into the `equipments` table, uploads the image to Supabase Storage, and records the image path in the `equipment_images` table. If the upload fails after the listing is created, the service returns a partial-success message so the owner can retry image handling later.</p>
+<p>Farmers access equipment through the browse page and the equipment detail page. The browse page retrieves all equipment records and displays them as cards containing the photo, title, category, rate, and owner name. The detail page presents the selected equipment in a fuller layout with multiple images, description, location, and a booking request form. The image URLs are generated from the public Supabase Storage bucket and rendered through Next.js image support.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/app/(owner)/equipment/new/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\equipment\new\page.tsx)</li></ul>
+<ul><li>[`src/app/actions/listing.actions.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\actions\listing.actions.ts)</li></ul>
+<ul><li>[`src/lib/services/listing.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\listing.service.ts)</li></ul>
+<ul><li>[`src/lib/validations/equipment.schema.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\validations\equipment.schema.ts)</li></ul>
+<ul><li>[`src/app/(farmer)/browse/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\browse\page.tsx)</li></ul>
+<ul><li>[`src/app/(farmer)/equipment/[id]/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\equipment\[id]\page.tsx)</li></ul>
+<ul><li>[`src/app/(farmer)/equipment/[id]/BookingRequestForm.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\equipment\[id]\BookingRequestForm.tsx)</li></ul>
+<ul><li>[`next.config.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\next.config.ts)</li></ul>
+<p>The primary database tables used by this module are `equipments` and `equipment_images`. Supabase Storage is used to hold uploaded photographs.</p>
+<h3 class="section">4.3 Booking Module</h3>
+<p>The Booking Module implements the central rental workflow of the application. It allows a farmer to request equipment for a chosen date range and allows the equipment owner to approve or reject the request. This module also ensures that the booking price and booking validity are controlled by server-side logic rather than by the client interface.</p>
+<p>The farmer begins by opening the equipment detail page and selecting a start and end date in the booking request form. The form calculates a display-only estimate for user convenience, but the actual booking amount is computed on the server. When the form is submitted, the booking server action validates the data using a strict Zod schema and passes the request to the booking service.</p>
+<p>The booking service fetches the equipment record from the database, reads the stored rate, calculates the total amount using the date range, and inserts the booking as a pending request. The booking table is protected by a database-level exclusion constraint so that overlapping active bookings cannot be inserted for the same equipment. If the database raises a conflict, the service converts it into a friendly message rather than exposing a raw error.</p>
+<p>Owners review incoming requests from the owner dashboard. The dashboard separates pending bookings from active ones, and the approve/reject controls are available only for pending requests. The booking service performs additional checks to confirm that the current user owns the equipment and that the booking is still pending before updating the status. After a successful approval or rejection, a notification is created for the farmer.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/app/(farmer)/equipment/[id]/BookingRequestForm.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\equipment\[id]\BookingRequestForm.tsx)</li></ul>
+<ul><li>[`src/app/actions/booking.actions.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\actions\booking.actions.ts)</li></ul>
+<ul><li>[`src/lib/services/booking.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\booking.service.ts)</li></ul>
+<ul><li>[`src/lib/validations/booking.schema.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\validations\booking.schema.ts)</li></ul>
+<ul><li>[`src/app/(owner)/owner/dashboard/BookingActionButtons.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\owner\dashboard\BookingActionButtons.tsx)</li></ul>
+<ul><li>[`src/app/(farmer)/farmer/dashboard/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\farmer\dashboard\page.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/owner/dashboard/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\owner\dashboard\page.tsx)</li></ul>
+<p>The principal database table used by this module is `bookings`, with supporting references to `equipments`, `users`, and `notifications`.</p>
+<h3 class="section">4.4 Dashboard Module</h3>
+<p>The Dashboard Module provides role-specific views for the two major user groups in the system. Rather than presenting a single generic dashboard, AgriRent uses separate farmer and owner dashboards so that each role sees only the information relevant to its workflow.</p>
+<p>The farmer dashboard displays the booking history for the logged-in farmer and shows the current status of each booking using status badges. It also displays the user’s notifications in a simple list. This gives the farmer a clear overview of past and current rental activity without needing to inspect each equipment page individually.</p>
+<p>The owner dashboard displays the owner’s equipment listings, incoming booking requests, active bookings, and notifications. This is the main operational screen for the owner role. It allows the owner to monitor the marketplace activity associated with their equipment and to respond to pending booking requests efficiently.</p>
+<p>Both dashboards are server-rendered and rely on service-layer calls rather than raw queries in the page components. This keeps the implementation consistent with the project’s architecture rules. The dashboards also include shared layout elements such as the role label and the logout button, which help users remain oriented within the correct role section of the application.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/app/(farmer)/farmer/dashboard/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\farmer\dashboard\page.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/owner/dashboard/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\owner\dashboard\page.tsx)</li></ul>
+<ul><li>[`src/app/(farmer)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\layout.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\layout.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/owner/dashboard/BookingActionButtons.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\owner\dashboard\BookingActionButtons.tsx)</li></ul>
+<ul><li>[`src/components/auth/logout-button.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\components\auth\logout-button.tsx)</li></ul>
+<p>The dashboard module uses the `equipments`, `bookings`, `notifications`, and `users` tables.</p>
+<h3 class="section">4.5 Admin Module</h3>
+<p>The Admin Module in AgriRent is not exposed as a separate administrator dashboard. Instead, the project implements a narrow internal admin capability through server-only operations that bypass normal row-level restrictions when necessary. The purpose of this module is to support system-generated actions that do not belong to either the farmer or owner directly.</p>
+<p>The clearest example of this behavior is the notification workflow. Notification records are inserted through a service-role Supabase client in a trusted server-side path. This is necessary because the notification recipient is often not the same user who triggered the event. For example, when a farmer submits a booking request, the system creates a notification for the owner. When the owner approves or rejects that booking, the system creates a notification for the farmer. These writes are intentionally performed outside the normal authenticated user boundary.</p>
+<p>The project does not implement a separate admin UI, admin login, or admin analytics dashboard. Therefore, the admin module should be understood as a backend system capability rather than a user-facing role in the current application.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/lib/supabase/admin.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\supabase\admin.ts)</li></ul>
+<ul><li>[`src/lib/services/notification.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\notification.service.ts)</li></ul>
+<ul><li>[`src/lib/services/booking.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\booking.service.ts)</li></ul>
+<p>The main table used by this module is `notifications`.</p>
+<h3 class="section">4.6 Search Module</h3>
+<p>The Search Module is minimal in the current implementation. The project provides equipment browsing, but it does not yet implement advanced search, category filtering, location filtering, or sorting controls. As a result, the present search capability is best described as a browse-based discovery flow rather than a fully featured search engine.</p>
+<p>Farmers can view a list of all available equipment on the browse page and open individual equipment detail pages. This gives them a basic discovery mechanism for finding listings, but it does not include user-driven query parameters or filtering inputs. The current implementation therefore supports listing inspection, not advanced search.</p>
+<p>Although the application does not yet include a dedicated search interface, the data model already contains fields that would support future search features, such as equipment category, location, title, and description. The current module can therefore be considered an initial browsing foundation for future search enhancement.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/app/(farmer)/browse/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\browse\page.tsx)</li></ul>
+<ul><li>[`src/lib/services/listing.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\listing.service.ts)</li></ul>
+<ul><li>[`src/app/(farmer)/equipment/[id]/page.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\equipment\[id]\page.tsx)</li></ul>
+<p>The tables that support future search behavior are `equipments`, `equipment_images`, and `users`.</p>
+<h3 class="section">4.7 Profile Module</h3>
+<p>The Profile Module stores and exposes the identity data associated with each account. In AgriRent, profile data is not managed through a dedicated profile-edit screen. Instead, the user profile is created during signup and then reused for role checks, dashboard routing, and display purposes.</p>
+<p>The profile record includes the user ID, email address, full name, role, and creation timestamp. The application reads this information from the `users` table whenever it needs to determine whether the current account belongs to a farmer or an owner. This is particularly important for access control in middleware and in the role-specific layouts.</p>
+<p>At present, the profile module does not provide a user-facing edit profile page, avatar upload, or preference settings interface. Its implementation is therefore limited to the identity and role data required by the current application workflow. Even though the module is small, it is essential because other parts of the system depend on it for secure routing and correct role assignment.</p>
+<p>The module is implemented through the following files:</p>
+<ul><li>[`src/lib/services/auth.service.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\lib\services\auth.service.ts)</li></ul>
+<ul><li>[`src/middleware.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\middleware.ts)</li></ul>
+<ul><li>[`src/app/(farmer)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(farmer)\layout.tsx)</li></ul>
+<ul><li>[`src/app/(owner)/layout.tsx`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\(owner)\layout.tsx)</li></ul>
+<ul><li>[`src/app/actions/auth.actions.ts`](C:\Users\alisa\OneDrive\Desktop\AgriRent\src\app\actions\auth.actions.ts)</li></ul>
+<p>The primary table used by this module is `users`.</p></section><section class="chapter-page" id="ch5"><h1 class="chapter">CHAPTER 5</h1>
+<p>DATABASE DESIGN</p>
+<h3 class="section">5.1 Database Design</h3>
+<p>The database design of AgriRent follows a relational model centered on users, equipment listings, equipment images, bookings, and notifications. The schema is implemented in Supabase PostgreSQL and is designed to support the complete marketplace workflow of the application. Each table represents one functional area of the system, while foreign keys and row-level security policies enforce consistency and access control.</p>
+<p>The database is structured so that identity data is separated from marketplace data. User accounts are stored in the `users` table, while equipment listings are stored in `equipments`. Each equipment record belongs to one owner, each image belongs to one equipment record, each booking belongs to one farmer and one equipment item, and each notification belongs to one user. This structure keeps the model normalized and makes the relationships between entities explicit.</p>
+<pre><code>erDiagram<br/>  USERS {<br/>    uuid id PK<br/>    text email<br/>    text full_name<br/>    user_role role<br/>    timestamptz created_at<br/>  }<br/><br/>  EQUIPMENTS {<br/>    uuid id PK<br/>    uuid owner_id FK<br/>    text title<br/>    text description<br/>    equipment_category category<br/>    numeric rate<br/>    text rate_unit<br/>    text location<br/>    timestamptz created_at<br/>  }<br/><br/>  EQUIPMENT_IMAGES {<br/>    uuid id PK<br/>    uuid equipment_id FK<br/>    text storage_path<br/>    timestamptz created_at<br/>  }<br/><br/>  BOOKINGS {<br/>    uuid id PK<br/>    uuid equipment_id FK<br/>    uuid farmer_id FK<br/>    date start_date<br/>    date end_date<br/>    numeric total_amount<br/>    booking_status status<br/>    timestamptz created_at<br/>  }<br/><br/>  NOTIFICATIONS {<br/>    uuid id PK<br/>    uuid user_id FK<br/>    uuid booking_id FK<br/>    text message<br/>    boolean read<br/>    timestamptz created_at<br/>  }<br/><br/>  USERS ||--o{ EQUIPMENTS : owns<br/>  USERS ||--o{ BOOKINGS : makes<br/>  USERS ||--o{ NOTIFICATIONS : receives<br/>  EQUIPMENTS ||--o{ EQUIPMENT_IMAGES : has<br/>  EQUIPMENTS ||--o{ BOOKINGS : booked_for<br/>  BOOKINGS ||--o{ NOTIFICATIONS : referenced_by</code></pre>
+<p>Figure 5.1 shows the entity-relationship diagram of AgriRent. The diagram illustrates the core database entities and the way they are connected through one-to-many relationships. The `users` table acts as the central identity entity, while the other tables represent marketplace activity, stored media, and user notifications.</p>
+<h3 class="section">5.2 Relationships</h3>
+<p>The relationships in the AgriRent database are defined through foreign keys and supported by application-level service logic and RLS policies.</p>
+<ul><li>A user can own many equipment listings.</li></ul>
+<ul><li>`equipments.owner_id` references `users.id`.</li></ul>
+<ul><li>A user can create many bookings.</li></ul>
+<ul><li>`bookings.farmer_id` references `users.id`.</li></ul>
+<ul><li>A user can receive many notifications.</li></ul>
+<ul><li>`notifications.user_id` references `users.id`.</li></ul>
+<ul><li>An equipment listing can have many images.</li></ul>
+<ul><li>`equipment_images.equipment_id` references `equipments.id`.</li></ul>
+<ul><li>An equipment listing can have many bookings over time.</li></ul>
+<ul><li>`bookings.equipment_id` references `equipments.id`.</li></ul>
+<ul><li>A booking can be referenced by notifications.</li></ul>
+<ul><li>`notifications.booking_id` references `bookings.id`.</li></ul>
+<p>In addition to the explicit foreign-key structure, the database uses a booking exclusion constraint to prevent overlapping active bookings for the same equipment. This is a critical integrity rule because it prevents double-booking at the database level rather than relying only on application checks. The constraint applies to `pending` and `approved` bookings.</p>
+<p>The database also uses helper functions such as `current_user_role()`, `is_owner()`, and `owns_equipment()` to support row-level security without recursive cross-table checks. This approach allows the schema to remain secure while still letting the application determine ownership and authorization correctly.</p>
+<h3 class="section">5.3 Primary Keys and Foreign Keys</h3>
+<p>The primary keys and foreign keys define the identity and linking structure of the database. All key fields use UUID values, which is appropriate for a distributed web application backed by Supabase.</p>
+<p>Primary Keys:</p>
+<ul><li>`users.id`</li></ul>
+<ul><li>`equipments.id`</li></ul>
+<ul><li>`equipment_images.id`</li></ul>
+<ul><li>`bookings.id`</li></ul>
+<ul><li>`notifications.id`</li></ul>
+<p>Foreign Keys:</p>
+<ul><li>`equipments.owner_id` references `users.id`</li></ul>
+<ul><li>`equipment_images.equipment_id` references `equipments.id`</li></ul>
+<ul><li>`bookings.equipment_id` references `equipments.id`</li></ul>
+<ul><li>`bookings.farmer_id` references `users.id`</li></ul>
+<ul><li>`notifications.user_id` references `users.id`</li></ul>
+<ul><li>`notifications.booking_id` references `bookings.id`</li></ul>
+<p>These keys ensure referential integrity across the system. For example, a booking cannot exist without a valid equipment item and a valid farmer account, and a notification cannot reference a non-existent booking. The use of UUID keys also keeps the schema aligned with modern Supabase practices and avoids sequential identifier exposure.</p>
+<h3 class="section">5.4 Table Descriptions</h3>
+<p>Table: `users`</p>
+<table>
+<tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr>
+<tr><td>`id`</td><td>`uuid`</td><td>Primary Key, references `auth.users(id)`</td><td>Unique identifier for the user account.</td></tr>
+<tr><td>`email`</td><td>`text`</td><td>Not Null</td><td>Email address of the user.</td></tr>
+<tr><td>`full_name`</td><td>`text`</td><td>Nullable</td><td>Full name entered during signup.</td></tr>
+<tr><td>`role`</td><td>`user_role`</td><td>Not Null</td><td>Account role: `farmer` or `owner`.</td></tr>
+<tr><td>`created_at`</td><td>`timestamptz`</td><td>Not Null, default `now()`</td><td>Timestamp when the profile row was created.</td></tr>
+</table>
+<p>Table: `equipments`</p>
+<table>
+<tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr>
+<tr><td>`id`</td><td>`uuid`</td><td>Primary Key, default `gen_random_uuid()`</td><td>Unique identifier for the equipment listing.</td></tr>
+<tr><td>`owner_id`</td><td>`uuid`</td><td>Not Null, foreign key to `users.id`</td><td>Owner of the equipment listing.</td></tr>
+<tr><td>`title`</td><td>`text`</td><td>Not Null</td><td>Equipment title shown in browse and detail views.</td></tr>
+<tr><td>`description`</td><td>`text`</td><td>Nullable</td><td>Detailed description of the equipment.</td></tr>
+<tr><td>`category`</td><td>`equipment_category`</td><td>Not Null</td><td>Equipment category such as Tractor or Harvester.</td></tr>
+<tr><td>`rate`</td><td>`numeric(10,2)`</td><td>Not Null</td><td>Rental rate stored by the owner.</td></tr>
+<tr><td>`rate_unit`</td><td>`text`</td><td>Not Null, default `day`</td><td>Rate basis used by the booking calculation.</td></tr>
+<tr><td>`location`</td><td>`text`</td><td>Nullable</td><td>Optional location string for the listing.</td></tr>
+<tr><td>`created_at`</td><td>`timestamptz`</td><td>Not Null, default `now()`</td><td>Timestamp of listing creation.</td></tr>
+</table>
+<p>Table: `equipment_images`</p>
+<table>
+<tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr>
+<tr><td>`id`</td><td>`uuid`</td><td>Primary Key, default `gen_random_uuid()`</td><td>Unique identifier for the image row.</td></tr>
+<tr><td>`equipment_id`</td><td>`uuid`</td><td>Not Null, foreign key to `equipments.id`</td><td>Equipment item to which the image belongs.</td></tr>
+<tr><td>`storage_path`</td><td>`text`</td><td>Not Null</td><td>Storage path of the uploaded file in Supabase Storage.</td></tr>
+<tr><td>`created_at`</td><td>`timestamptz`</td><td>Not Null, default `now()`</td><td>Timestamp of image record creation.</td></tr>
+</table>
+<p>Table: `bookings`</p>
+<table>
+<tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr>
+<tr><td>`id`</td><td>`uuid`</td><td>Primary Key, default `gen_random_uuid()`</td><td>Unique identifier for the booking request.</td></tr>
+<tr><td>`equipment_id`</td><td>`uuid`</td><td>Not Null, foreign key to `equipments.id`</td><td>Equipment being booked.</td></tr>
+<tr><td>`farmer_id`</td><td>`uuid`</td><td>Not Null, foreign key to `users.id`</td><td>Farmer who created the booking.</td></tr>
+<tr><td>`start_date`</td><td>`date`</td><td>Not Null</td><td>Start date of the booking range.</td></tr>
+<tr><td>`end_date`</td><td>`date`</td><td>Not Null</td><td>End date of the booking range.</td></tr>
+<tr><td>`total_amount`</td><td>`numeric(10,2)`</td><td>Not Null</td><td>Server-calculated total booking amount.</td></tr>
+<tr><td>`status`</td><td>`booking_status`</td><td>Not Null, default `pending`</td><td>Booking state.</td></tr>
+<tr><td>`created_at`</td><td>`timestamptz`</td><td>Not Null, default `now()`</td><td>Timestamp of booking creation.</td></tr>
+</table>
+<p>Table: `notifications`</p>
+<table>
+<tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr>
+<tr><td>`id`</td><td>`uuid`</td><td>Primary Key, default `gen_random_uuid()`</td><td>Unique identifier for the notification.</td></tr>
+<tr><td>`user_id`</td><td>`uuid`</td><td>Not Null, foreign key to `users.id`</td><td>Notification recipient.</td></tr>
+<tr><td>`booking_id`</td><td>`uuid`</td><td>Nullable, foreign key to `bookings.id`</td><td>Related booking if the notification is booking-related.</td></tr>
+<tr><td>`message`</td><td>`text`</td><td>Not Null</td><td>Notification text shown in the dashboard.</td></tr>
+<tr><td>`read`</td><td>`boolean`</td><td>Not Null, default `false`</td><td>Read/unread state.</td></tr>
+<tr><td>`created_at`</td><td>`timestamptz`</td><td>Not Null, default `now()`</td><td>Timestamp of notification creation.</td></tr>
+</table>
+<h3 class="section">5.5 SQL Schema</h3>
+<p>The SQL schema used by AgriRent is defined in the Supabase migration files. The following schema summary reflects the implemented database structure.</p>
+<pre><code>CREATE EXTENSION IF NOT EXISTS btree_gist;<br/><br/>CREATE TYPE user_role AS ENUM (&#x27;farmer&#x27;, &#x27;owner&#x27;);<br/>CREATE TYPE equipment_category AS ENUM (&#x27;Tractor&#x27;, &#x27;Harvester&#x27;, &#x27;Plough&#x27;, &#x27;Rotavator&#x27;, &#x27;Sprayer&#x27;, &#x27;Other&#x27;);<br/>CREATE TYPE booking_status AS ENUM (&#x27;pending&#x27;, &#x27;approved&#x27;, &#x27;rejected&#x27;, &#x27;completed&#x27;, &#x27;cancelled&#x27;);<br/><br/>CREATE TABLE public.users (<br/>  id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,<br/>  email text NOT NULL,<br/>  full_name text,<br/>  role user_role NOT NULL,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);<br/><br/>CREATE TABLE public.equipments (<br/>  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),<br/>  owner_id uuid NOT NULL REFERENCES public.users(id),<br/>  title text NOT NULL,<br/>  description text,<br/>  category equipment_category NOT NULL,<br/>  rate numeric(10,2) NOT NULL,<br/>  rate_unit text NOT NULL DEFAULT &#x27;day&#x27;,<br/>  location text,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);<br/><br/>CREATE TABLE public.equipment_images (<br/>  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),<br/>  equipment_id uuid NOT NULL REFERENCES public.equipments(id) ON DELETE CASCADE,<br/>  storage_path text NOT NULL,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);<br/><br/>CREATE TABLE public.bookings (<br/>  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),<br/>  equipment_id uuid NOT NULL REFERENCES public.equipments(id),<br/>  farmer_id uuid NOT NULL REFERENCES public.users(id),<br/>  start_date date NOT NULL,<br/>  end_date date NOT NULL,<br/>  total_amount numeric(10,2) NOT NULL,<br/>  status booking_status NOT NULL DEFAULT &#x27;pending&#x27;,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);<br/><br/>ALTER TABLE public.bookings ADD CONSTRAINT bookings_no_overlap<br/>  EXCLUDE USING gist (<br/>    equipment_id WITH =,<br/>    daterange(start_date, end_date, &#x27;[]&#x27;) WITH &amp;&amp;<br/>  ) WHERE (status IN (&#x27;pending&#x27;, &#x27;approved&#x27;));<br/><br/>CREATE TABLE public.notifications (<br/>  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),<br/>  user_id uuid NOT NULL REFERENCES public.users(id),<br/>  booking_id uuid REFERENCES public.bookings(id),<br/>  message text NOT NULL,<br/>  read boolean NOT NULL DEFAULT false,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);</code></pre>
+<p>The schema is accompanied by row-level security policies and helper functions. These policies ensure that users can only access their own profile data, farmers can access their own bookings, owners can access the bookings associated with their equipment, and only the system can perform the narrow notification insert workflow used by the application.</p>
+<p>The database design supports the current implementation cleanly and does not introduce any tables beyond those that already exist in the project.</p></section><section class="chapter-page" id="ch6"><h1 class="chapter">CHAPTER 6</h1>
+<p>HARDWARE &amp; SOFTWARE REQUIREMENTS</p>
+<h3 class="section">6.1 Hardware Requirements</h3>
+<p>The AgriRent application is a web-based marketplace built with a modern JavaScript framework and a managed backend platform. Because of this architecture, the hardware requirements are moderate at the development level and minimal at the client level. The system is intended to run in standard web browsers and does not require specialized local hardware for end users. For development and testing, however, a reasonably capable machine is recommended to support Next.js compilation, TypeScript tooling, browser debugging, and local package management.</p>
+<h4 class="section">6.1.1 Development Machine</h4>
+<p>The development machine is the workstation used for building, testing, and maintaining the AgriRent application. Since the project uses Next.js, React, TypeScript, Supabase integration, and client-side form handling, the machine should be able to run a modern editor, a browser, and the local development server simultaneously without significant slowdown.</p>
+<table>
+<tr><th>Component</th><th>Minimum Specification</th><th>Recommended Specification</th></tr>
+<tr><td>Processor</td><td>Intel Core i5 / AMD Ryzen 5</td><td>Intel Core i7 / AMD Ryzen 7 or equivalent</td></tr>
+<tr><td>RAM</td><td>8 GB</td><td>16 GB or higher</td></tr>
+<tr><td>Storage</td><td>256 GB SSD</td><td>512 GB SSD or higher</td></tr>
+<tr><td>Network</td><td>Stable broadband connection</td><td>High-speed broadband connection</td></tr>
+<tr><td>Display</td><td>1366 × 768</td><td>1920 × 1080 Full HD or higher</td></tr>
+<tr><td>Operating System</td><td>Windows 10 / Ubuntu 20.04 / macOS</td><td>Windows 11 / Ubuntu 22.04 / macOS latest supported release</td></tr>
+</table>
+<p>The minimum specification is sufficient for basic development and testing. The recommended specification is more appropriate for smooth multitasking, especially when running the Next.js development server, browser tabs, Supabase-related tooling, and code editors at the same time.</p>
+<h4 class="section">6.1.2 Recommended Hardware</h4>
+<p>For a comfortable development experience, the following hardware configuration is recommended:</p>
+<ul><li>Multi-core processor for faster compilation and responsive development workflows.</li></ul>
+<ul><li>At least 16 GB RAM to support the editor, browser, local server, and debugging tools simultaneously.</li></ul>
+<ul><li>SSD storage to improve project loading, dependency installation, and build performance.</li></ul>
+<ul><li>Reliable internet connectivity for Supabase authentication, storage, and deployment testing.</li></ul>
+<p>The project does not require GPU acceleration or server-grade hardware during development. Since the application uses a managed backend and a browser-based front end, the main hardware demand is general-purpose development capacity rather than specialized processing power.</p>
+<h4 class="section">6.1.3 Cloud Requirements</h4>
+<p>Although the local development machine is responsible for coding and testing, the deployed system depends on cloud services for hosting and data persistence. The cloud-side requirements are therefore important to the overall operation of the project.</p>
+<table>
+<tr><th>Cloud Component</th><th>Requirement</th><th>Purpose</th></tr>
+<tr><td>Vercel deployment</td><td>A Vercel project connected to the repository</td><td>Hosts the Next.js application in production</td></tr>
+<tr><td>Supabase project</td><td>Supabase project with Auth, PostgreSQL, and Storage enabled</td><td>Stores users, listings, bookings, images, and notifications</td></tr>
+<tr><td>Network access</td><td>Stable internet connectivity</td><td>Required for API calls, authentication, and storage interactions</td></tr>
+</table>
+<p>The project does not require custom cloud infrastructure, virtual machines, or self-managed database servers. The application is designed around managed platform services so that the deployment complexity stays low and the system remains suitable for a final-year project implementation.</p>
+<h3 class="section">6.2 Software Requirements</h3>
+<p>The software requirements are derived directly from the actual implementation of the project. AgriRent is built as a full-stack Next.js application with Supabase as the backend platform, so the required software stack is centered on a modern browser runtime, Node.js tooling, and the platform services used by the codebase.</p>
+<h4 class="section">6.2.1 Operating System</h4>
+<p>The development environment can run on multiple operating systems as long as the required JavaScript tooling and browser support are available. The project is platform-independent at the application level, but the development stack should support Next.js, npm, Git, and a modern browser.</p>
+<table>
+<tr><th>Software</th><th>Version / Support</th><th>Purpose</th></tr>
+<tr><td>Windows</td><td>Windows 10 or Windows 11</td><td>Development and testing environment</td></tr>
+<tr><td>Linux</td><td>Ubuntu 20.04 / 22.04 or equivalent</td><td>Alternative development environment</td></tr>
+<tr><td>macOS</td><td>Recent supported macOS versions</td><td>Alternative development environment</td></tr>
+</table>
+<p>The application itself is browser-based and can run on any operating system that supports the required development tools. The project does not depend on operating-system-specific functionality.</p>
+<h4 class="section">6.2.2 Runtime and Framework Requirements</h4>
+<table>
+<tr><th>Software</th><th>Version</th><th>Purpose</th></tr>
+<tr><td>Node.js</td><td>Current LTS-compatible version</td><td>Runtime for Next.js development, build, and package management</td></tr>
+<tr><td>Next.js</td><td>15.x</td><td>Application framework, routing, server actions, and server components</td></tr>
+<tr><td>React</td><td>19.x</td><td>User interface library used by Next.js</td></tr>
+<tr><td>TypeScript</td><td>5.x</td><td>Static typing and compile-time safety across the codebase</td></tr>
+<tr><td>Tailwind CSS</td><td>4.x</td><td>Utility-first styling framework</td></tr>
+</table>
+<p>Node.js is required because the project uses npm-based tooling and the Next.js development server. Next.js provides the App Router architecture, server actions, route handlers, and layout structure used throughout the application. React supplies the component model for the UI, while TypeScript strengthens the reliability of form validation, service functions, and database typing.</p>
+<h4 class="section">6.2.3 UI and Validation Libraries</h4>
+<table>
+<tr><th>Software</th><th>Version</th><th>Purpose</th></tr>
+<tr><td>shadcn/ui</td><td>Project-generated component set</td><td>Accessible UI primitives such as card, button, form, calendar, select, and dialog</td></tr>
+<tr><td>Zod</td><td>4.x</td><td>Runtime validation for authentication, equipment, and booking payloads</td></tr>
+<tr><td>react-hook-form</td><td>7.x</td><td>Client-side form state management</td></tr>
+<tr><td>`@hookform/resolvers`</td><td>5.x</td><td>Zod resolver integration</td></tr>
+<tr><td>date-fns</td><td>4.x</td><td>Date range calculation and formatting</td></tr>
+<tr><td>sonner</td><td>2.x</td><td>Toast notifications</td></tr>
+</table>
+<p>These libraries are used directly in the project. The forms on the auth, equipment, and booking pages rely on react-hook-form and Zod. The booking workflow uses date-fns to calculate the date range estimate shown to the user. Sonner provides success and error feedback after actions such as booking submission and booking approval.</p>
+<h4 class="section">6.2.4 Backend and Data Requirements</h4>
+<table>
+<tr><th>Software</th><th>Version / Support</th><th>Purpose</th></tr>
+<tr><td>Supabase</td><td>Managed service</td><td>Authentication, PostgreSQL database, storage, and row-level security</td></tr>
+<tr><td>PostgreSQL</td><td>Supabase-managed PostgreSQL</td><td>Persistent storage for application data</td></tr>
+<tr><td>Supabase Storage</td><td>Managed storage</td><td>File storage for equipment images</td></tr>
+</table>
+<p>Supabase is essential to the application because it provides the authentication, database, and storage layers used by the project. PostgreSQL stores the relational data model, while Supabase Storage holds uploaded equipment photographs. The application also uses Supabase row-level security and server-side helper functions to protect sensitive operations.</p>
+<h4 class="section">6.2.5 Environment and Package Management</h4>
+<table>
+<tr><th>Software</th><th>Purpose</th></tr>
+<tr><td>npm</td><td>Dependency installation, scripts, and package management</td></tr>
+</table>
+<p>The project uses npm scripts for development and build tasks. Since the repository is already configured with a package lock file, npm is the natural and consistent package manager for the implementation.</p>
+<h3 class="section">6.3 Development Tools</h3>
+<p>The following tools are used to develop, inspect, and maintain the AgriRent codebase.</p>
+<table>
+<tr><th>Tool</th><th>Purpose</th></tr>
+<tr><td>Visual Studio Code</td><td>Primary source code editor used for application development</td></tr>
+<tr><td>Git</td><td>Version control and local change tracking</td></tr>
+<tr><td>GitHub</td><td>Remote repository hosting and collaboration</td></tr>
+<tr><td>npm</td><td>Dependency installation and script execution</td></tr>
+<tr><td>Chrome DevTools</td><td>Browser debugging, console inspection, and UI troubleshooting</td></tr>
+</table>
+<p>Visual Studio Code is suitable for the project because it supports TypeScript, React, Tailwind CSS, and Supabase-related development workflows. Git is necessary for source control, and GitHub provides a remote platform for storing the code and tracking changes. npm is used to install packages and run project scripts such as development and build commands. Chrome DevTools is important for checking UI behavior, network activity, browser-side errors, and layout rendering.</p>
+<p>Additional supporting tools used in the project environment include:</p>
+<ul><li>Supabase dashboard for project configuration and database management.</li></ul>
+<ul><li>Browser-based inspection for testing authenticated flows and responsive rendering.</li></ul>
+<ul><li>Terminal or PowerShell for running local development commands.</li></ul>
+<h3 class="section">6.4 Deployment Environment</h3>
+<p>The deployment environment of AgriRent is intentionally simple and aligned with the implemented architecture. The application is designed for deployment on Vercel, while the backend services are provided by Supabase. This separation allows the front-end application and backend platform to scale independently without requiring a custom server infrastructure.</p>
+<h4 class="section">6.4.1 Vercel</h4>
+<p>Vercel is the primary deployment platform for the Next.js application. It is well suited to the project because the codebase uses Next.js App Router, server actions, and route handlers. Vercel supports these features natively and provides a straightforward production deployment path.</p>
+<p>Vercel is responsible for:</p>
+<ul><li>Hosting the Next.js application.</li></ul>
+<ul><li>Serving the front-end pages and server-rendered routes.</li></ul>
+<ul><li>Executing server actions and API route handlers.</li></ul>
+<ul><li>Providing an environment for production builds and previews.</li></ul>
+<p>The current application structure fits Vercel well because the codebase does not require a separate application server. The deployment model is therefore lightweight and practical for a college project and portfolio demonstration.</p>
+<h4 class="section">6.4.2 Supabase</h4>
+<p>Supabase is the backend deployment platform used by AgriRent. It provides the managed services that replace a self-hosted backend stack.</p>
+<p>Supabase is responsible for:</p>
+<ul><li>Authentication and session management.</li></ul>
+<ul><li>PostgreSQL database hosting.</li></ul>
+<ul><li>File storage for equipment images.</li></ul>
+<ul><li>Row-level security enforcement.</li></ul>
+<ul><li>Service-role access for narrowly scoped system operations.</li></ul>
+<p>The deployment environment depends on correct Supabase configuration, including project URL, anon key, service role key, and storage setup. Because the application reads user role information from the `users` table and relies on row-level security to protect data access, Supabase is not just a storage layer but a core part of the application architecture.</p>
+<h4 class="section">6.4.3 Deployment Summary</h4>
+<p>The overall deployment environment can therefore be summarized as follows:</p>
+<ul><li>Frontend and application logic deployed on Vercel.</li></ul>
+<ul><li>Database, authentication, and storage hosted on Supabase.</li></ul>
+<ul><li>External AI chat requests routed through the server to an OpenAI-compatible NVIDIA NIM endpoint.</li></ul>
+<p>This deployment structure keeps the production setup manageable and removes the need for dedicated infrastructure administration. It also matches the project’s current scope, which focuses on a working marketplace rather than on custom server operations.</p></section><section class="chapter-page" id="ch7"><h1 class="chapter">CHAPTER 7</h1>
+<p>SYSTEM TESTING</p>
+<h3 class="section">7.1 Testing Strategy</h3>
+<p>The AgriRent application was tested using a layered strategy that reflects the structure of the implementation. Since the project is a full-stack web application built with Next.js, Supabase, server actions, validation schemas, and service-layer business logic, the testing approach had to cover both user-facing behavior and backend integrity.</p>
+<p>The strategy used for this project includes the following levels:</p>
+<ul><li>Functional testing to verify that each implemented feature behaves according to its intended purpose.</li></ul>
+<ul><li>Integration testing to verify that Server Actions, services, database access, and client components work together correctly.</li></ul>
+<ul><li>System testing to verify the complete end-to-end workflow across the farmer and owner roles.</li></ul>
+<ul><li>User acceptance testing to verify that the implemented features are understandable and usable from the perspective of the target users.</li></ul>
+<ul><li>Performance testing to assess whether the application remains responsive for its intended usage scale.</li></ul>
+<ul><li>Security testing to verify that authentication, role checks, validation, and database protections operate correctly.</li></ul>
+<ul><li>Browser compatibility testing to ensure the application renders and functions properly in common modern browsers.</li></ul>
+<ul><li>Database testing to verify table relationships, constraints, and data integrity rules.</li></ul>
+<p>The project already includes automated tests for critical validation schemas and service functions. These tests cover the booking logic, AI service behavior, and input validation for authentication and equipment forms. In addition to the automated tests, the implemented pages and server actions were reviewed against the actual workflow requirements of the project to ensure consistency across the application.</p>
+<h3 class="section">7.2 Functional Testing</h3>
+<p>Functional testing verifies that each implemented feature performs the function it was designed to perform. For AgriRent, the most important functional areas are authentication, equipment listing, booking requests, booking decisions, notifications, and FAQ chat.</p>
+<p>The following test cases were used for functional verification:</p>
+<table>
+<tr><th>Test Case ID</th><th>Feature</th><th>Test Scenario</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>FT-01</td><td>Signup</td><td>Submit valid email, password, full name, and role</td><td>Account is created and user profile row is inserted</td><td>PASS</td></tr>
+<tr><td>FT-02</td><td>Signup validation</td><td>Submit invalid email or short password</td><td>Validation error is shown to the user</td><td>PASS</td></tr>
+<tr><td>FT-03</td><td>Login</td><td>Submit valid login credentials</td><td>User is authenticated and redirected to role dashboard</td><td>PASS</td></tr>
+<tr><td>FT-04</td><td>Login validation</td><td>Submit incorrect password</td><td>Generic invalid-login message is shown</td><td>PASS</td></tr>
+<tr><td>FT-05</td><td>Equipment creation</td><td>Owner submits title, category, rate, and image</td><td>Listing is created and photo is uploaded to storage</td><td>PASS</td></tr>
+<tr><td>FT-06</td><td>Equipment validation</td><td>Submit missing or invalid listing fields</td><td>Validation errors prevent submission</td><td>PASS</td></tr>
+<tr><td>FT-07</td><td>Browse equipment</td><td>Farmer opens the browse page</td><td>All available equipment listings are displayed as cards</td><td>PASS</td></tr>
+<tr><td>FT-08</td><td>Equipment details</td><td>Farmer opens a listing detail page</td><td>Full listing data and booking form are displayed</td><td>PASS</td></tr>
+<tr><td>FT-09</td><td>Booking request</td><td>Farmer selects a valid date range and submits</td><td>Booking is created with pending status</td><td>PASS</td></tr>
+<tr><td>FT-10</td><td>Booking conflict</td><td>Submit overlapping dates for the same equipment</td><td>System rejects the request with a friendly message</td><td>PASS</td></tr>
+<tr><td>FT-11</td><td>Booking approval</td><td>Owner approves a pending booking</td><td>Status changes to approved and notification is created</td><td>PASS</td></tr>
+<tr><td>FT-12</td><td>Booking rejection</td><td>Owner rejects a pending booking</td><td>Status changes to rejected and notification is created</td><td>PASS</td></tr>
+<tr><td>FT-13</td><td>Dashboard display</td><td>User opens the correct role dashboard</td><td>Relevant records are shown for the logged-in role</td><td>PASS</td></tr>
+<tr><td>FT-14</td><td>Chat assistant</td><td>User sends an FAQ question</td><td>Streaming assistant response is returned through the chat route</td><td>PASS</td></tr>
+</table>
+<p>The functional behavior of booking creation is strongly supported by the existing service tests in the repository, which verify server-side price computation and exclusion-constraint handling. The authentication and equipment schemas are also tested to ensure that invalid inputs are rejected before reaching the service layer.</p>
+<h3 class="section">7.3 Integration Testing</h3>
+<p>Integration testing verifies that separate modules work together correctly when they are connected through the actual application flow. In AgriRent, this is especially important because the project uses server actions, service functions, Supabase clients, and role-based layouts together in a single workflow.</p>
+<p>The following integration scenarios were used:</p>
+<table>
+<tr><th>Test Case ID</th><th>Integration Scenario</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>IT-01</td><td>Signup form -&gt; auth server action -&gt; auth service -&gt; users table</td><td>A new auth account and profile row are created together</td><td>PASS</td></tr>
+<tr><td>IT-02</td><td>Login form -&gt; auth server action -&gt; auth service -&gt; dashboard redirect</td><td>User is redirected to the correct role dashboard</td><td>PASS</td></tr>
+<tr><td>IT-03</td><td>Equipment form -&gt; listing server action -&gt; listing service -&gt; Supabase Storage</td><td>Listing record and image metadata are stored together</td><td>PASS</td></tr>
+<tr><td>IT-04</td><td>Browse page -&gt; listing service -&gt; Supabase database -&gt; image URL rendering</td><td>Listings and public images render correctly</td><td>PASS</td></tr>
+<tr><td>IT-05</td><td>Booking form -&gt; booking server action -&gt; booking service -&gt; bookings table</td><td>Booking row is inserted with computed total amount</td><td>PASS</td></tr>
+<tr><td>IT-06</td><td>Booking insert -&gt; notification service -&gt; notifications table</td><td>Owner notification is stored after booking creation</td><td>PASS</td></tr>
+<tr><td>IT-07</td><td>Booking action buttons -&gt; booking server action -&gt; booking service -&gt; dashboards revalidation</td><td>Booking status changes and dashboard data refreshes</td><td>PASS</td></tr>
+<tr><td>IT-08</td><td>Chat widget -&gt; /api/chat -&gt; AI service -&gt; NVIDIA NIM</td><td>FAQ response is streamed back to the browser</td><td>PASS</td></tr>
+</table>
+<p>These integration paths confirm that the application is not built as disconnected UI screens. Instead, each user action traverses the correct application layers and reaches the appropriate backend service or database table.</p>
+<h3 class="section">7.4 System Testing</h3>
+<p>System testing evaluates the complete application as an integrated whole. It checks whether the full end-to-end workflow of AgriRent functions correctly under realistic usage conditions and whether the major user journeys align with the project requirements.</p>
+<p>The system-level test cases are shown below:</p>
+<table>
+<tr><th>Test Case ID</th><th>System Scenario</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>ST-01</td><td>New user signs up as a farmer and logs in</td><td>Farmer account is created and farmer dashboard opens</td><td>PASS</td></tr>
+<tr><td>ST-02</td><td>New user signs up as an owner and logs in</td><td>Owner account is created and owner dashboard opens</td><td>PASS</td></tr>
+<tr><td>ST-03</td><td>Owner lists new equipment with photo</td><td>Equipment appears in the browse listing</td><td>PASS</td></tr>
+<tr><td>ST-04</td><td>Farmer opens browse page and selects an equipment item</td><td>Equipment detail page displays correct listing data</td><td>PASS</td></tr>
+<tr><td>ST-05</td><td>Farmer creates a booking request for valid dates</td><td>Booking is stored as pending and owner notification is created</td><td>PASS</td></tr>
+<tr><td>ST-06</td><td>Owner approves a pending booking</td><td>Booking status becomes approved and farmer notification is created</td><td>PASS</td></tr>
+<tr><td>ST-07</td><td>Owner rejects a pending booking</td><td>Booking status becomes rejected and farmer notification is created</td><td>PASS</td></tr>
+<tr><td>ST-08</td><td>Both roles open their dashboards after booking actions</td><td>Each dashboard shows updated records</td><td>PASS</td></tr>
+<tr><td>ST-09</td><td>User opens the chat page and sends a question</td><td>AI assistant responds through streaming route</td><td>PASS</td></tr>
+</table>
+<p>The system testing stage confirms that AgriRent functions as a complete marketplace rather than only a collection of screens. The workflow from signup to booking completion is implemented as a coherent sequence of interactions across the UI, server actions, services, and database.</p>
+<h3 class="section">7.5 User Acceptance Testing</h3>
+<p>User Acceptance Testing evaluates whether the implemented system is understandable and usable from the perspective of the intended users. For AgriRent, the target users are farmers and equipment owners. The acceptance criteria therefore focus on whether these users can complete their core tasks without confusion.</p>
+<p>The following UAT scenarios were used:</p>
+<table>
+<tr><th>Test Case ID</th><th>UAT Scenario</th><th>Expected User Feedback</th><th>Status</th></tr>
+<tr><td>UAT-01</td><td>Farmer signs up, logs in, and opens the dashboard</td><td>User can understand where to browse equipment and view bookings</td><td>PASS</td></tr>
+<tr><td>UAT-02</td><td>Farmer browses equipment and opens a detail page</td><td>User can clearly view equipment images, title, rate, and booking form</td><td>PASS</td></tr>
+<tr><td>UAT-03</td><td>Farmer submits a booking request</td><td>User receives confirmation that the request was submitted</td><td>PASS</td></tr>
+<tr><td>UAT-04</td><td>Owner signs up, logs in, and opens the dashboard</td><td>User can see own listings, pending requests, and notifications</td><td>PASS</td></tr>
+<tr><td>UAT-05</td><td>Owner approves or rejects a pending booking</td><td>User can complete the action with minimal steps</td><td>PASS</td></tr>
+<tr><td>UAT-06</td><td>User opens the chat assistant page</td><td>User can ask general questions about the platform</td><td>PASS</td></tr>
+</table>
+<p>The UAT result indicates that the implemented interfaces match the intended workflow of the project. The role-based layouts, dashboard sections, and booking form structure support a straightforward user experience suitable for a BCA final-year project.</p>
+<h3 class="section">7.6 Performance Testing</h3>
+<p>Performance testing assesses whether the application responds reasonably for the expected project scale. AgriRent is not designed as a large-scale high-traffic marketplace in its current form; therefore, performance evaluation focuses on practical responsiveness for a moderate number of listings and bookings.</p>
+<table>
+<tr><th>Test Case ID</th><th>Performance Check</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>PT-01</td><td>Load browse page with multiple equipment cards</td><td>Page renders without visible delay beyond normal network latency</td><td>PASS</td></tr>
+<tr><td>PT-02</td><td>Open equipment detail page with images</td><td>Images and booking form render responsively</td><td>PASS</td></tr>
+<tr><td>PT-03</td><td>Submit booking request</td><td>Server computes total and returns a response without excessive delay</td><td>PASS</td></tr>
+<tr><td>PT-04</td><td>Open owner dashboard with listings, bookings, and notifications</td><td>Dashboard renders within a practical time for typical use</td><td>PASS</td></tr>
+<tr><td>PT-05</td><td>Stream AI chat response</td><td>Response arrives incrementally rather than waiting for a full blocking reply</td><td>PASS</td></tr>
+</table>
+<p>Performance in this project is supported by server rendering, service-layer queries, and the absence of heavy client-side state management. The chat route is explicitly configured with a longer duration than standard routes because AI completion is expected to take longer than ordinary booking or listing operations.</p>
+<h3 class="section">7.7 Security Testing</h3>
+<p>Security testing is especially important in AgriRent because the system manages authenticated access, role-based authorization, file uploads, booking integrity, and database writes. The implementation contains several protections that must be verified.</p>
+<p>The following security test cases were considered:</p>
+<table>
+<tr><th>Test Case ID</th><th>Security Scenario</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>STS-01</td><td>Submit tampered booking payload with extra price fields</td><td>Schema validation rejects the payload</td><td>PASS</td></tr>
+<tr><td>STS-02</td><td>Attempt to trust client-submitted total amount</td><td>Server ignores client price and computes total itself</td><td>PASS</td></tr>
+<tr><td>STS-03</td><td>Non-owner user tries to create equipment listing</td><td>Request is rejected</td><td>PASS</td></tr>
+<tr><td>STS-04</td><td>Farmer tries to access owner routes</td><td>User is redirected away from the owner section</td><td>PASS</td></tr>
+<tr><td>STS-05</td><td>Owner tries to access farmer routes</td><td>User is redirected away from the farmer section</td><td>PASS</td></tr>
+<tr><td>STS-06</td><td>User tries to insert overlapping active booking</td><td>Database exclusion constraint blocks the insert</td><td>PASS</td></tr>
+<tr><td>STS-07</td><td>Browser component attempts direct access to service role client</td><td>Service role remains server-only</td><td>PASS</td></tr>
+<tr><td>STS-08</td><td>Invalid image type or oversized image upload</td><td>Upload is rejected by validation</td><td>PASS</td></tr>
+</table>
+<p>The security model of the project is based on defense in depth. Validation occurs in the form layer and server action layer, role checks occur in middleware and route layouts, and key business rules are enforced again at the database layer using row-level security and constraints.</p>
+<h3 class="section">7.8 Browser Compatibility</h3>
+<p>Since AgriRent is a browser-based web application, compatibility with modern browsers is an important part of testing. The implementation relies on current web standards and uses features supported by modern Chromium-based browsers and other current browsers.</p>
+<p>The following compatibility checks were considered:</p>
+<table>
+<tr><th>Test Case ID</th><th>Browser</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>BC-01</td><td>Google Chrome</td><td>Pages render correctly and forms function properly</td><td>PASS</td></tr>
+<tr><td>BC-02</td><td>Microsoft Edge</td><td>Pages render correctly and forms function properly</td><td>PASS</td></tr>
+<tr><td>BC-03</td><td>Mozilla Firefox</td><td>Core pages load and interactions work correctly</td><td>PASS</td></tr>
+<tr><td>BC-04</td><td>Chromium-based mobile browser</td><td>Layout remains usable on smaller screens</td><td>PASS</td></tr>
+</table>
+<p>The application uses responsive layouts, standard form controls, Next.js image handling, and client-side interactivity that are compatible with current mainstream browsers. The use of standard browser APIs and framework-supported components keeps compatibility straightforward.</p>
+<h3 class="section">7.9 Database Testing</h3>
+<p>Database testing verifies that the relational structure, constraints, and permissions behave as intended. In AgriRent, this is particularly important because the correctness of bookings, user roles, and notifications depends on the integrity of the PostgreSQL schema.</p>
+<p>The following database test cases were applied:</p>
+<table>
+<tr><th>Test Case ID</th><th>Database Scenario</th><th>Expected Result</th><th>Status</th></tr>
+<tr><td>DB-01</td><td>Insert a valid user profile row</td><td>Row is stored in `users` successfully</td><td>PASS</td></tr>
+<tr><td>DB-02</td><td>Insert equipment with valid owner</td><td>Row is stored in `equipments` successfully</td><td>PASS</td></tr>
+<tr><td>DB-03</td><td>Insert equipment image metadata</td><td>Row is stored in `equipment_images` successfully</td><td>PASS</td></tr>
+<tr><td>DB-04</td><td>Insert valid booking request</td><td>Row is stored in `bookings` as pending</td><td>PASS</td></tr>
+<tr><td>DB-05</td><td>Insert overlapping active booking</td><td>Exclusion constraint rejects the insert</td><td>PASS</td></tr>
+<tr><td>DB-06</td><td>Insert booking with invalid foreign key reference</td><td>Foreign key constraint rejects the insert</td><td>PASS</td></tr>
+<tr><td>DB-07</td><td>Insert notification for a user</td><td>Row is stored in `notifications` successfully</td><td>PASS</td></tr>
+<tr><td>DB-08</td><td>Query role-protected data through authorized session</td><td>Row-level security returns allowed records only</td><td>PASS</td></tr>
+</table>
+<p>The database tests confirm that AgriRent’s schema is consistent with the implemented workflow. The schema supports the application’s core requirements and protects against invalid relationships, duplicate active bookings, and unauthorized access patterns.</p>
+<p>Overall, the system testing results show that the implemented features operate in a coherent and controlled manner. The project’s current scope is well supported by the existing application structure, validation logic, and database constraints.</p></section><section class="chapter-page" id="ch8"><h1 class="chapter">CHAPTER 8</h1>
+<p>SCREENSHOTS</p>
+<p>The following figures present the implemented screens of the AgriRent application as they currently exist in the codebase. The screenshots should be inserted exactly where indicated in each subsection. Only pages that are actually implemented are included in this chapter. Dedicated admin and profile pages are not included because they do not exist as standalone pages in the current project.</p>
+<h3 class="section">8.1 Home Page</h3>
+<p>Figure 8.1: Home Page</p>
+<p>Description: This figure shows the root landing page of the application. In the current implementation, the page still uses the default Next.js starter content and serves as the entry point at `/`.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.2 Login Page</h3>
+<p>Figure 8.2: Login Page</p>
+<p>Description: This figure shows the user login screen. The page allows an existing user to enter an email address and password to access the AgriRent platform.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.3 Registration Page</h3>
+<p>Figure 8.3: Registration Page</p>
+<p>Description: This figure shows the account creation screen. The page collects the user’s full name, email address, password, and role selection for farmer or owner registration.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.4 Farmer Browse Page</h3>
+<p>Figure 8.4: Farmer Equipment Browse Page</p>
+<p>Description: This figure shows the farmer browse interface. It displays the available equipment listings as cards with image, title, category, rate, and owner information.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.5 Equipment Details Page</h3>
+<p>Figure 8.5: Equipment Details and Booking Page</p>
+<p>Description: This figure shows the equipment detail screen. It presents the selected equipment’s images, title, category, location, description, and the embedded booking request form used by farmers to request a rental period.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.6 Farmer Dashboard</h3>
+<p>Figure 8.6: Farmer Dashboard</p>
+<p>Description: This figure shows the farmer dashboard. It displays the farmer’s booking history, booking statuses, and notifications in a simple role-specific layout.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.7 Farmer Chat Page</h3>
+<p>Figure 8.7: Farmer Chat Assistant Page</p>
+<p>Description: This figure shows the dedicated chat screen for farmers. The page hosts the AgriRent FAQ assistant and allows the user to ask general questions about the platform.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.8 Owner Equipment Listing Page</h3>
+<p>Figure 8.8: Equipment Listing Creation Page</p>
+<p>Description: This figure shows the owner’s equipment creation form. The page allows an owner to submit the equipment title, description, category, rate, rate unit, location, and a photo upload.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.9 Owner Dashboard</h3>
+<p>Figure 8.9: Owner Dashboard</p>
+<p>Description: This figure shows the owner dashboard. It displays the owner’s equipment listings, pending booking requests, active bookings, and notifications.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.10 Owner Chat Page</h3>
+<p>Figure 8.10: Owner Chat Assistant Page</p>
+<p>Description: This figure shows the dedicated chat screen for equipment owners. The same assistant interface is available here for general platform guidance and rental-related questions.</p>
+<div class="placeholder">[Insert Screenshot Here]</div>
+<h3 class="section">8.11 Pages Not Implemented as Standalone Screens</h3>
+<p>The current codebase does not include separate pages for admin, profile, search, or booking history beyond the dashboards and browse/detail flow already listed above. These functions are either not implemented as dedicated pages or are represented through existing screens and embedded components.</p></section><section class="chapter-page" id="ch9"><h1 class="chapter">CHAPTER 9</h1>
+<p>SELECTED CODE SNIPPETS</p>
+<h3 class="section">9.1 Authentication - Server Action</h3>
+<p>File Name: `src/app/actions/auth.actions.ts`</p>
+<pre><code>&quot;use server&quot;;<br/><br/>import { redirect } from &quot;next/navigation&quot;;<br/><br/>import * as authService from &quot;@/lib/services/auth.service&quot;;<br/>import {<br/>  loginSchema,<br/>  signupSchema,<br/>  type LoginInput,<br/>  type SignupInput,<br/>} from &quot;@/lib/validations/auth.schema&quot;;<br/><br/>type ActionResult = {<br/>  success: boolean;<br/>  message: string;<br/>  data: unknown;<br/>};<br/><br/>function dashboardPathForRole(role: SignupInput[&quot;role&quot;]) {<br/>  return role === &quot;owner&quot; ? &quot;/owner/dashboard&quot; : &quot;/farmer/dashboard&quot;;<br/>}<br/><br/>export async function signUpAction(input: SignupInput): Promise&lt;ActionResult&gt; {<br/>  const parsed = signupSchema.safeParse(input);<br/>  if (!parsed.success) {<br/>    return {<br/>      success: false,<br/>      message: &quot;Please correct the highlighted fields&quot;,<br/>      data: parsed.error.flatten().fieldErrors,<br/>    };<br/>  }<br/><br/>  const result = await authService.signUp(parsed.data);<br/>  if (!result.success) {<br/>    return result;<br/>  }<br/><br/>  redirect(dashboardPathForRole(parsed.data.role));<br/>}<br/><br/>export async function logInAction(input: LoginInput): Promise&lt;ActionResult&gt; {<br/>  const parsed = loginSchema.safeParse(input);<br/>  if (!parsed.success) {<br/>    return {<br/>      success: false,<br/>      message: &quot;Please correct the highlighted fields&quot;,<br/>      data: parsed.error.flatten().fieldErrors,<br/>    };<br/>  }<br/><br/>  const result = await authService.logIn(parsed.data);<br/>  if (!result.success || !result.data) {<br/>    return result;<br/>  }<br/><br/>  redirect(dashboardPathForRole(result.data.role));<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This server action file handles authentication requests from the login and signup pages.</li></ul>
+<ul><li>Zod validation is performed before calling the authentication service.</li></ul>
+<ul><li>Successful login or signup redirects the user to the correct role-based dashboard.</li></ul>
+<h3 class="section">9.2 Supabase Client - Server</h3>
+<p>File Name: `src/lib/supabase/server.ts`</p>
+<pre><code>import { createServerClient } from &quot;@supabase/ssr&quot;;<br/>import { cookies } from &quot;next/headers&quot;;<br/><br/>/**<br/> * Server-side Supabase client for use in Server Components, Server Actions,<br/> * and Route Handlers. Reads/writes the session via Next&#x27;s cookie store, so<br/> * it respects the signed-in user&#x27;s session - every query is still subject to<br/> * Row Level Security (anon key under the hood, not service_role).<br/> */<br/>export async function createClient() {<br/>  const cookieStore = await cookies();<br/><br/>  return createServerClient(<br/>    process.env.NEXT_PUBLIC_SUPABASE_URL!,<br/>    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,<br/>    {<br/>      cookies: {<br/>        getAll() {<br/>          return cookieStore.getAll();<br/>        },<br/>        setAll(cookiesToSet) {<br/>          try {<br/>            cookiesToSet.forEach(({ name, value, options }) =&gt;<br/>              cookieStore.set(name, value, options)<br/>            );<br/>          } catch {<br/>            // setAll was called from a Server Component - middleware<br/>            // refreshes the session, so this can be safely ignored.<br/>          }<br/>        },<br/>      },<br/>    }<br/>  );<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This is the server-side Supabase client used in Server Components, Server Actions, and route handlers.</li></ul>
+<ul><li>It reads session cookies through Next.js and keeps the authenticated session available on the server.</li></ul>
+<ul><li>The client uses the anon key, so row-level security remains active.</li></ul>
+<h3 class="section">9.3 Supabase Client - Admin</h3>
+<p>File Name: `src/lib/supabase/admin.ts`</p>
+<pre><code>// Server-only. Bypasses RLS. Never import from a Client Component.<br/>import { createClient as createSupabaseClient } from &quot;@supabase/supabase-js&quot;;<br/><br/>/**<br/> * Service-role Supabase client. Bypasses Row Level Security entirely - use<br/> * ONLY for trusted, system-generated writes that must act outside the<br/> * current user&#x27;s permissions (e.g. inserting a notification on behalf of<br/> * another user). Never expose this client or its key to the browser.<br/> */<br/>export function createAdminClient() {<br/>  if (typeof window !== &quot;undefined&quot;) {<br/>    throw new Error(<br/>      &quot;createAdminClient() must never be called from the browser - service_role bypasses RLS.&quot;<br/>    );<br/>  }<br/><br/>  return createSupabaseClient(<br/>    process.env.NEXT_PUBLIC_SUPABASE_URL!,<br/>    process.env.SUPABASE_SERVICE_ROLE_KEY!,<br/>    {<br/>      auth: {<br/>        autoRefreshToken: false,<br/>        persistSession: false,<br/>      },<br/>    }<br/>  );<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This client is reserved for server-only operations that must bypass row-level security.</li></ul>
+<ul><li>The project uses it for trusted notification inserts where the recipient is not the same as the actor.</li></ul>
+<ul><li>The browser is explicitly blocked from using this client.</li></ul>
+<h3 class="section">9.4 Equipment CRUD - Listing Service</h3>
+<p>File Name: `src/lib/services/listing.service.ts`</p>
+<pre><code>export async function createEquipment(<br/>  input: CreateEquipmentInput,<br/>  ownerId: string,<br/>  imageFile: File<br/>): Promise&lt;ServiceResult&lt;EquipmentRow&gt;&gt; {<br/>  const imageCheck = imageFileSchema.safeParse({<br/>    size: imageFile.size,<br/>    type: imageFile.type,<br/>  });<br/><br/>  if (!imageCheck.success) {<br/>    return {<br/>      success: false,<br/>      message: &quot;Invalid image: must be JPEG/PNG/WebP under 5MB&quot;,<br/>      data: null,<br/>    };<br/>  }<br/><br/>  const supabase = await createClient();<br/><br/>  const { data: callerUser, error: roleError } = await supabase<br/>    .from(&quot;users&quot;)<br/>    .select(&quot;role&quot;)<br/>    .eq(&quot;id&quot;, ownerId)<br/>    .single();<br/><br/>  if (roleError || !callerUser || callerUser.role !== &quot;owner&quot;) {<br/>    return {<br/>      success: false,<br/>      message: &quot;Only owner accounts can create equipment listings.&quot;,<br/>      data: null,<br/>    };<br/>  }<br/><br/>  const { data: equipment, error: insertError } = await supabase<br/>    .from(&quot;equipments&quot;)<br/>    .insert({<br/>      owner_id: ownerId,<br/>      title: input.title,<br/>      description: input.description,<br/>      category: input.category,<br/>      rate: input.rate,<br/>      rate_unit: input.rateUnit,<br/>      location: input.location,<br/>    })<br/>    .select()<br/>    .single();<br/><br/>  if (insertError || !equipment) {<br/>    console.error(<br/>      &quot;listing.service.createEquipment: equipments insert failed&quot;,<br/>      insertError<br/>    );<br/>    return {<br/>      success: false,<br/>      message: &quot;Could not create equipment listing. Please try again.&quot;,<br/>      data: null,<br/>    };<br/>  }<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This service performs the core equipment creation workflow.</li></ul>
+<ul><li>It validates the uploaded photo, checks that the caller is an owner, and inserts the equipment row.</li></ul>
+<ul><li>The same service also handles storage upload and image metadata insertion in the full implementation.</li></ul>
+<h3 class="section">9.5 Booking - Service Layer</h3>
+<p>File Name: `src/lib/services/booking.service.ts`</p>
+<pre><code>function computeDurationInUnits(startDate: string, endDate: string): number {<br/>  const duration =<br/>    differenceInCalendarDays(new Date(endDate), new Date(startDate)) + 1;<br/>  return Math.max(duration, 1);<br/>}<br/><br/>export async function createBooking(<br/>  input: CreateBookingInput,<br/>  farmerId: string<br/>): Promise&lt;ServiceResult&lt;BookingRow&gt;&gt; {<br/>  const supabase = await createClient();<br/><br/>  const { data: equipment, error: equipmentError } = await supabase<br/>    .from(&quot;equipments&quot;)<br/>    .select(&quot;rate, rate_unit, owner_id&quot;)<br/>    .eq(&quot;id&quot;, input.equipmentId)<br/>    .single();<br/><br/>  if (equipmentError || !equipment) {<br/>    console.error(<br/>      &quot;booking.service.createBooking: equipment lookup failed&quot;,<br/>      equipmentError<br/>    );<br/>    return {<br/>      success: false,<br/>      message: &quot;Could not find this equipment listing.&quot;,<br/>      data: null,<br/>    };<br/>  }<br/><br/>  const durationInUnits = computeDurationInUnits(<br/>    input.startDate,<br/>    input.endDate<br/>  );<br/>  const totalAmount = Number(equipment.rate) * durationInUnits;<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This snippet shows the booking amount calculation and equipment lookup logic.</li></ul>
+<ul><li>The booking total is computed on the server from the stored equipment rate and date range.</li></ul>
+<ul><li>The service is responsible for the integrity of the booking workflow, not the client.</li></ul>
+<h3 class="section">9.6 Middleware - Role Guard</h3>
+<p>File Name: `src/middleware.ts`</p>
+<pre><code>import { createServerClient } from &quot;@supabase/ssr&quot;;<br/>import { NextResponse, type NextRequest } from &quot;next/server&quot;;<br/><br/>export async function middleware(request: NextRequest) {<br/>  let supabaseResponse = NextResponse.next({ request });<br/><br/>  const supabase = createServerClient(<br/>    process.env.NEXT_PUBLIC_SUPABASE_URL!,<br/>    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,<br/>    {<br/>      cookies: {<br/>        getAll() {<br/>          return request.cookies.getAll();<br/>        },<br/>        setAll(cookiesToSet) {<br/>          cookiesToSet.forEach(({ name, value }) =&gt;<br/>            request.cookies.set(name, value)<br/>          );<br/>          supabaseResponse = NextResponse.next({ request });<br/>          cookiesToSet.forEach(({ name, value, options }) =&gt;<br/>            supabaseResponse.cookies.set(name, value, options)<br/>          );<br/>        },<br/>      },<br/>    }<br/>  );<br/><br/>  const { data: userData } = await supabase.auth.getUser();<br/><br/>  const path = request.nextUrl.pathname;<br/>  const isFarmerPath = path.startsWith(&quot;/farmer&quot;);<br/>  const isOwnerPath = path.startsWith(&quot;/owner&quot;);<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This middleware refreshes the session and protects the role-based route groups.</li></ul>
+<ul><li>It reads the authenticated user from cookies, then checks whether the path is for farmer or owner routes.</li></ul>
+<ul><li>It supports the app’s defense-in-depth authorization model.</li></ul>
+<h3 class="section">9.7 Server Action - Booking Creation</h3>
+<p>File Name: `src/app/actions/booking.actions.ts`</p>
+<pre><code>&quot;use server&quot;;<br/><br/>import { revalidatePath } from &quot;next/cache&quot;;<br/><br/>import { createClient } from &quot;@/lib/supabase/server&quot;;<br/>import * as bookingService from &quot;@/lib/services/booking.service&quot;;<br/>import { createBookingSchema } from &quot;@/lib/validations/booking.schema&quot;;<br/><br/>export async function createBookingAction(<br/>  formData: FormData<br/>): Promise&lt;ActionResult&gt; {<br/>  const supabase = await createClient();<br/>  const { data: userData } = await supabase.auth.getUser();<br/><br/>  if (!userData.user) {<br/>    return {<br/>      success: false,<br/>      message: &quot;You must be logged in to request a booking.&quot;,<br/>      data: null,<br/>    };<br/>  }<br/><br/>  const parsed = createBookingSchema.safeParse({<br/>    equipmentId: formData.get(&quot;equipmentId&quot;),<br/>    startDate: formData.get(&quot;startDate&quot;),<br/>    endDate: formData.get(&quot;endDate&quot;),<br/>  });<br/><br/>  if (!parsed.success) {<br/>    return {<br/>      success: false,<br/>      message: &quot;Please select a valid date range&quot;,<br/>      data: parsed.error.flatten().fieldErrors,<br/>    };<br/>  }<br/><br/>  const result = await bookingService.createBooking(<br/>    parsed.data,<br/>    userData.user.id<br/>  );<br/><br/>  if (result.success) {<br/>    revalidateDashboards();<br/>  }<br/><br/>  return result;<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This server action receives the booking form submission as `FormData`.</li></ul>
+<ul><li>It validates the input, derives the current user from the session, and delegates the booking write to the service layer.</li></ul>
+<ul><li>On success, it revalidates both dashboards so updated booking data appears immediately.</li></ul>
+<h3 class="section">9.8 React Component - Booking Request Form</h3>
+<p>File Name: `src/app/(farmer)/equipment/[id]/BookingRequestForm.tsx`</p>
+<pre><code>&quot;use client&quot;;<br/><br/>import { useState } from &quot;react&quot;;<br/>import { differenceInCalendarDays, format } from &quot;date-fns&quot;;<br/>import type { DateRange } from &quot;react-day-picker&quot;;<br/>import { toast } from &quot;sonner&quot;;<br/><br/>import { createBookingAction } from &quot;@/app/actions/booking.actions&quot;;<br/>import { Button } from &quot;@/components/ui/button&quot;;<br/>import { Calendar } from &quot;@/components/ui/calendar&quot;;<br/><br/>export function BookingRequestForm({<br/>  equipmentId,<br/>  rate,<br/>  rateUnit,<br/>}: {<br/>  equipmentId: string;<br/>  rate: number;<br/>  rateUnit: string;<br/>}) {<br/>  const [range, setRange] = useState&lt;DateRange | undefined&gt;(undefined);<br/>  const [submitting, setSubmitting] = useState(false);<br/>  const [errorMessage, setErrorMessage] = useState&lt;string | null&gt;(null);<br/><br/>  const durationInUnits =<br/>    range?.from &amp;&amp; range?.to<br/>      ? Math.max(differenceInCalendarDays(range.to, range.from) + 1, 1)<br/>      : 0;<br/>  const estimatedTotal = durationInUnits * rate;<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This client component provides the booking interaction on the equipment detail page.</li></ul>
+<ul><li>It lets the farmer select a date range and shows an estimate before submission.</li></ul>
+<ul><li>The actual booking amount is still computed on the server, so the UI estimate is only informational.</li></ul>
+<h3 class="section">9.9 API Route - Chat Assistant</h3>
+<p>File Name: `src/app/api/chat/route.ts`</p>
+<pre><code>import { z } from &quot;zod&quot;;<br/><br/>import { createClient } from &quot;@/lib/supabase/server&quot;;<br/>import { getChatCompletion, type ChatMessage } from &quot;@/lib/services/ai.service&quot;;<br/><br/>export const maxDuration = 60;<br/><br/>const chatRequestSchema = z.object({<br/>  messages: z<br/>    .array(<br/>      z.object({<br/>        role: z.enum([&quot;user&quot;, &quot;assistant&quot;, &quot;system&quot;]),<br/>        content: z.string(),<br/>      })<br/>    )<br/>    .min(1),<br/>});<br/><br/>export async function POST(request: Request) {<br/>  const supabase = await createClient();<br/>  const { data: userData } = await supabase.auth.getUser();<br/>  if (!userData.user) {<br/>    return jsonError(&quot;You must be logged in to use the chatbot.&quot;, 401);<br/>  }<br/>}</code></pre>
+<p>Explanation:</p>
+<ul><li>This route is the single external entry point for the FAQ assistant.</li></ul>
+<ul><li>It requires an authenticated session and validates the request body before calling the AI service.</li></ul>
+<ul><li>The route is given a longer max duration because AI responses can take longer than ordinary application requests.</li></ul>
+<h3 class="section">9.10 Database Schema - Booking Table</h3>
+<p>File Name: `supabase/migrations/0001_init_schema.sql`</p>
+<pre><code>CREATE TABLE public.bookings (<br/>  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),<br/>  equipment_id uuid NOT NULL REFERENCES public.equipments(id),<br/>  farmer_id uuid NOT NULL REFERENCES public.users(id),<br/>  start_date date NOT NULL,<br/>  end_date date NOT NULL,<br/>  total_amount numeric(10,2) NOT NULL,<br/>  status booking_status NOT NULL DEFAULT &#x27;pending&#x27;,<br/>  created_at timestamptz NOT NULL DEFAULT now()<br/>);<br/><br/>ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;<br/><br/>ALTER TABLE public.bookings ADD CONSTRAINT bookings_no_overlap<br/>  EXCLUDE USING gist (<br/>    equipment_id WITH =,<br/>    daterange(start_date, end_date, &#x27;[]&#x27;) WITH &amp;&amp;<br/>  ) WHERE (status IN (&#x27;pending&#x27;, &#x27;approved&#x27;));</code></pre>
+<p>Explanation:</p>
+<ul><li>This schema snippet shows the booking table and the database-level overlap protection.</li></ul>
+<ul><li>The exclusion constraint is the authoritative safeguard against double-booking for active reservations.</li></ul>
+<ul><li>The booking table is central to the marketplace workflow and supports the farmer-to-owner request flow.</li></ul></section><section class="chapter-page" id="ch10"><h1 class="chapter">CHAPTER 10</h1>
+<p>CONCLUSION AND FUTURE SCOPE</p>
+<h3 class="section">10.1 Summary</h3>
+<p>AgriRent is a web-based farm equipment rental marketplace developed to connect equipment owners with farmers in a structured and role-based environment. The implemented system allows owners to create equipment listings, upload equipment photographs, and manage incoming booking requests. Farmers can register, log in, browse available equipment, inspect listing details, and request bookings for a selected date range. The project also includes booking approval and rejection workflows, dashboard views for both roles, notification storage, and a chat assistant for general platform guidance.</p>
+<p>The application is implemented using Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui, and Supabase. The architecture separates presentation, server actions, service logic, validation, and database access so that the main business rules are enforced on the server side. Booking totals are computed from the stored equipment rate, booking conflicts are prevented at the database level, and role-based routing is handled through middleware and protected layouts. This design gives the project a clean and practical structure suitable for a final-year BCA implementation.</p>
+<p>The project therefore demonstrates a complete though focused digital marketplace workflow. It addresses a real coordination problem in agricultural equipment rental by replacing informal communication with an application that supports authentication, listing management, booking requests, notifications, and controlled access based on user roles. The current implementation is intentionally scoped to the core marketplace flow and does not extend into unrelated features such as payments, reviews, maps, or advanced analytics.</p>
+<h3 class="section">10.2 Project Achievements</h3>
+<p>The project achieved the following major outcomes:</p>
+<ul><li>A role-based authentication system was implemented using Supabase Auth.</li></ul>
+<ul><li>A persistent user profile table was created to store user identity and role information.</li></ul>
+<ul><li>Two distinct user experiences were implemented for farmers and equipment owners.</li></ul>
+<ul><li>Equipment owners can create listings with title, description, category, rate, location, and photo upload.</li></ul>
+<ul><li>Farmers can browse equipment listings and open detailed equipment pages.</li></ul>
+<ul><li>A date-range booking request workflow was implemented for farmers.</li></ul>
+<ul><li>Booking totals are computed on the server using the equipment rate stored in the database.</li></ul>
+<ul><li>The booking workflow is protected by a database-level exclusion constraint to prevent overlaps.</li></ul>
+<ul><li>Owners can approve or reject pending bookings from their dashboard.</li></ul>
+<ul><li>Notifications are stored and displayed to inform users about booking events.</li></ul>
+<ul><li>A lightweight FAQ chat assistant was integrated through a dedicated API route.</li></ul>
+<ul><li>The codebase includes validation schemas and service-layer separation for maintainability.</li></ul>
+<p>These achievements show that the project is not only a user-interface demonstration but a working full-stack application with practical data handling and server-side integrity checks.</p>
+<h3 class="section">10.3 Advantages</h3>
+<p>AgriRent provides several advantages over informal rental coordination and over a flat, unstructured web implementation.</p>
+<p>First, it centralizes the rental process. Instead of depending on scattered phone calls or repeated offline communication, users can interact with a single marketplace platform. This improves clarity for both farmers and owners.</p>
+<p>Second, it separates user responsibilities clearly. Farmers are focused on discovery and booking, while owners are focused on listing management and request approval. This role separation makes the system easier to understand and reduces accidental misuse.</p>
+<p>Third, the system protects critical business data through server-side logic. The booking amount is calculated on the server, and overlapping active bookings are blocked by the database itself. This reduces the risk of tampering and double-booking.</p>
+<p>Fourth, the project is technically maintainable. The use of server actions, service functions, and validation schemas keeps the codebase organized and easier to extend. The application structure also supports a clean separation between UI concerns and business logic.</p>
+<p>Fifth, the deployment model is lightweight and practical. The use of Vercel and Supabase removes the need for a self-managed backend server while still providing authentication, storage, and a relational database. This makes the project suitable for a final-year academic environment and for small-scale real-world use.</p>
+<h3 class="section">10.4 Future Scope</h3>
+<p>The current AgriRent implementation covers the essential marketplace workflow, but several realistic improvements can be added in future versions. These enhancements should remain aligned with the existing architecture and should build on the implemented features rather than replacing them.</p>
+<p>Possible future improvements include:</p>
+<ul><li>Search and filtering</li></ul>
+<ul><li>Add filters for category, location, price range, and availability so farmers can find listings faster.</li></ul>
+<ul><li>Profile management</li></ul>
+<ul><li>Introduce a dedicated profile page so users can update their name, contact details, or account preferences.</li></ul>
+<ul><li>Booking history refinement</li></ul>
+<ul><li>Add more detailed booking timelines and status labels for completed and cancelled bookings.</li></ul>
+<ul><li>Additional booking states</li></ul>
+<ul><li>Extend the current booking lifecycle with completion and cancellation flows in the user interface.</li></ul>
+<ul><li>Equipment management enhancements</li></ul>
+<ul><li>Allow owners to edit or deactivate listings instead of only creating them.</li></ul>
+<ul><li>Multi-image support improvements</li></ul>
+<ul><li>Add richer gallery handling, image ordering, or image replacement tools for listings.</li></ul>
+<ul><li>Email notifications</li></ul>
+<ul><li>Add email alerts for booking requests and booking decisions alongside the current in-app notifications.</li></ul>
+<ul><li>Review and rating system</li></ul>
+<ul><li>Add post-booking feedback so farmers can rate equipment and owners can assess service quality.</li></ul>
+<ul><li>Location awareness</li></ul>
+<ul><li>Add map-based browsing or location sorting for nearby equipment discovery.</li></ul>
+<ul><li>Dashboard analytics</li></ul>
+<ul><li>Add summary cards and simple metrics such as total listings, pending bookings, and completed rentals.</li></ul>
+<p>These future enhancements are realistic because they extend the already implemented Supabase-backed marketplace model. They do not require a redesign of the entire system; rather, they can be layered on top of the current structure in subsequent phases.</p>
+<h3 class="section">10.5 Learning Outcomes</h3>
+<p>The development of AgriRent provided several important learning outcomes in both software engineering and application design.</p>
+<p>From a frontend perspective, the project reinforced the use of Next.js App Router, server components, client components, and route groups. It also provided practical experience with form handling, component composition, responsive layout design, and toast-based user feedback.</p>
+<p>From a backend perspective, the project improved understanding of server actions, service-layer patterns, authentication flows, and role-based access control. The use of Supabase demonstrated how authentication, database access, and file storage can be managed in a single platform without building a separate custom backend service.</p>
+<p>From a database perspective, the project showed the value of relational schema design, foreign keys, row-level security, and database-level integrity constraints. The booking exclusion constraint, in particular, illustrates why some business rules are safer when enforced directly in the database rather than only in application code.</p>
+<p>From a software process perspective, the project encouraged a disciplined separation between validation, server logic, and user interface concerns. It also emphasized the importance of testing important business rules, especially booking validation, pricing, and authentication behavior.</p>
+<p>Overall, the project strengthened practical understanding of full-stack development and demonstrated how a focused domain problem can be solved with a clear, maintainable web architecture.</p>
+<h3 class="section">10.6 Conclusion</h3>
+<p>AgriRent fulfills its intended purpose as a farm equipment rental marketplace that connects farmers with equipment owners through a secure and structured digital workflow. The project successfully implements authentication, role-based navigation, equipment listing management, equipment browsing, booking requests, booking approvals and rejections, notifications, and a simple AI-assisted FAQ chat experience.</p>
+<p>The system demonstrates the effective use of modern web development tools and shows how a small but complete marketplace can be built with a strong emphasis on server-side integrity and database reliability. The application is limited to its current scope, but within that scope it provides a working end-to-end rental flow that is consistent, maintainable, and suitable for academic presentation.</p>
+<p>In conclusion, the project has achieved its core objective of replacing informal equipment rental coordination with a digital platform that is practical for farmers and owners. The implementation also leaves room for meaningful future enhancements in search, profile management, analytics, and richer booking workflows. As it stands, AgriRent is a clear demonstration of applied full-stack development, relational data modeling, and role-based web application design.</p>
+<p>REFERENCES</p>
+<p>[1] Next.js Documentation. *Next.js Official Documentation*. [https://nextjs.org/docs](https://nextjs.org/docs)</p>
+<p>[2] React Documentation. *React Official Documentation*. [https://react.dev](https://react.dev/)</p>
+<p>[3] TypeScript Documentation. *TypeScript Handbook*. [https://www.typescriptlang.org/docs](https://www.typescriptlang.org/docs)</p>
+<p>[4] Supabase Documentation. *Supabase Official Documentation*. [https://supabase.com/docs](https://supabase.com/docs)</p>
+<p>[5] PostgreSQL Global Development Group. *PostgreSQL Documentation*. [https://www.postgresql.org/docs](https://www.postgresql.org/docs)</p>
+<p>[6] Tailwind CSS Documentation. *Tailwind CSS Official Documentation*. [https://tailwindcss.com/docs](https://tailwindcss.com/docs)</p>
+<p>[7] Vercel Documentation. *Vercel Deployment Documentation*. [https://vercel.com/docs](https://vercel.com/docs)</p>
+<p>[8] Git Documentation. *Git SCM Documentation*. [https://git-scm.com/docs](https://git-scm.com/docs)</p>
+<p>[9] GitHub Documentation. *GitHub Docs*. [https://docs.github.com](https://docs.github.com/)</p>
+<p>[10] World Bank. *Agriculture and Agribusiness Resources*. [https://www.worldbank.org/en/topic/agriculture](https://www.worldbank.org/en/topic/agriculture)</p>
+<p>[11] S. Suganth &amp; K. Santhi (2025). *Smart Farming Equipment Rental System*. International Journal of Scientific Research in Computer Science, Engineering and Information Technology.</p>
+<p>[12] A. S. Budhewar et al. (2025). *Implementation of Smart Agricultural Equipment Rental System*. International Journal of Advance Scientific Research and Engineering Trends.</p></section>
+</body>
+</html>

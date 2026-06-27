@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1350" viewBox="0 0 2100 1350">
+
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+<text x="1050.0" y="56" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#1f2937">Figure 3.1  System Architecture</text>
+<ellipse cx="250" cy="170" rx="48" ry="48" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="250" y="161" text-anchor="middle" font-family="Arial" font-size="20" fill="#2563eb">UB</text>
+<text x="250" y="227" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">User Browser</text>
+<rect x="470" y="120" width="470" height="450" rx="18" ry="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="3"/>
+<text x="705" y="159" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Presentation Layer</text>
+<text x="705" y="186" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Next.js App Router</text>
+<text x="705" y="212" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Auth pages</text>
+<text x="705" y="238" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Farmer pages</text>
+<text x="705" y="264" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Owner pages</text>
+<text x="705" y="290" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Chat page</text>
+<text x="705" y="316" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">shadcn/ui + Tailwind</text>
+<rect x="1030" y="120" width="530" height="450" rx="18" ry="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<text x="1295" y="159" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Application Layer</text>
+<text x="1295" y="186" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Middleware</text>
+<text x="1295" y="212" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Server Actions</text>
+<text x="1295" y="238" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">API route /api/chat</text>
+<text x="1295" y="264" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Validation schemas</text>
+<text x="1295" y="290" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Auth / Listing / Booking / Notification / AI services</text>
+<rect x="1640" y="120" width="370" height="450" rx="18" ry="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<text x="1825" y="159" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Data &amp; External</text>
+<text x="1825" y="186" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Supabase Auth</text>
+<text x="1825" y="212" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">PostgreSQL tables</text>
+<text x="1825" y="238" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Supabase Storage</text>
+<text x="1825" y="264" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">RLS policies</text>
+<text x="1825" y="290" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">NVIDIA NIM API</text>
+<rect x="1030" y="770" width="980" height="260" rx="18" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<text x="1520" y="809" text-anchor="middle" font-family="Arial" font-size="20" fill="#1f2937">Core Data Entities</text>
+<text x="1520" y="836" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">users</text>
+<text x="1520" y="862" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">equipments</text>
+<text x="1520" y="888" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">equipment_images</text>
+<text x="1520" y="914" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">bookings</text>
+<text x="1520" y="940" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">notifications</text>
+<line x1="250" y1="220" x2="470" y2="220" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="940" y1="360" x2="1030" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1560" y1="360" x2="1640" y2="360" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1500" y1="950" x2="1640" y2="950" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1030" y1="900" x2="1640" y2="500" stroke="#d97706" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1030" y1="900" x2="470" y2="500" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1640" y1="600" x2="1550" y2="760" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1290" y1="570" x2="1290" y2="750" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+<line x1="1800" y1="570" x2="1800" y2="760" stroke="#16a34a" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="250" y1="220" x2="940" y2="220" stroke="#6b7280" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="530" y="266" font-family="Arial" font-size="16" fill="#4b5563">UI requests and navigation</text>
+<text x="1075" y="266" font-family="Arial" font-size="16" fill="#4b5563">business rules and server actions</text>
+<text x="1680" y="266" font-family="Arial" font-size="16" fill="#4b5563">authentication, data storage, and AI</text>
+</svg>
