@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03.4-01-PLAN.md
-last_updated: "2026-06-27T22:08:24.221Z"
+stopped_at: Completed 03.4-02-PLAN.md
+last_updated: "2026-06-27T22:20:14.327Z"
 last_activity: 2026-06-27 -- Phase 03.4 execution started
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 28
-  completed_plans: 16
+  completed_plans: 17
   percent: 33
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 ## Current Position
 
 Phase: 03.4 (user-profile-management-view-edit-display-name-upload-change) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-27 -- Phase 03.4 execution started
 
@@ -62,6 +62,7 @@ Progress: [██████████] 100%
 | Phase 02.1 P04 | 20min | 3 tasks | 2 files |
 | Phase 02.1 P05 | 35min | 3 tasks | 4 files |
 | Phase 03.4 P01 | 25min | 2 tasks | 4 files |
+| Phase 03.4 P02 | 28min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -96,6 +97,7 @@ Recent decisions affecting current work:
 - [Phase 02.1]: Out-of-scope fix applied during 02.1-06 verification: NotificationBell.tsx's Supabase Realtime channel topic is now scoped per mount instance (userId + random suffix) -- fixed a pre-existing (since Phase 1) crash where React Strict Mode's double-effect-invoke in dev collided with @supabase/realtime-js's channel-name dedup, throwing on every page load
 - [Phase ?]: Phase 03.4 Plan 01: phone column inherits the same accepted information-disclosure tradeoff as email under the existing public-read users RLS policy; documented in-migration
 - [Phase ?]: Phase 03.4 Plan 01: avatars bucket INSERT policy deliberately omits public.is_owner() since any authenticated user (farmer or owner) must be able to upload their own avatar
+- [Phase ?]: [Phase 03.4-02]: AccountMenu falls back to email local-part for display name when full_name is null/empty; phone empty string normalized to null at the service layer; pre-existing uncommitted Phase 03.1 nav restructure in both role layouts committed together with this plan's AccountMenu wiring since they touched the same lines
 
 ### Pending Todos
 
@@ -125,6 +127,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T22:08:24.205Z
-Stopped at: Completed 03.4-01-PLAN.md
+Last session: 2026-06-27T22:20:14.311Z
+Stopped at: Completed 03.4-02-PLAN.md
 Resume file: None
