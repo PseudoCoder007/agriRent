@@ -49,18 +49,18 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4 dark:from-background dark:to-background">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-foreground">
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
             Set a new password
           </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-muted-foreground">
+          <p className="mt-1 text-sm text-slate-600">
             Choose a new password for your AgriRent account.
           </p>
         </div>
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8 dark:bg-card">
+        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -81,7 +81,7 @@ export default function ResetPasswordPage() {
               />
 
               {responseMessage ? (
-                <p className="text-sm text-slate-600 dark:text-muted-foreground">{responseMessage}</p>
+                <p className="text-sm text-slate-600">{responseMessage}</p>
               ) : null}
 
               <Button

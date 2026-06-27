@@ -42,21 +42,21 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4 dark:from-background dark:to-background">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300">
+          <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
             ← Back to home
           </Link>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950 dark:text-foreground">
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
             Welcome back
           </h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-muted-foreground">
+          <p className="mt-1 text-sm text-slate-600">
             Log in to your AgriRent account.
           </p>
         </div>
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8 dark:bg-card">
+        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
           <Form {...form}>
             <div className="mb-5 space-y-3">
               <GoogleOAuthButton mode="login" />
@@ -64,8 +64,8 @@ export default function LoginPage() {
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
                 </div>
-                <div className="relative flex justify-center text-xs uppercase tracking-widest text-slate-400 dark:text-muted-foreground">
-                  <span className="bg-white px-3 dark:bg-card">or</span>
+                <div className="relative flex justify-center text-xs uppercase tracking-widest text-slate-400">
+                  <span className="bg-white px-3">or</span>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function LoginPage() {
               <div className="-mt-2 flex justify-end">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline dark:text-muted-foreground dark:hover:text-foreground"
+                  className="text-sm text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -129,9 +129,9 @@ export default function LoginPage() {
           </Form>
         </div>
 
-        <p className="mt-6 text-center text-sm text-slate-600 dark:text-muted-foreground">
+        <p className="mt-6 text-center text-sm text-slate-600">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-medium text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300">
+          <Link href="/signup" className="font-medium text-emerald-700 hover:text-emerald-800">
             Sign up
           </Link>
         </p>

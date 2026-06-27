@@ -44,11 +44,11 @@ export function GoogleOAuthButton({ mode, role }: GoogleOAuthButtonProps) {
     <Button
       type="button"
       variant="outline"
-      className="h-11 w-full rounded-full border-slate-300 bg-white text-slate-950 hover:bg-slate-50 dark:border-border dark:bg-card dark:text-foreground dark:hover:bg-accent"
+      className="h-11 w-full rounded-full border-slate-300 bg-white text-slate-950 hover:bg-slate-50"
       onClick={handleGoogleLogin}
       disabled={loading}
     >
-      <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-sm font-semibold text-slate-950 shadow-sm ring-1 ring-slate-200 dark:bg-foreground dark:text-background dark:ring-border">
+      <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-sm font-semibold text-slate-950 shadow-sm ring-1 ring-slate-200">
         G
       </span>
       {loading ? "Connecting..." : `Continue with Google`}
