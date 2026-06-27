@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Walking Skeleton** - Auth, equipment, booking, notifications, and AI chat all run end-to-end for one farmer and one owner account (completed 2026-06-26)
 - [ ] **Phase 2: Equipment & Booking Lifecycle Deepening** - Owners manage listings fully, farmers search/filter/favorite, bookings reach completed/cancelled
-- [ ] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle
+- [x] **Phase 2.1: Mobile Responsiveness, Persistent AgriMate AI Chat, Bug Fixes, Dark Mode (INSERTED)** - Mobile nav/dashboard responsiveness, persistent per-user chat history, two confirmed bug fixes, light/dark mode toggle (completed 2026-06-27)
 - [ ] **Phase 3: Reviews & Dashboard/Notification Richness** - Completed bookings unlock reviews; dashboards and notifications become live and informative
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
@@ -92,7 +92,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 02.1-04: Mobile nav collapse — shadcn Sheet drawer for farmer/owner headers below 640px
-- [ ] 02.1-05: Chat widget persistence wiring + AgriMate AI rebrand
+- [x] 02.1-05: Chat widget persistence wiring + AgriMate AI rebrand
 
 ### Phase 3: Reviews & Dashboard/Notification Richness
 
@@ -142,6 +142,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Walking Skeleton | 5/5 | Complete   | 2026-06-26 |
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
-| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 4/5 | In Progress|  |
+| 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 5/5 | Complete   | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 4. UI/Design Polish | 0/TBD | Not started | - |

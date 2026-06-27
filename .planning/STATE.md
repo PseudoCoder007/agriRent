@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02.1-04-PLAN.md
-last_updated: "2026-06-27T07:55:23.653Z"
+stopped_at: Completed 02.1-05-PLAN.md
+last_updated: "2026-06-27T10:54:54.532Z"
 last_activity: 2026-06-27 -- Phase 02.1 execution started
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 19
-  completed_plans: 9
-  percent: 20
+  completed_plans: 10
+  percent: 40
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 ## Current Position
 
 Phase: 02.1 (mobile-responsiveness-persistent-agrimate-ai-chat-multi-list) — EXECUTING
-Plan: 5 of 5
+Plan: 2 of 5
 Status: Ready to execute
 Last activity: 2026-06-27 -- Phase 02.1 execution started
 
@@ -60,6 +60,7 @@ Progress: [██████████] 100%
 | Phase 02.1 P02 | 12min | 3 tasks | 3 files |
 | Phase 02.1 P03 | 15min | 2 tasks | 5 files |
 | Phase 02.1 P04 | 20min | 3 tasks | 2 files |
+| Phase 02.1 P05 | 35min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 02.1-02]: Used buttonVariants() className helper instead of Button asChild for Link-styled CTAs -- this codebase's Button wraps @base-ui/react/button (no asChild prop), not Radix's Slot-based shadcn Button
 - [Phase 02.1]: [Phase 02.1-03]: THEME-01 requirement ID is not present in REQUIREMENTS.md traceability table (phase 02.1 was inserted urgently and never had requirement IDs minted there per RESEARCH.md); requirements.mark-complete returned not_found -- flagged for traceability backfill, not blocking plan completion
 - [Phase ?]: [Phase 02.1-04]: Used SheetTrigger render prop instead of asChild -- this codebase's Sheet/Button primitives are @base-ui/react-backed (not Radix Slot-based), no asChild prop exists on DialogTrigger
+- [Phase ?]: [Phase 02.1-05]: Mapped chat_messages DB row's generic string role to ChatWidget's strict user|assistant union via explicit .map() cast in both chat page Server Components, not by widening ChatWidget's Message type
+- [Phase ?]: [Phase 02.1-05]: Assistant message persisted from a locally-accumulated string built in parallel with the streaming setMessages updater, not read back from React state, since state updates are async
 
 ### Pending Todos
 
@@ -96,6 +99,7 @@ None yet.
 
 - Phase 1 requires research-flagged verification at implementation time: confirm NVIDIA NIM model availability/rate-limit behavior again (model catalog has already changed once), and re-verify RLS policy design (SECURITY DEFINER helper functions) holds as later tables (favorites, reviews) are added in Phase 2-3.
 - Phase 5-equivalent AI tool-calling deepening (AI recommendations) is v2 scope, not in this roadmap — no canonical reference architecture was found during research; resolve via a research pass if/when scheduled.
+- CHAT-PERSIST-01 and CHAT-BRAND-01 requirement IDs not present in REQUIREMENTS.md traceability table (phase 02.1 inserted urgently, never had requirement IDs minted there, same gap as THEME-01 from Plan 03) -- flagged for traceability backfill, not blocking
 
 ### Quick Tasks Completed
 
@@ -114,6 +118,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T07:55:23.573Z
-Stopped at: Completed 02.1-04-PLAN.md
+Last session: 2026-06-27T10:54:06.213Z
+Stopped at: Completed 02.1-05-PLAN.md
 Resume file: None
