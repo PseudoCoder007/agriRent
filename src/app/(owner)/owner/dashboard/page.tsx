@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageShell } from "@/components/ui/page-shell";
@@ -99,10 +101,7 @@ export default async function OwnerDashboardPage() {
             title="No equipment listed"
             description="Create your first listing to start receiving booking requests."
             action={
-              <Link
-                href="/equipment/new"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-slate-950 px-4 text-sm font-medium text-white hover:bg-slate-800"
-              >
+              <Link href="/equipment/new" className={buttonVariants()}>
                 List equipment
               </Link>
             }
@@ -110,13 +109,36 @@ export default async function OwnerDashboardPage() {
         ) : (
           <ul className="space-y-1">
             {equipment.map((item) => (
-              <li key={item.id} className="rounded-md border p-2 text-sm">
-                <Link
-                  href={`/equipment/${item.id}/edit`}
-                  className="hover:underline"
-                >
-                  {item.title} — ₹{item.rate}/{item.rate_unit}
-                </Link>
+              <li
+                key={item.id}
+                className="flex items-center gap-3 rounded-md border p-2 text-sm"
+              >
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-muted">
+                  {item.equipment_images[0] ? (
+                    <Image
+                      src={listingService.getEquipmentImageUrl(
+                        item.equipment_images[0].storage_path
+                      )}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                      No photo
+                    </div>
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <Link
+                    href={`/equipment/${item.id}/edit`}
+                    className="hover:underline"
+                  >
+                    <span className="truncate">
+                      {item.title} — ₹{item.rate}/{item.rate_unit}
+                    </span>
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>
@@ -134,7 +156,7 @@ export default async function OwnerDashboardPage() {
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="flex items-center justify-between rounded-md border p-2 text-sm"
+                className="flex flex-col gap-2 rounded-md border p-2 text-sm sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
                   <p>{booking.equipments?.title ?? "Equipment"}</p>
@@ -144,7 +166,7 @@ export default async function OwnerDashboardPage() {
                     {booking.total_amount}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant={
                       booking.status === "rejected"
