@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3.1: Auth & Navigation UI Fixes (INSERTED)** - Fix dark-mode CSS variable bleed-through on forced-light pages, redesign login/signup visual design, rebuild role-scoped nav as a structured layout
 - [ ] **Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)** - Custom brand mark used consistently across nav, chat, and favicon; branded chat avatar + animated typing indicator
 - [ ] **Phase 3.3: Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED)** - Soft-deleted owner listings disappear from the dashboard, a persistent add-equipment CTA stays visible, and auth/home pages stay white after logout
-- [ ] **Phase 03.4: User Profile Management (INSERTED)** - View/edit display name, upload/change profile photo, add/edit phone number
+- [x] **Phase 03.4: User Profile Management (INSERTED)** - View/edit display name, upload/change profile photo, add/edit phone number (completed 2026-06-27)
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -148,7 +148,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 03.4-03: Profile photo upload vertical slice — uploadAvatar/getAvatarUrl, uploadAvatarAction, AvatarUpload component, wired into ProfileForm + AccountMenu (PROFILE-02)
+- [x] 03.4-03: Profile photo upload vertical slice — uploadAvatar/getAvatarUrl, uploadAvatarAction, AvatarUpload component, wired into ProfileForm + AccountMenu (PROFILE-02)
 
 ### Phase 3.1: Auth & Navigation UI Fixes (INSERTED)
 
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 3.3 �
 | 2. Equipment & Booking Lifecycle Deepening | 0/4 | Not started | - |
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
-| 03.4. User Profile Management (INSERTED) | 2/3 | In Progress|  |
+| 03.4. User Profile Management (INSERTED) | 3/3 | Complete   | 2026-06-27 |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
 | 3.3. Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED) | 0/3 | Not started | - |
