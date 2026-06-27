@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import { Resend } from "resend";
 
 const BRAND_LINE = "Connecting Farmers. Sharing Equipment. Growing Together.";
@@ -489,18 +488,23 @@ function bulletList(items: string[]) {
   );
 }
 
-function sendEmail(message: EmailMessage): Promise<EmailResult> {
+async function sendEmail(message: EmailMessage): Promise<EmailResult> {
   if (!resend) {
     console.warn("Resend is not configured. Skipping email send.", {
       to: message.to,
       subject: message.subject,
     });
-    return Promise.resolve({
+    return {
       success: false,
       message: "Resend is not configured",
-    });
+    };
   }
 
+  // Dynamically imported so Next.js's RSC bundler does not statically resolve
+  // react-dom/server into this module's import graph (this file is reachable
+  // from Server Actions via auth.service.ts) — see Next.js error:
+  // "You're importing a component that imports react-dom/server."
+  const { renderToStaticMarkup } = await import("react-dom/server");
   const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <EmailDocument preview={message.preview} title={message.subject}>
       {message.body}
