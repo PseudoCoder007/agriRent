@@ -7,7 +7,13 @@ import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 /**
  * Enforces role=farmer for every route under this group. Defense in depth
@@ -80,19 +86,36 @@ export default async function FarmerLayout({
             <Menu className="h-5 w-5" />
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
+            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
             <nav className="flex flex-col gap-1 p-4">
-              <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground">
+              <SheetClose
+                render={
+                  <Link href="/farmer/dashboard" className="text-muted-foreground hover:text-foreground" />
+                }
+              >
                 Dashboard
-              </Link>
-              <Link href="/browse" className="text-muted-foreground hover:text-foreground">
+              </SheetClose>
+              <SheetClose
+                render={
+                  <Link href="/browse" className="text-muted-foreground hover:text-foreground" />
+                }
+              >
                 Browse
-              </Link>
-              <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground">
+              </SheetClose>
+              <SheetClose
+                render={
+                  <Link href="/farmer/favorites" className="text-muted-foreground hover:text-foreground" />
+                }
+              >
                 Favorites
-              </Link>
-              <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground">
+              </SheetClose>
+              <SheetClose
+                render={
+                  <Link href="/farmer/chat" className="text-muted-foreground hover:text-foreground" />
+                }
+              >
                 Chat
-              </Link>
+              </SheetClose>
             </nav>
             <div className="flex flex-col gap-2 border-t p-4 pt-3">
               <ThemeToggle />
