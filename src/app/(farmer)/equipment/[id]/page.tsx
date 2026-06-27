@@ -2,8 +2,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { createClient } from "@/lib/supabase/server";
+import * as favoritesService from "@/lib/services/favorites.service";
 import * as listingService from "@/lib/services/listing.service";
+import { ReviewSection } from "@/components/equipment/ReviewSection";
 import { BookingRequestForm } from "./BookingRequestForm";
+import { FavoriteButton } from "./FavoriteButton";
 
 /**
  * Equipment detail page — photos, full description, category, rate, and
@@ -15,16 +19,26 @@ export default async function EquipmentDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const result = await listingService.getEquipmentById(id);
 
-  if (!result.data) {
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+
+  const [equipmentResult, favoritedResult] = await Promise.all([
+    listingService.getEquipmentById(id),
+    userData?.user
+      ? favoritesService.isFavorited(userData.user.id, id)
+      : Promise.resolve({ success: true, data: false } as const),
+  ]);
+
+  if (!equipmentResult.data) {
     notFound();
   }
 
-  const equipment = result.data;
+  const equipment = equipmentResult.data;
+  const initialFavorited = favoritedResult.data ?? false;
 
   return (
-    <div className="mx-auto max-w-3xl p-4">
+    <div className="mx-auto max-w-3xl space-y-6 p-4 sm:p-6">
       <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {equipment.equipment_images.length === 0 ? (
           <div className="flex aspect-video items-center justify-center rounded-md bg-muted text-sm text-muted-foreground">
@@ -49,7 +63,13 @@ export default async function EquipmentDetailPage({
 
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-xl font-semibold">{equipment.title}</h1>
-        <Badge variant="secondary">{equipment.category}</Badge>
+        <div className="flex items-center gap-2">
+          <FavoriteButton
+            equipmentId={equipment.id}
+            initialFavorited={initialFavorited}
+          />
+          <Badge variant="secondary">{equipment.category}</Badge>
+        </div>
       </div>
 
       <p className="mt-1 text-lg font-medium">
@@ -75,6 +95,8 @@ export default async function EquipmentDetailPage({
         rate={Number(equipment.rate)}
         rateUnit={equipment.rate_unit}
       />
+
+      <ReviewSection equipmentId={equipment.id} />
     </div>
   );
 }

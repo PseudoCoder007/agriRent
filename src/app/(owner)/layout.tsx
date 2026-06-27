@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 
@@ -38,8 +40,21 @@ export default async function OwnerLayout({
   return (
     <div>
       <header className="flex items-center justify-between border-b p-4">
-        <span className="text-sm font-medium">AgriRent — Owner</span>
-        <LogoutButton />
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-medium">AgriRent — Owner</span>
+          <nav className="flex gap-3 text-sm">
+            <Link href="/owner/dashboard" className="text-muted-foreground hover:text-foreground">
+              Dashboard
+            </Link>
+            <Link href="/owner/chat" className="text-muted-foreground hover:text-foreground">
+              Chat
+            </Link>
+          </nav>
+        </div>
+        <div className="flex items-center gap-2">
+          <NotificationBell userId={userData.user.id} />
+          <LogoutButton />
+        </div>
       </header>
       <main>{children}</main>
     </div>

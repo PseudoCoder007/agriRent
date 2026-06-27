@@ -66,6 +66,17 @@ Plans:
 - [ ] 02-03: Favorites (save/list) — farmer can favorite equipment and find it again on a dedicated page
 - [ ] 02-04: Booking completed/cancelled state machine — service-layer VALID_TRANSITIONS guard, farmer self-cancel RLS policy, dashboard UI for both roles
 
+### Phase 02.1: Mobile responsiveness, persistent AgriMate AI chat, multi-listing bug, listing image bug, and dark mode (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 2
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (run /gsd-plan-phase 02.1 to break down)
+
 ### Phase 3: Reviews & Dashboard/Notification Richness
 
 **Goal**: Farmers can leave trustworthy reviews tied to real completed bookings, equipment pages show that trust signal, and both dashboards plus the notification system feel like a finished product rather than a bare list.

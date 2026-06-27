@@ -125,3 +125,62 @@ export async function rejectBookingAction(
 
   return result;
 }
+
+/**
+ * Marks an approved booking as completed (owner-only).
+ */
+export async function completeBookingAction(
+  bookingId: string
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    return {
+      success: false,
+      message: "You must be logged in to complete a booking.",
+      data: null,
+    };
+  }
+
+  const result = await bookingService.completeBooking(
+    bookingId,
+    userData.user.id
+  );
+
+  if (result.success) {
+    revalidateDashboards();
+  }
+
+  return result;
+}
+
+/**
+ * Cancels a booking. The caller's session (farmer or owner) determines
+ * which transitions are allowed — see booking.service.cancelBooking.
+ */
+export async function cancelBookingAction(
+  bookingId: string
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    return {
+      success: false,
+      message: "You must be logged in to cancel a booking.",
+      data: null,
+    };
+  }
+
+  const result = await bookingService.cancelBooking(
+    bookingId,
+    userData.user.id
+  );
+
+  if (result.success) {
+    revalidateDashboards();
+  }
+
+  return result;
+}

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { logInAction } from "@/app/actions/auth.actions";
+import { GoogleOAuthButton } from "@/components/auth/google-oauth-button";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -41,17 +42,33 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,200,130,0.22),_transparent_45%),linear-gradient(180deg,_#f7fbf6_0%,_#eef5ea_100%)] px-6 py-10 sm:px-10 lg:px-16">
-      <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-sm flex-col justify-center">
-        <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
-          <div className="mb-6 space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
-              Log in
-            </h1>
-            <p className="text-sm text-slate-600">Welcome back to AgriRent.</p>
-          </div>
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-6 text-center">
+          <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
+            ← Back to home
+          </Link>
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
+            Welcome back
+          </h1>
+          <p className="mt-1 text-sm text-slate-600">
+            Log in to your AgriRent account.
+          </p>
+        </div>
 
+        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
           <Form {...form}>
+            <div className="mb-5 space-y-3">
+              <GoogleOAuthButton mode="login" />
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase tracking-widest text-slate-400">
+                  <span className="bg-white px-3">or</span>
+                </div>
+              </div>
+            </div>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex flex-col gap-4"
@@ -104,13 +121,20 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="h-11 rounded-full bg-slate-950 text-white hover:bg-slate-800"
+                className="h-11 rounded-lg bg-slate-950 text-white hover:bg-slate-800"
               >
                 {form.formState.isSubmitting ? "Logging in..." : "Log in"}
               </Button>
             </form>
           </Form>
         </div>
+
+        <p className="mt-6 text-center text-sm text-slate-600">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="font-medium text-emerald-700 hover:text-emerald-800">
+            Sign up
+          </Link>
+        </p>
       </div>
     </main>
   );

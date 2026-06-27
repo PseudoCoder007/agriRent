@@ -22,6 +22,17 @@ export type BookingWithEquipmentAndFarmer = BookingRow & {
   users: Pick<Tables<"users">, "full_name"> | null;
 };
 
+/**
+ * Allow-list of valid booking status transitions. Mirrors the Postgres
+ * trigger enforce_booking_status_transition() in 0005_phase2_schema.sql.
+ * Both layers must always agree — this is the primary check, the PG
+ * trigger is defense-in-depth.
+ */
+const VALID_TRANSITIONS: Record<string, string[]> = {
+  pending: ["approved", "rejected", "cancelled"],
+  approved: ["completed", "cancelled"],
+};
+
 const PENDING_ONLY_GUARD_MESSAGE =
   "This booking has already been actioned and can no longer be changed.";
 
@@ -340,4 +351,170 @@ export async function getBookingsForOwner(
     message: "Booking requests loaded",
     data: data as BookingWithEquipmentAndFarmer[],
   };
+}
+
+/**
+ * Shared ownership guard for owner-only booking transitions
+ * (approve, reject, complete). Verifies the booking's equipment is
+ * owned by `ownerId`, regardless of booking status.
+ */
+async function getOwnedBooking(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  bookingId: string,
+  ownerId: string
+): Promise<
+  | { ok: true; booking: BookingWithEquipment }
+  | { ok: false; message: string }
+> {
+  const { data: booking, error } = await supabase
+    .from("bookings")
+    .select("*, equipments(id, title, owner_id)")
+    .eq("id", bookingId)
+    .single();
+
+  if (error || !booking) {
+    return { ok: false, message: "Booking not found" };
+  }
+
+  const typedBooking = booking as BookingWithEquipment;
+
+  if (typedBooking.equipments?.owner_id !== ownerId) {
+    return { ok: false, message: "You do not have access to this booking" };
+  }
+
+  return { ok: true, booking: typedBooking };
+}
+
+/**
+ * Common status-transition logic used by complete/cancel. Reads the
+ * current status from the DB (not from a stale argument) and applies
+ * the transition if VALID_TRANSITIONS allows it.
+ */
+async function transitionBookingStatus(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  bookingId: string,
+  newStatus: string,
+  notificationUserId: string,
+  notificationMessage: string
+): Promise<ServiceResult<BookingRow>> {
+  const { data: current, error: fetchError } = await supabase
+    .from("bookings")
+    .select("status")
+    .eq("id", bookingId)
+    .single();
+
+  if (fetchError || !current) {
+    return { success: false, message: "Booking not found", data: null };
+  }
+
+  const allowed = VALID_TRANSITIONS[current.status];
+  if (!allowed || !allowed.includes(newStatus)) {
+    return {
+      success: false,
+      message: `Cannot transition booking from ${current.status} to ${newStatus}`,
+      data: null,
+    };
+  }
+
+  const { data: updated, error: updateError } = await supabase
+    .from("bookings")
+    .update({ status: newStatus } as Partial<BookingRow>)
+    .eq("id", bookingId)
+    .select()
+    .single();
+
+  if (updateError || !updated) {
+    console.error(
+      `booking.service.transitionBookingStatus: ${newStatus} failed`,
+      updateError
+    );
+    return {
+      success: false,
+      message: `Could not update booking, please try again`,
+      data: null,
+    };
+  }
+
+  await notificationService.createNotification({
+    userId: notificationUserId,
+    bookingId: updated.id,
+    message: notificationMessage,
+  });
+
+  return {
+    success: true,
+    message: `Booking ${newStatus}`,
+    data: updated,
+  };
+}
+
+/**
+ * Completes an approved booking (owner-only). Notifies the farmer.
+ */
+export async function completeBooking(
+  bookingId: string,
+  ownerId: string
+): Promise<ServiceResult<BookingRow>> {
+  const supabase = await createClient();
+  const guard = await getOwnedBooking(supabase, bookingId, ownerId);
+  if (!guard.ok) {
+    return { success: false, message: guard.message, data: null };
+  }
+
+  return transitionBookingStatus(
+    supabase,
+    bookingId,
+    "completed",
+    guard.booking.farmer_id,
+    "Your booking has been marked as completed."
+  );
+}
+
+/**
+ * Cancels a booking. The owner can cancel any owned booking (pending or
+ * approved); the farmer can only cancel their own pending booking.
+ */
+export async function cancelBooking(
+  bookingId: string,
+  userId: string
+): Promise<ServiceResult<BookingRow>> {
+  const supabase = await createClient();
+
+  const { data: booking, error } = await supabase
+    .from("bookings")
+    .select("*, equipments(id, title, owner_id)")
+    .eq("id", bookingId)
+    .single();
+
+  if (error || !booking) {
+    return { success: false, message: "Booking not found", data: null };
+  }
+
+  const typedBooking = booking as BookingWithEquipment;
+  const isOwner = typedBooking.equipments?.owner_id === userId;
+  const isFarmer = typedBooking.farmer_id === userId;
+
+  if (!isOwner && !isFarmer) {
+    return {
+      success: false,
+      message: "You do not have access to this booking",
+      data: null,
+    };
+  }
+
+  const otherUserId = isOwner
+    ? typedBooking.farmer_id
+    : typedBooking.equipments?.owner_id;
+
+  const notificationMessage = isOwner
+    ? "The owner has cancelled your booking."
+    : "You have cancelled your booking request.";
+
+  return transitionBookingStatus(
+    supabase,
+    bookingId,
+    "cancelled",
+    otherUserId ?? "",
+    notificationMessage
+  );
 }

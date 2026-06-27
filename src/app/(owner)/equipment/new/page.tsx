@@ -10,13 +10,6 @@ import type { z } from "zod";
 import { createEquipmentAction } from "@/app/actions/listing.actions";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Form,
   FormControl,
   FormField,
@@ -100,15 +93,14 @@ export default function NewEquipmentPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>List new equipment</CardTitle>
-          <CardDescription>
-            Add a tractor or machine for farmers to discover and book.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <div className="mx-auto max-w-lg p-4 sm:p-6">
+      <div className="mb-6">
+        <h1 className="text-xl font-semibold tracking-tight">List new equipment</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Add a tractor or machine for farmers to discover and book.
+        </p>
+      </div>
+      <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -262,8 +254,7 @@ export default function NewEquipmentPage() {
               </Button>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+        </div>
     </div>
   );
 }

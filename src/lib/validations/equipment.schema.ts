@@ -43,3 +43,12 @@ export const imageFileSchema = z.object({
 });
 
 export type ImageFileInput = z.infer<typeof imageFileSchema>;
+
+/**
+ * Equipment edit payload — same shape as create, but all fields optional
+ * for partial updates. No ownerId field: the server always derives it
+ * from the authenticated session, never from the form submission.
+ */
+export const updateEquipmentSchema = createEquipmentSchema.partial();
+
+export type UpdateEquipmentInput = z.infer<typeof updateEquipmentSchema>;

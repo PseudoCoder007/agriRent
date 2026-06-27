@@ -64,6 +64,55 @@ export async function createNotification({
  * "notifications select own" SELECT policy from 0001_init_schema.sql
  * already allows, so no admin-client bypass is needed here.
  */
+/**
+ * Returns the number of unread notifications for a user.
+ */
+export async function getUnreadCount(
+  userId: string
+): Promise<ServiceResult<number>> {
+  const supabase = await createClient();
+
+  const { count, error } = await supabase
+    .from("notifications")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .eq("read", false);
+
+  if (error) {
+    console.error(
+      "notification.service.getUnreadCount: query failed",
+      error
+    );
+    return { success: false, message: "Could not load unread count", data: null };
+  }
+
+  return { success: true, message: "OK", data: count ?? 0 };
+}
+
+/**
+ * Marks one or more notifications as read.
+ */
+export async function markNotificationsRead(
+  ids: string[]
+): Promise<ServiceResult<null>> {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read: true })
+    .in("id", ids);
+
+  if (error) {
+    console.error(
+      "notification.service.markNotificationsRead: update failed",
+      error
+    );
+    return { success: false, message: "Could not mark as read", data: null };
+  }
+
+  return { success: true, message: "Marked as read", data: null };
+}
+
 export async function getNotificationsForUser(
   userId: string
 ): Promise<ServiceResult<NotificationRow[]>> {

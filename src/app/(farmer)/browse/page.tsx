@@ -1,30 +1,46 @@
+import { PackageSearch } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { PageShell } from "@/components/ui/page-shell";
+import { EquipmentFilterBar } from "@/components/equipment/equipment-filter-bar";
 import * as listingService from "@/lib/services/listing.service";
 
 /**
- * Flat, unfiltered equipment browse list for farmers — no category or
- * location filters yet (EQUIP-05 search/filter is explicitly deferred to
- * Phase 2 per SKELETON.md). Server Component making a direct service-layer
- * call, no client-side fetch.
+ * Server-side filtered equipment browse list for farmers. Category uses
+ * exact match; location uses case-insensitive substring match (ILIKE).
+ * Both filters are applied server-side via the Supabase query builder in
+ * listing.service.ts — never client-side array filtering.
  */
-export default async function BrowsePage() {
-  const result = await listingService.getAllEquipment();
+export default async function BrowsePage(props: {
+  searchParams: Promise<{ category?: string; location?: string }>;
+}) {
+  const { category, location } = await props.searchParams;
+  const result = await listingService.getAllEquipment({ category, location });
   const equipment = result.data ?? [];
 
   return (
-    <div className="p-4">
-      <h1 className="mb-4 text-lg font-medium">Browse equipment</h1>
+    <PageShell title="Browse equipment" subtitle="Find the equipment you need for your farm">
+      <EquipmentFilterBar
+        currentCategory={category}
+        currentLocation={location}
+      />
 
       {!result.success ? (
         <p className="text-sm text-destructive">{result.message}</p>
       ) : equipment.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          No equipment listings yet. Check back soon.
-        </p>
+        <EmptyState
+          icon={PackageSearch}
+          title="No equipment found"
+          description={
+            category || location
+              ? "Try adjusting your filters to see more results."
+              : "No equipment listings yet. Check back soon."
+          }
+        />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {equipment.map((item) => {
@@ -70,6 +86,6 @@ export default async function BrowsePage() {
           })}
         </div>
       )}
-    </div>
+    </PageShell>
   );
 }

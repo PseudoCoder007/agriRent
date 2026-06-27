@@ -49,18 +49,18 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,200,130,0.22),_transparent_45%),linear-gradient(180deg,_#f7fbf6_0%,_#eef5ea_100%)] px-6 py-10 sm:px-10 lg:px-16">
-      <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-sm flex-col justify-center">
-        <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
-          <div className="mb-6 space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
-              Set a new password
-            </h1>
-            <p className="text-sm text-slate-600">
-              Choose a new password for your AgriRent account.
-            </p>
-          </div>
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50/60 to-white p-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-950">
+            Set a new password
+          </h1>
+          <p className="mt-1 text-sm text-slate-600">
+            Choose a new password for your AgriRent account.
+          </p>
+        </div>
 
+        <div className="rounded-xl border bg-white p-6 shadow-sm sm:p-8">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -87,7 +87,7 @@ export default function ResetPasswordPage() {
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="h-11 rounded-full bg-slate-950 text-white hover:bg-slate-800"
+                className="h-11 rounded-lg bg-slate-950 text-white hover:bg-slate-800"
               >
                 {form.formState.isSubmitting
                   ? "Updating..."

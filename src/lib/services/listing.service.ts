@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   imageFileSchema,
   type CreateEquipmentInput,
+  type UpdateEquipmentInput,
 } from "@/lib/validations/equipment.schema";
 import type { Tables } from "../../../types/database";
 
@@ -147,19 +148,143 @@ export async function createEquipment(
 }
 
 /**
- * Flat, unfiltered list of all equipment for the farmer browse page
- * (no category/location filters yet — deferred to Phase 2 per
- * SKELETON.md). Joins the first image and owner's full_name.
+ * Updates an equipment listing's editable fields. Ownership is re-verified
+ * server-side BEFORE the write — the ownerId is from the authenticated
+ * session, never from the submitted form data.
  */
-export async function getAllEquipment(): Promise<
-  ServiceResult<EquipmentWithOwnerAndImages[]>
-> {
+export async function updateEquipment(
+  equipmentId: string,
+  ownerId: string,
+  input: UpdateEquipmentInput
+): Promise<ServiceResult<EquipmentRow>> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  const { data: existing } = await supabase
+    .from("equipments")
+    .select("owner_id")
+    .eq("id", equipmentId)
+    .single();
+
+  if (!existing || existing.owner_id !== ownerId) {
+    return {
+      success: false,
+      message: "You do not have permission to edit this listing",
+      data: null,
+    };
+  }
+
+  const { data: updated, error: updateError } = await supabase
+    .from("equipments")
+    .update({
+      ...(input.title !== undefined && { title: input.title }),
+      ...(input.description !== undefined && {
+        description: input.description,
+      }),
+      ...(input.category !== undefined && { category: input.category }),
+      ...(input.rate !== undefined && { rate: input.rate }),
+      ...(input.rateUnit !== undefined && { rate_unit: input.rateUnit }),
+      ...(input.location !== undefined && { location: input.location }),
+    })
+    .eq("id", equipmentId)
+    .select()
+    .single();
+
+  if (updateError || !updated) {
+    console.error(
+      "listing.service.updateEquipment: update failed",
+      updateError
+    );
+    return {
+      success: false,
+      message: "Could not update equipment listing.",
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Equipment updated",
+    data: updated,
+  };
+}
+
+/**
+ * Soft-deletes an equipment listing by setting deleted_at. Ownership is
+ * re-verified server-side before the write. The row remains in the database
+ * so existing bookings still resolve their FK reference without error.
+ */
+export async function softDeleteEquipment(
+  equipmentId: string,
+  ownerId: string
+): Promise<ServiceResult<null>> {
+  const supabase = await createClient();
+
+  const { data: existing } = await supabase
+    .from("equipments")
+    .select("owner_id")
+    .eq("id", equipmentId)
+    .single();
+
+  if (!existing || existing.owner_id !== ownerId) {
+    return {
+      success: false,
+      message: "You do not have permission to delete this listing",
+      data: null,
+    };
+  }
+
+  const { error: updateError } = await supabase
+    .from("equipments")
+    .update({ deleted_at: new Date().toISOString() })
+    .eq("id", equipmentId);
+
+  if (updateError) {
+    console.error(
+      "listing.service.softDeleteEquipment: update failed",
+      updateError
+    );
+    return {
+      success: false,
+      message: "Could not delete listing.",
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Listing deleted",
+    data: null,
+  };
+}
+
+/**
+ * List all non-deleted equipment for the farmer browse page, optionally
+ * filtered by category and/or location. Category uses exact match; location
+ * uses case-insensitive substring match (ILIKE). Both filters are applied
+ * server-side via the Supabase query builder — never fetched-all-then-
+ * filtered client-side (see Pattern 1 in 02-RESEARCH.md).
+ */
+export async function getAllEquipment(filters?: {
+  category?: string;
+  location?: string;
+}): Promise<ServiceResult<EquipmentWithOwnerAndImages[]>> {
+  const supabase = await createClient();
+
+  let query = supabase
     .from("equipments")
     .select("*, equipment_images(id, storage_path), users(full_name)")
+    .is("deleted_at", null)
     .order("created_at", { ascending: false });
+
+  if (filters?.category) {
+    query = query.eq("category", filters.category);
+  }
+
+  if (filters?.location) {
+    query = query.ilike("location", `%${filters.location}%`);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("listing.service.getAllEquipment: query failed", error);
@@ -179,7 +304,8 @@ export async function getAllEquipment(): Promise<
 
 /**
  * Single equipment row with all images and owner info, for the farmer
- * detail page.
+ * detail page. Soft-deleted listings return null (404) for non-owners.
+ * The owner's dashboard uses getEquipmentByOwner (unfiltered) instead.
  */
 export async function getEquipmentById(
   id: string
@@ -190,6 +316,7 @@ export async function getEquipmentById(
     .from("equipments")
     .select("*, equipment_images(id, storage_path), users(full_name)")
     .eq("id", id)
+    .is("deleted_at", null)
     .maybeSingle();
 
   if (error) {

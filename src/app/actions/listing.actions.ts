@@ -4,7 +4,10 @@ import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
 import * as listingService from "@/lib/services/listing.service";
-import { createEquipmentSchema } from "@/lib/validations/equipment.schema";
+import {
+  createEquipmentSchema,
+  updateEquipmentSchema,
+} from "@/lib/validations/equipment.schema";
 
 type ActionResult = {
   success: boolean;
@@ -69,6 +72,79 @@ export async function createEquipmentAction(
 
   if (result.success) {
     revalidatePath("/browse");
+  }
+
+  return result;
+}
+
+export async function updateEquipmentAction(
+  equipmentId: string,
+  formData: FormData
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    return {
+      success: false,
+      message: "You must be logged in to edit a listing.",
+      data: null,
+    };
+  }
+
+  const parsed = updateEquipmentSchema.safeParse({
+    title: formData.get("title") || undefined,
+    description: formData.get("description") || undefined,
+    category: formData.get("category") || undefined,
+    rate: formData.get("rate") || undefined,
+    rateUnit: formData.get("rateUnit") || undefined,
+    location: formData.get("location") || undefined,
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Please correct the highlighted fields",
+      data: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  const result = await listingService.updateEquipment(
+    equipmentId,
+    userData.user.id,
+    parsed.data
+  );
+
+  if (result.success) {
+    revalidatePath("/browse");
+    revalidatePath(`/equipment/${equipmentId}`);
+  }
+
+  return result;
+}
+
+export async function deleteEquipmentAction(
+  equipmentId: string
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    return {
+      success: false,
+      message: "You must be logged in to delete a listing.",
+      data: null,
+    };
+  }
+
+  const result = await listingService.softDeleteEquipment(
+    equipmentId,
+    userData.user.id
+  );
+
+  if (result.success) {
+    revalidatePath("/browse");
+    revalidatePath("/owner/dashboard");
   }
 
   return result;

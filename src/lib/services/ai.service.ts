@@ -1,11 +1,6 @@
 import OpenAI from "openai";
 
-/**
- * SERVER-ONLY. This file reads process.env.NVIDIA_API_KEY and must never be
- * imported by a Client Component ('use client' file) — the only network
- * boundary the browser ever talks to is /api/chat (see route.ts), never
- * NVIDIA directly. See 01-04-PLAN.md threat T-04-01.
- */
+import * as listingService from "@/lib/services/listing.service";
 
 export type ChatMessage = {
   role: "user" | "assistant" | "system";
@@ -18,29 +13,8 @@ type ServiceResult<T> = {
   data: T | null;
 };
 
-/**
- * Single source of truth for the NVIDIA NIM model name. Treat as
- * configuration, not a literal repeated across files, per PITFALLS.md
- * Pitfall 5 — the originally-requested model (minimax-m2.5) went EOL
- * (HTTP 410) without notice.
- */
 export const NVIDIA_MODEL = "meta/llama-3.1-8b-instruct";
 
-const SYSTEM_PROMPT: ChatMessage = {
-  role: "system",
-  content:
-    "You are the AgriRent assistant, a helpful FAQ chatbot for a farm " +
-    "equipment rental marketplace. You can answer general questions about " +
-    "how booking and rental works on AgriRent: farmers search and request " +
-    "equipment for a date range, owners approve or reject requests, and " +
-    "pricing is calculated from the equipment's listed hourly/daily rate. " +
-    "You do NOT have access to live booking, equipment, or account data, " +
-    "and you CANNOT create, modify, approve, or cancel bookings or " +
-    "listings on the user's behalf — for anything account-specific, tell " +
-    "the user to use the app's dashboard. Keep answers concise and friendly.",
-};
-
-/** Bounded history per PITFALLS.md Pitfall 5 — never accumulate unbounded turns. */
 const MAX_HISTORY_TURNS = 10;
 const MAX_RETRIES = 2;
 const DEFAULT_BACKOFF_MS = [500, 1500];
@@ -84,29 +58,70 @@ type MinimalOpenAIClient = {
 };
 
 /**
- * Wraps the NVIDIA NIM (OpenAI-compatible) chat completions call with:
- * - a fixed FAQ-only system prompt prepended to every request
- * - bounded conversation history (last MAX_HISTORY_TURNS turns)
- * - retry with exponential backoff (capped at MAX_RETRIES) on 429/5xx
- * - a generic friendly fallback on exhausted retries — never the raw
- *   provider error body or API key value (see T-04-04)
- *
- * `client` and `options.backoffMs` are injectable for unit testing only;
- * production callers should omit both and rely on the defaults.
+ * Builds a dynamic system prompt with live marketplace context so the AI
+ * can give grounded recommendations. Called once per conversation turn
+ * (data is cached per request — not per user session).
+ */
+async function buildSystemPrompt(): Promise<string> {
+  const listingResult = await listingService.getAllEquipment();
+  const listings = listingResult.data ?? [];
+
+  const categoryCounts: Record<string, number> = {};
+  for (const l of listings) {
+    categoryCounts[l.category] = (categoryCounts[l.category] || 0) + 1;
+  }
+
+  const categorySummary = Object.entries(categoryCounts)
+    .map(([cat, count]) => `${count}x ${cat}`)
+    .join(", ");
+
+  const sampleListings = listings.slice(0, 5).map(
+    (l) =>
+      `- ${l.title} (${l.category}, ₹${l.rate}/${l.rate_unit}${l.location ? `, ${l.location}` : ""})`
+  );
+
+  return (
+    "You are the AgriRent assistant for a farm equipment rental marketplace. " +
+    "Your role is to help farmers find equipment and help owners understand the platform. " +
+    "You can answer questions about how bookings work, suggest what to search for, " +
+    "and give recommendations based on the available listings.\n\n" +
+    "--- LIVE MARKETPLACE DATA ---\n" +
+    `Listings available: ${listings.length}\n` +
+    `Available categories: ${categorySummary || "None yet"}\n` +
+    `Recent listings:\n${sampleListings.join("\n") || "No listings yet"}\n` +
+    "---\n\n" +
+    "Rules:\n" +
+    "- Use the marketplace data above to give specific, grounded recommendations.\n" +
+    "- If a farmer asks about equipment, suggest what's actually available.\n" +
+    "- Do NOT make up equipment, prices, or availability.\n" +
+    "- Do NOT create, modify, approve, or cancel bookings or listings.\n" +
+    "- For account-specific actions (bookings, listings), tell the user to use the dashboard.\n" +
+    "- Keep answers concise and friendly."
+  );
+}
+
+/**
+ * Returns a streaming chat completion with a dynamically-generated system
+ * prompt that includes live marketplace data. The FAQ-only system prompt
+ * is replaced with a recommendation-capable one.
  */
 export async function getChatCompletion(
   messages: ChatMessage[],
   client?: MinimalOpenAIClient,
   options?: { backoffMs?: number[] }
 ): Promise<ServiceResult<AsyncIterable<unknown>>> {
-  const activeClient = client ?? (getDefaultClient() as unknown as MinimalOpenAIClient);
+  const activeClient =
+    client ?? (getDefaultClient() as unknown as MinimalOpenAIClient);
   const backoffMs = options?.backoffMs ?? DEFAULT_BACKOFF_MS;
 
   const truncatedHistory = messages.slice(-MAX_HISTORY_TURNS);
-  const outgoingMessages = [SYSTEM_PROMPT, ...truncatedHistory];
+  const systemMessage: ChatMessage = {
+    role: "system",
+    content: await buildSystemPrompt(),
+  };
+  const outgoingMessages = [systemMessage, ...truncatedHistory];
 
   let attempt = 0;
-  // attempt 0 = first try, attempts 1..MAX_RETRIES = retries
   while (attempt <= MAX_RETRIES) {
     try {
       const stream = await activeClient.chat.completions.create({
@@ -135,11 +150,12 @@ export async function getChatCompletion(
         };
       }
 
-      await sleep(backoffMs[attempt] ?? backoffMs[backoffMs.length - 1] ?? 0);
+      await sleep(
+        backoffMs[attempt] ?? backoffMs[backoffMs.length - 1] ?? 0
+      );
       attempt += 1;
     }
   }
 
-  // Unreachable, but keeps TypeScript satisfied about a return on every path.
   return { success: false, message: FALLBACK_MESSAGE, data: null };
 }
