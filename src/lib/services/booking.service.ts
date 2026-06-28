@@ -1,5 +1,12 @@
 import { differenceInCalendarDays } from "date-fns";
 
+import {
+  sendBookingApprovedEmails,
+  sendBookingCancelledEmails,
+  sendBookingCompletedEmails,
+  sendBookingRejectedEmails,
+  sendBookingRequestedEmails,
+} from "@/lib/email/mailer";
 import { createClient } from "@/lib/supabase/server";
 import * as notificationService from "@/lib/services/notification.service";
 import type { CreateBookingInput } from "@/lib/validations/booking.schema";
@@ -20,6 +27,11 @@ export type BookingWithEquipment = BookingRow & {
 export type BookingWithEquipmentAndFarmer = BookingRow & {
   equipments: Pick<Tables<"equipments">, "id" | "title" | "owner_id"> | null;
   users: Pick<Tables<"users">, "full_name"> | null;
+};
+
+type UserContact = {
+  email: string;
+  fullName: string | null;
 };
 
 /**
@@ -46,6 +58,27 @@ function computeDurationInUnits(startDate: string, endDate: string): number {
   const duration =
     differenceInCalendarDays(new Date(endDate), new Date(startDate)) + 1;
   return Math.max(duration, 1);
+}
+
+async function getUserContact(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string
+): Promise<UserContact | null> {
+  const { data, error } = await supabase
+    .from("users")
+    .select("email, full_name")
+    .eq("id", userId)
+    .single();
+
+  if (error || !data) {
+    console.error("booking.service.getUserContact: lookup failed", error);
+    return null;
+  }
+
+  return {
+    email: data.email,
+    fullName: data.full_name,
+  };
 }
 
 /**
@@ -87,7 +120,7 @@ export async function createBooking(
 
   const { data: equipment, error: equipmentError } = await supabase
     .from("equipments")
-    .select("rate, rate_unit, owner_id")
+    .select("title, rate, rate_unit, owner_id")
     .eq("id", input.equipmentId)
     .single();
 
@@ -147,6 +180,22 @@ export async function createBooking(
     bookingId: booking.id,
     message: "A farmer requested a booking for your equipment.",
   });
+
+  const [ownerContact, farmerContact] = await Promise.all([
+    getUserContact(supabase, equipment.owner_id),
+    getUserContact(supabase, farmerId),
+  ]);
+
+  if (ownerContact && farmerContact) {
+    await sendBookingRequestedEmails({
+      owner: ownerContact,
+      farmer: farmerContact,
+      equipmentTitle: equipment.title,
+      startDate: input.startDate,
+      endDate: input.endDate,
+      totalAmount,
+    });
+  }
 
   return {
     success: true,
@@ -233,6 +282,22 @@ export async function approveBooking(
     message: "Your booking request was approved.",
   });
 
+  const [ownerContact, farmerContact] = await Promise.all([
+    getUserContact(supabase, ownerId),
+    getUserContact(supabase, updated.farmer_id),
+  ]);
+
+  if (ownerContact && farmerContact && updated.equipments?.title) {
+    await sendBookingApprovedEmails({
+      owner: ownerContact,
+      farmer: farmerContact,
+      equipmentTitle: updated.equipments.title,
+      startDate: updated.start_date,
+      endDate: updated.end_date,
+      totalAmount: Number(updated.total_amount),
+    });
+  }
+
   return {
     success: true,
     message: "Booking approved",
@@ -279,6 +344,22 @@ export async function rejectBooking(
     bookingId: updated.id,
     message: "Your booking request was rejected.",
   });
+
+  const [ownerContact, farmerContact] = await Promise.all([
+    getUserContact(supabase, ownerId),
+    getUserContact(supabase, updated.farmer_id),
+  ]);
+
+  if (ownerContact && farmerContact && updated.equipments?.title) {
+    await sendBookingRejectedEmails({
+      owner: ownerContact,
+      farmer: farmerContact,
+      equipmentTitle: updated.equipments.title,
+      startDate: updated.start_date,
+      endDate: updated.end_date,
+      totalAmount: Number(updated.total_amount),
+    });
+  }
 
   return {
     success: true,
@@ -461,13 +542,33 @@ export async function completeBooking(
     return { success: false, message: guard.message, data: null };
   }
 
-  return transitionBookingStatus(
+  const result = await transitionBookingStatus(
     supabase,
     bookingId,
     "completed",
     guard.booking.farmer_id,
     "Your booking has been marked as completed."
   );
+
+  if (result.success && result.data && guard.booking.equipments?.title) {
+    const [ownerContact, farmerContact] = await Promise.all([
+      getUserContact(supabase, ownerId),
+      getUserContact(supabase, guard.booking.farmer_id),
+    ]);
+
+    if (ownerContact && farmerContact) {
+      await sendBookingCompletedEmails({
+        owner: ownerContact,
+        farmer: farmerContact,
+        equipmentTitle: guard.booking.equipments.title,
+        startDate: result.data.start_date,
+        endDate: result.data.end_date,
+        totalAmount: Number(result.data.total_amount),
+      });
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -510,11 +611,34 @@ export async function cancelBooking(
     ? "The owner has cancelled your booking."
     : "You have cancelled your booking request.";
 
-  return transitionBookingStatus(
+  const result = await transitionBookingStatus(
     supabase,
     bookingId,
     "cancelled",
     otherUserId ?? "",
     notificationMessage
   );
+
+  if (result.success && result.data && typedBooking.equipments?.title) {
+    const [ownerContact, farmerContact] = await Promise.all([
+      getUserContact(
+        supabase,
+        typedBooking.equipments?.owner_id ?? typedBooking.farmer_id
+      ),
+      getUserContact(supabase, typedBooking.farmer_id),
+    ]);
+
+    if (ownerContact && farmerContact) {
+      await sendBookingCancelledEmails({
+        owner: ownerContact,
+        farmer: farmerContact,
+        equipmentTitle: typedBooking.equipments.title,
+        startDate: result.data.start_date,
+        endDate: result.data.end_date,
+        totalAmount: Number(result.data.total_amount),
+      });
+    }
+  }
+
+  return result;
 }

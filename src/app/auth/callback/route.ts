@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { sendSignInEmail, sendWelcomeEmail } from "@/lib/email/mailer";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -51,11 +52,17 @@ export async function GET(request: NextRequest) {
       if (user) {
         const { data: profile } = await supabase
           .from("users")
-          .select("role")
+          .select("role, full_name, email")
           .eq("id", user.id)
-          .single();
+          .maybeSingle();
 
         if (profile?.role === "owner" || profile?.role === "farmer") {
+          await sendSignInEmail({
+            to: profile.email ?? user.email ?? "",
+            fullName: profile.full_name ?? user.email?.split("@")[0] ?? "there",
+            role: profile.role,
+          });
+
           return NextResponse.redirect(`${origin}/${profile.role}/dashboard`);
         }
 
@@ -78,6 +85,17 @@ export async function GET(request: NextRequest) {
           );
 
           if (!insertError) {
+            await sendWelcomeEmail({
+              to: user.email ?? "",
+              fullName: buildFullName({
+                email: user.email,
+                user_metadata: user.user_metadata as
+                  | Record<string, unknown>
+                  | null,
+              }),
+              role: parsedRole.data,
+            });
+
             return NextResponse.redirect(
               `${origin}/${parsedRole.data}/dashboard`
             );

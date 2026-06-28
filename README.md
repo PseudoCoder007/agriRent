@@ -9,6 +9,7 @@ Live app: [https://agrirent.shop](https://agrirent.shop)
 - Farmers can sign up, log in, browse equipment, open details, and request bookings.
 - Owners can sign up, log in, create equipment listings, and approve or reject booking requests.
 - The app stores users, listings, bookings, and notifications in Supabase.
+- AgriRent sends branded transactional emails through Resend for welcome, sign-in, password reset, booking, and review events.
 - The chat assistant answers rental FAQ questions through NVIDIA NIM.
 
 ## Tech Stack
@@ -38,6 +39,7 @@ Live app: [https://agrirent.shop](https://agrirent.shop)
 - npm
 - A Supabase project
 - An NVIDIA API key for chat
+- A Resend account for transactional email
 
 ## Environment Variables
 
@@ -47,6 +49,9 @@ Create a `.env.local` file in the project root and set:
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM_EMAIL="AgriRent <noreply@agrirent.shop>"
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NVIDIA_API_KEY=your_nvidia_api_key
 ```
 

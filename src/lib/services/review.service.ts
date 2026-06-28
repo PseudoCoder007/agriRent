@@ -1,3 +1,4 @@
+import { sendReviewReceivedEmails } from "@/lib/email/mailer";
 import { createClient } from "@/lib/supabase/server";
 import type { CreateReviewInput } from "@/lib/validations/review.schema";
 import type { Tables } from "../../../types/database";
@@ -13,6 +14,32 @@ type ReviewRow = Tables<"reviews">;
 export type ReviewWithFarmer = ReviewRow & {
   users: Pick<Tables<"users">, "full_name"> | null;
 };
+
+type UserContact = {
+  email: string;
+  fullName: string | null;
+};
+
+async function getUserContact(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string
+): Promise<UserContact | null> {
+  const { data, error } = await supabase
+    .from("users")
+    .select("email, full_name")
+    .eq("id", userId)
+    .single();
+
+  if (error || !data) {
+    console.error("review.service.getUserContact: lookup failed", error);
+    return null;
+  }
+
+  return {
+    email: data.email,
+    fullName: data.full_name,
+  };
+}
 
 /**
  * Creates a review for a completed booking. The RLS policy
@@ -84,6 +111,32 @@ export async function createReview(
       message: "Could not submit review, please try again.",
       data: null,
     };
+  }
+
+  const [equipmentResult, reviewerContact] = await Promise.all([
+    supabase
+      .from("equipments")
+      .select("title, owner_id")
+      .eq("id", booking.equipment_id)
+      .single(),
+    getUserContact(supabase, farmerId),
+  ]);
+
+  const ownerId = equipmentResult.data?.owner_id;
+  const equipmentTitle = equipmentResult.data?.title;
+
+  if (ownerId && equipmentTitle && reviewerContact) {
+    const ownerContact = await getUserContact(supabase, ownerId);
+
+    if (ownerContact) {
+      await sendReviewReceivedEmails({
+        owner: ownerContact,
+        reviewer: reviewerContact,
+        equipmentTitle,
+        rating: input.rating,
+        comment: input.comment ?? null,
+      });
+    }
   }
 
   return {
