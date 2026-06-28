@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 Phase: 03.5 (home-page-feature-showcase) — EXECUTING
 Plan: 1 of 1
 Status: Phase complete — ready for verification
-Last activity: 2026-06-28 -- Phase 03.5 execution started
+Last activity: 2026-06-28 - Completed quick task 260628-js7: Update README.md "What the platform does" section to list all currently shipped features
 
 Progress: [██████████] 100%
 
@@ -120,6 +120,7 @@ None yet.
 |---|-------------|------|--------|-----------|
 | 260627-ax3 | Fix login/signup page design to match home page, add show/hide password toggle, add forgot password flow | 2026-06-27 | aa1ce7f | [260627-ax3-fix-login-signup-page-design-to-match-ho](./quick/260627-ax3-fix-login-signup-page-design-to-match-ho/) |
 | 260627-ph2 | Fix mobile nav drawer cramped spacing (farmer/owner layouts) and invisible login/signup input borders | 2026-06-27 | fdcd2a0 | [260627-ph2-fix-mobile-nav-drawer-cramped-spacing-fa](./quick/260627-ph2-fix-mobile-nav-drawer-cramped-spacing-fa/) |
+| 260628-js7 | Update README.md "What the platform does" section to list all currently shipped features | 2026-06-28 | 99dd43a | [260628-js7-update-readme-md-what-the-platform-does-](./quick/260628-js7-update-readme-md-what-the-platform-does-/) |
 
 ## Deferred Items
 
