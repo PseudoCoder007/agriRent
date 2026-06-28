@@ -127,13 +127,13 @@ Plans:
 **Goal:** The landing page's copy and sections accurately represent AgriRent as it exists today, instead of pre-dating most of the shipped functionality.
 **Requirements**: TBD
 **Depends on:** Phase 3.4
-**Plans:** 0 plans
+**Plans:** 1 plan
 
 Scope: refresh src/app/page.tsx to showcase equipment browsing/search and booking, owner listing management with approve/reject, the full booking lifecycle (requested/approved/rejected/cancelled/completed) with email notifications, reviews and ratings, the realtime notification bell, role-based dashboards, branded transactional emails via Resend, the AgriMate AI chat assistant, and Supabase auth. Content/copy refresh of an existing page, not new functionality.
 
 Plans:
 
-- [ ] TBD (run /gsd-plan-phase 03.5 to break down)
+- [ ] 03.5-01: Rewrite feature grid content/icons in src/app/page.tsx (6 cards: browse & book, owner control, no double-booking, reviews, live notifications, AgriMate AI) + typography weight consolidation
 
 ### Phase 03.4: User Profile Management (INSERTED)
 
@@ -254,6 +254,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 3.3 �
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 03.4. User Profile Management (INSERTED) | 3/3 | Complete    | 2026-06-27 |
+| 03.5. Home Page Feature Showcase (INSERTED) | 0/1 | Not started | - |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
 | 3.3. Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED) | 0/3 | Not started | - |
