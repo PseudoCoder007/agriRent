@@ -350,6 +350,7 @@ export async function getEquipmentByOwner(
     .from("equipments")
     .select("*, equipment_images(id, storage_path), users(full_name)")
     .eq("owner_id", ownerId)
+    .is("deleted_at", null)
     .order("created_at", { ascending: false });
 
   if (error) {
