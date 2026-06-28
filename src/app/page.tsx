@@ -46,7 +46,7 @@ export default async function Home(props: {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-emerald-50 to-white">
+    <main className="force-light min-h-screen bg-gradient-to-b from-emerald-50 to-white">
       <div className="mx-auto max-w-6xl px-6 py-10 sm:px-10 lg:px-16">
         <section className="flex min-h-[80vh] flex-col justify-center gap-12 lg:flex-row lg:items-center">
           <div className="flex-1 space-y-6">

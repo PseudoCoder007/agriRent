@@ -53,7 +53,7 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
+    <main className="force-light flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
           <Link href="/" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
@@ -93,7 +93,7 @@ export default function SignupPage() {
                     <FormControl>
                       <Input
                         placeholder="Jane Farmer"
-                        className="border-slate-300"
+                        className="h-11 rounded-xl border-slate-300 bg-slate-50/95 px-4 text-slate-950 shadow-sm placeholder:text-slate-400 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:bg-slate-900/70 dark:text-slate-50"
                         {...field}
                       />
                     </FormControl>
@@ -112,7 +112,7 @@ export default function SignupPage() {
                       <Input
                         type="email"
                         placeholder="you@example.com"
-                        className="border-slate-300"
+                        className="h-11 rounded-xl border-slate-300 bg-slate-50/95 px-4 text-slate-950 shadow-sm placeholder:text-slate-400 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:bg-slate-900/70 dark:text-slate-50"
                         {...field}
                       />
                     </FormControl>
@@ -128,7 +128,10 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput className="border-slate-300" {...field} />
+                      <PasswordInput
+                        className="h-11 rounded-xl border-slate-300 bg-slate-50/95 px-4 text-slate-950 shadow-sm placeholder:text-slate-400 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:bg-slate-900/70 dark:text-slate-50"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

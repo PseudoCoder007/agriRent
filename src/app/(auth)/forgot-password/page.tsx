@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
+    <main className="force-light flex min-h-screen items-center justify-center bg-gradient-to-b from-emerald-50 to-white p-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
           <Link href="/login" className="text-sm font-medium text-emerald-700 hover:text-emerald-800">
