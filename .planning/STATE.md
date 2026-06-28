@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 03.4-03-PLAN.md
-last_updated: "2026-06-28T08:04:01.451Z"
-last_activity: 2026-06-27
+stopped_at: Completed 03.5-01-PLAN.md
+last_updated: "2026-06-28T08:32:23.084Z"
+last_activity: 2026-06-28 -- Phase 03.5 execution started
 progress:
   total_phases: 10
-  completed_phases: 4
-  total_plans: 28
-  completed_plans: 18
-  percent: 40
+  completed_phases: 5
+  total_plans: 29
+  completed_plans: 19
+  percent: 50
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-06-26)
 
 ## Current Position
 
-Phase: 03.5
-Plan: Not started
+Phase: 03.5 (home-page-feature-showcase) — EXECUTING
+Plan: 1 of 1
 Status: Phase complete — ready for verification
-Last activity: 2026-06-27
+Last activity: 2026-06-28 -- Phase 03.5 execution started
 
 Progress: [██████████] 100%
 
@@ -65,6 +65,7 @@ Progress: [██████████] 100%
 | Phase 03.4 P01 | 25min | 2 tasks | 4 files |
 | Phase 03.4 P02 | 28min | 3 tasks | 8 files |
 | Phase 03.4 P03 | 20min | 2 tasks | 9 files |
+| Phase 03.5 P01 | 10min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Phase 03.4 Plan 01: avatars bucket INSERT policy deliberately omits public.is_owner() since any authenticated user (farmer or owner) must be able to upload their own avatar
 - [Phase ?]: [Phase 03.4-02]: AccountMenu falls back to email local-part for display name when full_name is null/empty; phone empty string normalized to null at the service layer; pre-existing uncommitted Phase 03.1 nav restructure in both role layouts committed together with this plan's AccountMenu wiring since they touched the same lines
 - [Phase ?]: [Phase 03.4-03]: uploadAvatar stores only the storage path (never a URL) in avatar_url, matching equipment_images.storage_path convention; AvatarUpload uses router.refresh() after upload instead of local optimistic state to re-pull a freshly cache-busted URL from the Server Component
+- [Phase 03.5-01]: Kept icon: MessageSquareText as an unused fallback in the AgriMate AI feature-array entry (uniform ComponentType shape) -- branched only inside JSX render to substitute AgriMateAIIcon brand mark
 
 ### Pending Todos
 
@@ -130,6 +132,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-27T22:29:46.410Z
-Stopped at: Completed 03.4-03-PLAN.md
+Last session: 2026-06-28T08:32:23.068Z
+Stopped at: Completed 03.5-01-PLAN.md
 Resume file: None

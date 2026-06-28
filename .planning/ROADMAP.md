@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)** - Custom brand mark used consistently across nav, chat, and favicon; branded chat avatar + animated typing indicator
 - [ ] **Phase 3.3: Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED)** - Soft-deleted owner listings disappear from the dashboard, a persistent add-equipment CTA stays visible, and auth/home pages stay white after logout
 - [x] **Phase 03.4: User Profile Management (INSERTED)** - View/edit display name, upload/change profile photo, add/edit phone number (completed 2026-06-27)
-- [ ] **Phase 03.5: Home Page Feature Showcase (INSERTED)** - Refresh the landing page copy/sections to represent the product as it exists today, across equipment, booking, reviews, notifications, email, and AI chat
+- [x] **Phase 03.5: Home Page Feature Showcase (INSERTED)** - Refresh the landing page copy/sections to represent the product as it exists today, across equipment, booking, reviews, notifications, email, and AI chat (completed 2026-06-28)
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -127,13 +127,13 @@ Plans:
 **Goal:** The landing page's copy and sections accurately represent AgriRent as it exists today, instead of pre-dating most of the shipped functionality.
 **Requirements**: TBD
 **Depends on:** Phase 3.4
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Scope: refresh src/app/page.tsx to showcase equipment browsing/search and booking, owner listing management with approve/reject, the full booking lifecycle (requested/approved/rejected/cancelled/completed) with email notifications, reviews and ratings, the realtime notification bell, role-based dashboards, branded transactional emails via Resend, the AgriMate AI chat assistant, and Supabase auth. Content/copy refresh of an existing page, not new functionality.
 
 Plans:
 
-- [ ] 03.5-01: Rewrite feature grid content/icons in src/app/page.tsx (6 cards: browse & book, owner control, no double-booking, reviews, live notifications, AgriMate AI) + typography weight consolidation
+- [x] 03.5-01: Rewrite feature grid content/icons in src/app/page.tsx (6 cards: browse & book, owner control, no double-booking, reviews, live notifications, AgriMate AI) + typography weight consolidation
 
 ### Phase 03.4: User Profile Management (INSERTED)
 
@@ -254,7 +254,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 3 → 3.1 → 3.2 → 3.3 �
 | 2.1. Mobile Responsiveness, Persistent Chat, Bug Fixes, Dark Mode | 6/6 | Complete    | 2026-06-27 |
 | 3. Reviews & Dashboard/Notification Richness | 0/TBD | Not started | - |
 | 03.4. User Profile Management (INSERTED) | 3/3 | Complete    | 2026-06-27 |
-| 03.5. Home Page Feature Showcase (INSERTED) | 0/1 | Not started | - |
+| 03.5. Home Page Feature Showcase (INSERTED) | 1/1 | Complete   | 2026-06-28 |
 | 3.1. Auth & Navigation UI Fixes (INSERTED) | 0/3 | Not started | - |
 | 3.2. AgriMate AI Brand Identity & Chat Polish (INSERTED) | 0/1 | Not started | - |
 | 3.3. Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED) | 0/3 | Not started | - |
