@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 export const metadata: Metadata = {
   title: "AgriRent",
   description: "Farm equipment rental marketplace",
+  icons: {
+    icon: "/icon",
+  },
 };
 
 export default function RootLayout({
