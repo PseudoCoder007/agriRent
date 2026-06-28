@@ -1,38 +1,45 @@
-import { Search, ListCheck, MessageSquareText, Star, ShieldCheck, Trees } from "lucide-react";
+import { Search, ListCheck, MessageSquareText, Star, ShieldCheck, Bell } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { AgriMateAIIcon } from "@/components/brand/agri-mate-ai-mark";
 
 const features = [
   {
     icon: Search,
-    title: "Browse & discover",
-    description: "Find tractors, harvesters, and more by category or location.",
+    title: "Browse & book",
+    description:
+      "Search tractors, harvesters, and more by category or location, then request a date range — pricing is calculated automatically.",
   },
   {
     icon: ListCheck,
-    title: "Request & book",
-    description: "Pick your dates and send a booking request in one click.",
-  },
-  {
-    icon: Star,
-    title: "Review & rate",
-    description: "Leave feedback after each completed rental.",
+    title: "Owners stay in control",
+    description:
+      "List equipment in minutes and approve or reject every booking request from a dedicated dashboard.",
   },
   {
     icon: ShieldCheck,
     title: "No double-booking",
-    description: "Availability enforced server-side with every request.",
+    description:
+      "Availability is enforced at the database level on every request — never just a UI check.",
+  },
+  {
+    icon: Star,
+    title: "Real reviews",
+    description:
+      "Farmers rate and review equipment after every completed rental, visible on the listing page.",
+  },
+  {
+    icon: Bell,
+    title: "Live notifications",
+    description:
+      "A real-time notification bell and branded email alerts keep both sides updated the moment a booking status changes.",
   },
   {
     icon: MessageSquareText,
-    title: "AI assistant",
-    description: "Get recommendations and answers instantly.",
-  },
-  {
-    icon: Trees,
-    title: "For Indian farms",
-    description: "Built for local equipment and rental practices.",
+    title: "AgriMate AI",
+    description:
+      "Ask AgriMate AI rental questions any time — booking policies, equipment tips, and more, answered instantly.",
   },
 ];
 
@@ -55,7 +62,7 @@ export default async function Home(props: {
               Farm equipment marketplace
             </div>
 
-            <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
               Rent farm equipment{" "}
               <span className="text-emerald-700">without the friction.</span>
             </h1>
@@ -143,9 +150,13 @@ export default async function Home(props: {
                 className="rounded-xl border bg-white p-5 transition-shadow hover:shadow-md"
               >
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <feature.icon className="h-5 w-5" />
+                  {feature.title === "AgriMate AI" ? (
+                    <AgriMateAIIcon variant="navbar" className="h-5 w-5" />
+                  ) : (
+                    <feature.icon className="h-5 w-5" />
+                  )}
                 </div>
-                <h3 className="mb-1 font-medium text-slate-950">
+                <h3 className="mb-1 font-semibold text-slate-950">
                   {feature.title}
                 </h3>
                 <p className="text-sm leading-6 text-slate-600">
