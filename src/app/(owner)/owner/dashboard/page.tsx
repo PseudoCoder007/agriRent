@@ -95,16 +95,19 @@ export default async function OwnerDashboardPage() {
       </div>
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold">My Equipment</h2>
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="text-sm font-semibold">My Equipment</h2>
+          <Link
+            href="/equipment/new"
+            className={buttonVariants({ size: "sm" })}
+          >
+            + List equipment
+          </Link>
+        </div>
         {equipment.length === 0 ? (
           <EmptyState
             title="No equipment listed"
             description="Create your first listing to start receiving booking requests."
-            action={
-              <Link href="/equipment/new" className={buttonVariants()}>
-                List equipment
-              </Link>
-            }
           />
         ) : (
           <ul className="space-y-1">
