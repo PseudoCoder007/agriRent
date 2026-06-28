@@ -6,11 +6,13 @@ Live app: [https://agrirent.shop](https://agrirent.shop)
 
 ## What the platform does
 
-- Farmers can sign up, log in, browse equipment, open details, and request bookings.
-- Owners can sign up, log in, create equipment listings, and approve or reject booking requests.
-- The app stores users, listings, bookings, and notifications in Supabase.
-- AgriRent sends branded transactional emails through Resend for welcome, sign-in, password reset, booking, and review events.
-- The chat assistant answers rental FAQ questions through NVIDIA NIM.
+- Farmers can sign up, log in, search/filter equipment by category and location, view listing details, and request bookings for a date range with auto-calculated pricing.
+- Owners can sign up, log in, create and manage equipment listings, and approve or reject booking requests from a dedicated dashboard.
+- Bookings move through a full lifecycle (requested, approved, rejected, cancelled, completed), and date-range availability conflicts are enforced at the database level (Postgres exclusion constraint), not just in the UI — no double-booking is possible.
+- Farmers can rate and review equipment after a completed rental, and reviews are visible on the listing page.
+- A real-time in-app notification bell plus branded transactional emails through Resend keep both farmers and owners updated on booking status changes (welcome, sign-in, password reset, booking, and review events).
+- Both roles get a tailored dashboard, can manage their profile (display name, avatar, phone), and farmers can save listings to favorites.
+- AgriMate AI, powered by NVIDIA NIM, answers rental questions (booking policies, equipment tips, and more) any time via the in-app chat assistant.
 
 ## Tech Stack
 
