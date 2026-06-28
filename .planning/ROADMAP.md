@@ -21,6 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3.2: AgriMate AI Brand Identity & Chat Polish (INSERTED)** - Custom brand mark used consistently across nav, chat, and favicon; branded chat avatar + animated typing indicator
 - [ ] **Phase 3.3: Owner Listing Cleanup & Forced-Light Auth Fixes (INSERTED)** - Soft-deleted owner listings disappear from the dashboard, a persistent add-equipment CTA stays visible, and auth/home pages stay white after logout
 - [x] **Phase 03.4: User Profile Management (INSERTED)** - View/edit display name, upload/change profile photo, add/edit phone number (completed 2026-06-27)
+- [ ] **Phase 03.5: Home Page Feature Showcase (INSERTED)** - Refresh the landing page copy/sections to represent the product as it exists today, across equipment, booking, reviews, notifications, email, and AI chat
 - [ ] **Phase 4: UI/Design Polish** - The full app looks and feels presentable across every flow built in Phases 1-3
 
 ## Phase Details
@@ -120,6 +121,19 @@ Plans:
 Plans:
 
 - [ ] 03-01: TBD
+
+### Phase 03.5: Home Page Feature Showcase (INSERTED)
+
+**Goal:** The landing page's copy and sections accurately represent AgriRent as it exists today, instead of pre-dating most of the shipped functionality.
+**Requirements**: TBD
+**Depends on:** Phase 3.4
+**Plans:** 0 plans
+
+Scope: refresh src/app/page.tsx to showcase equipment browsing/search and booking, owner listing management with approve/reject, the full booking lifecycle (requested/approved/rejected/cancelled/completed) with email notifications, reviews and ratings, the realtime notification bell, role-based dashboards, branded transactional emails via Resend, the AgriMate AI chat assistant, and Supabase auth. Content/copy refresh of an existing page, not new functionality.
+
+Plans:
+
+- [ ] TBD (run /gsd-plan-phase 03.5 to break down)
 
 ### Phase 03.4: User Profile Management (INSERTED)
 

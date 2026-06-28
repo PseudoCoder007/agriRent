@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 03.4-03-PLAN.md
-last_updated: "2026-06-27T22:42:50.415Z"
+last_updated: "2026-06-28T08:04:01.451Z"
 last_activity: 2026-06-27
 progress:
-  total_phases: 9
+  total_phases: 10
   completed_phases: 4
   total_plans: 28
   completed_plans: 18
-  percent: 44
+  percent: 40
 ---
 
 # Project State
@@ -21,11 +21,11 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26)
 
 **Core value:** A farmer can find available equipment near them and successfully book it for a date range, and the owner can approve or reject that request — end to end, with no double-booking and no client-side price tampering.
-**Current focus:** Phase 03.4 — user-profile-management-view-edit-display-name-upload-change
+**Current focus:** Phase 03.5 — home-page-feature-showcase
 
 ## Current Position
 
-Phase: 04
+Phase: 03.5
 Plan: Not started
 Status: Phase complete — ready for verification
 Last activity: 2026-06-27
