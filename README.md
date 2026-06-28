@@ -197,6 +197,21 @@ npm run build
 npm run lint
 ```
 
+## Detailed Testing Guide for AgriRent WebApp
+
+Detailed manual test procedures for every feature are in [`test_docs/`](./test_docs/).
+
+Start with the [Full Flow Smoke Test](./test_docs/09-full-flow-smoke-test.md) for a 15-minute end-to-end walkthrough, or pick a specific feature:
+
+- [Authentication](./test_docs/01-authentication.md) — sign up, log in, password reset
+- [Equipment Listings](./test_docs/02-equipment-listings.md) — create, browse, edit, delete
+- [Bookings](./test_docs/03-bookings.md) — request, approve, reject, complete, cancel
+- [Favorites](./test_docs/04-favorites.md) — save and unsave equipment
+- [Reviews](./test_docs/05-reviews.md) — write and read reviews
+- [Notifications](./test_docs/06-notifications.md) — bell icon, unread count
+- [Profile](./test_docs/07-profile.md) — edit name, phone, avatar
+- [AI Chat](./test_docs/08-ai-chat.md) — AgriMate AI assistant
+
 ## Deployment
 
 The production site is live at [agrirent.shop](https://agrirent.shop).
